@@ -15,14 +15,14 @@ class _LoginPageState extends State<LoginPage> {
         body: SafeArea(
             child: Center(
                 child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 25),
             // Hello again
             const Text(
-              "Hello again!",
+              "Hello Again!",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 24,
+                fontSize: 36,
               ),
             ),
             const SizedBox(height: 10),
@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
                 fontSize: 16,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 50),
             // username textfield
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 25),
 
             // not a member? register now
             Row(
