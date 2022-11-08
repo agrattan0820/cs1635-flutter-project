@@ -7,10 +7,10 @@ import 'app.dart';
 void main() {
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(
+      ChangeNotifierProvider<FoodItemViewModel>(
         create: (_) => FoodItemViewModel(),
       ),
-      ChangeNotifierProvider(
+      ChangeNotifierProvider<UserViewModel>(
         create: (_) => UserViewModel(),
       ),
     ],

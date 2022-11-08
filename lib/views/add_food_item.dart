@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view_models/food_item_view_model.dart';
+import 'package:provider/provider.dart';
 
 import '../components/food_category_card.dart';
 
@@ -37,6 +39,8 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
 
   @override
   Widget build(BuildContext context) {
+    var foodItems = context.watch<FoodItemViewModel>().foodItems;
+
     return Scaffold(
       backgroundColor: Colors.yellow[200],
       bottomNavigationBar: BottomNavigationBar(
@@ -107,10 +111,10 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
                 _selectedCategory != null
                     ? Expanded(
                         child: ListView.builder(
-                          itemCount: 5,
+                          itemCount: foodItems.length,
                           itemBuilder: (((context, index) {
-                            return const ListTile(
-                              title: Text("Hello"),
+                            return ListTile(
+                              title: Text(foodItems[index].name),
                             );
                           })),
                         ),
