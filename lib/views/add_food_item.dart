@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/food_add_form.dart';
 import 'package:flutter_application_1/models/food_item.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 import 'package:provider/provider.dart';
-
-import '../components/food_category_card.dart';
 
 class AddFoodItemView extends StatefulWidget {
   const AddFoodItemView({super.key});
@@ -26,6 +25,8 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
 
   List? _selectedCategory;
 
+  FoodItem? _selectedFoodItem;
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -35,6 +36,12 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
   void _onCardTapped(int index) {
     setState(() {
       _selectedCategory = foodCategories[index];
+    });
+  }
+
+  void _onFoodSelection(FoodItem item) {
+    setState(() {
+      _selectedFoodItem = item;
     });
   }
 
@@ -68,7 +75,7 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
       ),
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+          padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
           child: Center(
             child: Column(
               children: [
@@ -85,6 +92,7 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
                     });
                   }),
                   onSelected: (FoodItem selection) {
+                    _onFoodSelection(selection);
                     debugPrint(
                         'You just selected ${_foodItemDisplay(selection)}');
                   },
@@ -137,37 +145,39 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
                         ),
                       )
                     : const SizedBox(),
-                _selectedCategory != null
-                    ? Expanded(
-                        child: ListView.builder(
-                          itemCount: foodItems.length,
-                          itemBuilder: (((context, index) {
-                            return ListTile(
-                              title: Text(foodItems[index].name),
-                            );
-                          })),
-                        ),
-                      )
-                    : Expanded(
-                        child: GridView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: foodCategories.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2),
-                          itemBuilder: ((context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: FoodCategoryCard(
-                                text: foodCategories[index][0],
-                                cardColor: foodCategories[index][1],
-                                onPress: () => _onCardTapped(index),
-                              ),
-                            );
-                          }),
-                        ),
-                      )
+                // _selectedCategory != null
+                //     ? Expanded(
+                //         child: ListView.builder(
+                //           itemCount: foodItems.length,
+                //           itemBuilder: (((context, index) {
+                //             return ListTile(
+                //               title: Text(foodItems[index].name),
+                //               onTap: () => _onFoodSelection(foodItems[index]),
+                //             );
+                //           })),
+                //         ),
+                //       )
+                //     : Expanded(
+                //         child: GridView.builder(
+                //           scrollDirection: Axis.vertical,
+                //           shrinkWrap: true,
+                //           itemCount: foodCategories.length,
+                //           gridDelegate:
+                //               const SliverGridDelegateWithFixedCrossAxisCount(
+                //                   crossAxisCount: 2),
+                //           itemBuilder: ((context, index) {
+                //             return Padding(
+                //               padding: const EdgeInsets.all(8.0),
+                //               child: FoodCategoryCard(
+                //                 text: foodCategories[index][0],
+                //                 cardColor: foodCategories[index][1],
+                //                 onPress: () => _onCardTapped(index),
+                //               ),
+                //             );
+                //           }),
+                //         ),
+                //       )
+                const FoodAddForm()
               ],
             ),
           ),
