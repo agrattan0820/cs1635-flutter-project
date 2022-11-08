@@ -69,7 +69,7 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue[500],
+        selectedItemColor: Colors.yellow[800],
         backgroundColor: Colors.yellow[100],
         onTap: _onItemTapped,
       ),
@@ -121,7 +121,10 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
                         prefixIcon: Container(
                           padding: const EdgeInsets.all(16),
                           width: 16,
-                          child: const Icon(Icons.search),
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.yellow[800],
+                          ),
                         ),
                       ),
                     );
