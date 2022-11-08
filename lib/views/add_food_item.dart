@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/food_item.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../components/food_category_card.dart';
@@ -80,6 +81,10 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+
+      if (_selectedIndex == 2) {
+        GoRouter.of(context).go("/login");
+      }
     });
   }
 
