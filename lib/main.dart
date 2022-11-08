@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 import 'package:flutter_application_1/view_models/user_view_model.dart';
+import 'package:flutter_application_1/views/add_food_item.dart';
+import 'package:flutter_application_1/views/login_page.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'app.dart';
 
 void main() {
   runApp(MultiProvider(
@@ -14,20 +16,38 @@ void main() {
         create: (_) => UserViewModel(),
       ),
     ],
-    child: const MyApp(),
+    child: MyApp(),
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const App());
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      routerConfig: _router,
+    );
   }
+
+  final GoRouter _router = GoRouter(
+    routes: <GoRoute>[
+      GoRoute(
+        path: '/',
+        builder: (BuildContext context, GoRouterState state) {
+          return const AddFoodItemView();
+        },
+      ),
+      GoRoute(
+        path: '/login',
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginPage();
+        },
+      ),
+    ],
+  );
 }

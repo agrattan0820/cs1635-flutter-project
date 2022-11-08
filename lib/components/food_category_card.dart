@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class FoodCategoryCard extends StatelessWidget {
   final String text;
   final MaterialColor cardColor;
-  VoidCallback onPress;
+  final Widget icon;
+  final VoidCallback onPress;
 
-  FoodCategoryCard({
+  const FoodCategoryCard({
     super.key,
     required this.text,
     required this.cardColor,
+    required this.icon,
     required this.onPress,
   });
 
@@ -33,10 +35,10 @@ class FoodCategoryCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.face,
-              size: 64,
-              color: Colors.grey[800],
+            // const FaIcon(FontAwesomeIcons.circleInfo),
+            icon,
+            const SizedBox(
+              height: 8,
             ),
             Text(
               text,
