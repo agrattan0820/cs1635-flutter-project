@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/food_item.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +38,8 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
     });
   }
 
+  static String _foodItemDisplay(FoodItem item) => item.name;
+
   @override
   Widget build(BuildContext context) {
     var foodItems = context.watch<FoodItemViewModel>().foodItems;
@@ -68,27 +71,53 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
           padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
           child: Center(
             child: Column(
-              children: <Widget>[
-                TextField(
-                  cursorColor: Colors.grey,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(24),
-                      borderSide: BorderSide.none,
-                    ),
-                    hintText: "Search",
-                    hintStyle: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 18,
-                    ),
-                    prefixIcon: Container(
-                      padding: const EdgeInsets.all(16),
-                      width: 16,
-                      child: const Icon(Icons.search),
-                    ),
-                  ),
+              children: [
+                Autocomplete(
+                  displayStringForOption: _foodItemDisplay,
+                  optionsBuilder: ((textEditingValue) {
+                    if (textEditingValue.text == "") {
+                      return const Iterable<FoodItem>.empty();
+                    }
+                    return foodItems.where((FoodItem item) {
+                      return item.name
+                          .toLowerCase()
+                          .contains(textEditingValue.text.toLowerCase());
+                    });
+                  }),
+                  onSelected: (FoodItem selection) {
+                    debugPrint(
+                        'You just selected ${_foodItemDisplay(selection)}');
+                  },
+                  fieldViewBuilder: ((context, textEditingController, focusNode,
+                      onFieldSubmitted) {
+                    return TextFormField(
+                      controller: textEditingController,
+                      focusNode: focusNode,
+                      onFieldSubmitted: (String value) {
+                        onFieldSubmitted();
+                        debugPrint("You just typed a new entry $value");
+                      },
+                      cursorColor: Colors.grey,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                          borderSide: BorderSide.none,
+                        ),
+                        hintText: "Search",
+                        hintStyle: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18,
+                        ),
+                        prefixIcon: Container(
+                          padding: const EdgeInsets.all(16),
+                          width: 16,
+                          child: const Icon(Icons.search),
+                        ),
+                      ),
+                    );
+                  }),
                 ),
                 const SizedBox(
                   height: 24,
