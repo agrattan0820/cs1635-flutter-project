@@ -1,9 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/user.dart';
 
-class UserViewModel {
-  final User user;
+final User initialData = User(
+    firstName: "Alexander",
+    lastName: "Grattan",
+    email: "alex@grattan.me",
+    password: "password",
+    image: "image");
 
-  UserViewModel({required this.user});
+class UserViewModel with ChangeNotifier {
+  final User user = initialData;
 
   String get firstName {
     return user.firstName;
