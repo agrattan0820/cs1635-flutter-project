@@ -26,7 +26,11 @@ class _ItemListViewState extends State<ItemListView> {
     setState(() {
       _selectedIndex = index;
 
-      if (_selectedIndex == 2) {
+      if (_selectedIndex == 0) {
+        GoRouter.of(context).go("/");
+      } else if (_selectedIndex == 1) {
+        GoRouter.of(context).go("/add_item");
+      } else if (_selectedIndex == 2) {
         GoRouter.of(context).go("/login");
       }
     });
@@ -62,7 +66,8 @@ class _ItemListViewState extends State<ItemListView> {
           children: [
             Container(
               margin: const EdgeInsets.only(top: 25),
-              padding: const EdgeInsets.only(top: 28, left: 24, right: 24),
+              padding: const EdgeInsets.only(
+                  top: 28, bottom: 16, left: 24, right: 24),
               // color: Colors.white,
               width: MediaQuery.of(context).size.width,
               child: Row(children: [
