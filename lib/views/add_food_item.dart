@@ -72,7 +72,7 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
     ],
   ];
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   List? _selectedCategory;
 
