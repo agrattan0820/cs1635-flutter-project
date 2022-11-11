@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/list_food_entry.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
+import 'package:flutter_application_1/components/food_item_row.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -66,16 +67,38 @@ class _ItemListViewState extends State<ItemListView> {
           children: [
             Container(
               margin: const EdgeInsets.only(top: 25),
-              padding: const EdgeInsets.only(
-                  top: 28, bottom: 16, left: 24, right: 24),
-              // color: Colors.white,
-              width: MediaQuery.of(context).size.width,
+              padding: const EdgeInsets.only(top: 8, left: 24, right: 24),
               child: Row(children: [
-                const Text(
-                  "inventories dropdown here",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 24),
-                )
+                Expanded(
+                    flex: 2,
+                    child: TextButton(
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            const Text(
+                              "All Food Items",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 28,
+                                  color: Colors.black),
+                            ),
+                            const Icon(
+                              Icons.arrow_drop_down_rounded,
+                              color: Colors.black,
+                              size: 56,
+                            )
+                          ],
+                        ))),
+                TextButton(
+                    onPressed: () {},
+                    child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: const BoxDecoration(
+                          color: Color(0xD6D6D6D6),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.search,
+                            color: Colors.black, size: 28)))
               ]),
             ),
             Expanded(
@@ -83,48 +106,28 @@ class _ItemListViewState extends State<ItemListView> {
                     padding: const EdgeInsets.all(8),
                     itemCount: foodItems.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                          margin: const EdgeInsets.all(16),
-                          padding: const EdgeInsets.all(16),
-                          decoration: const BoxDecoration(
-                              color: Colors.white70,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  "${foodItems[index].quantity.toString()}x ${foodItems[index].name}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                margin: const EdgeInsets.only(right: 4),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Text(FoodListEntryViewModel.getInitials(
-                                    foodItems[index])),
-                              ),
-                              Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20))),
-                                child: Text(
-                                    FoodListEntryViewModel.expirationString(
-                                        foodItems[index])),
-                              )
-                            ],
-                          ));
-                    }))
+                      return FoodItemRow(foodItems: foodItems, index: index);
+                    })),
+            Container(
+              margin: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black),
+                  borderRadius: const BorderRadius.all(Radius.circular(20))),
+              child: Row(children: [
+                Container(
+                    margin: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                        border: Border(right: BorderSide(width: 1))),
+                    child: TextButton(
+                        onPressed: () {},
+                        child: Row(
+                          children: [
+                            const Icon(Icons.sort_rounded),
+                            const Text("Sort")
+                          ],
+                        )))
+              ]),
+            )
           ],
         ));
   }
