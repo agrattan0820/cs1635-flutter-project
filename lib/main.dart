@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 import 'package:flutter_application_1/view_models/user_view_model.dart';
+import 'package:flutter_application_1/views/app_scaffold.dart';
 import 'package:flutter_application_1/views/food_list_view.dart';
 import 'package:flutter_application_1/views/add_food_item.dart';
 import 'package:flutter_application_1/views/login_page.dart';
@@ -40,19 +41,25 @@ class MyApp extends StatelessWidget {
   }
 
   final GoRouter _router = GoRouter(
-    routes: <GoRoute>[
-      GoRoute(
-        path: '/',
-        builder: (BuildContext context, GoRouterState state) {
-          return const FoodListView();
-        },
-      ),
-      GoRoute(
-        path: '/add_item',
-        builder: (BuildContext context, GoRouterState state) {
-          return const AddFoodItemView();
-        },
-      ),
+    routes: [
+      ShellRoute(
+          builder: (context, state, child) {
+            return AppScaffold(child: child);
+          },
+          routes: [
+            GoRoute(
+              path: '/',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: FoodListView(),
+              ),
+            ),
+            GoRoute(
+              path: '/add_item',
+              pageBuilder: (context, state) => const NoTransitionPage(
+                child: AddFoodItemView(),
+              ),
+            ),
+          ]),
       GoRoute(
         path: '/login',
         builder: (BuildContext context, GoRouterState state) {
