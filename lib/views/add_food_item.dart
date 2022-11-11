@@ -72,7 +72,7 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
     ],
   ];
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   List? _selectedCategory;
 
@@ -82,7 +82,11 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
     setState(() {
       _selectedIndex = index;
 
-      if (_selectedIndex == 2) {
+      if (_selectedIndex == 0) {
+        GoRouter.of(context).go("/");
+      } else if (_selectedIndex == 1) {
+        GoRouter.of(context).go("/add_item");
+      } else if (_selectedIndex == 2) {
         GoRouter.of(context).go("/login");
       }
     });
