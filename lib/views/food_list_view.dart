@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/list_food_entry.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 import 'package:flutter_application_1/components/food_item_row.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -74,15 +73,15 @@ class _ItemListViewState extends State<ItemListView> {
                     child: TextButton(
                         onPressed: () {},
                         child: Row(
-                          children: [
-                            const Text(
+                          children: const [
+                            Text(
                               "All Food Items",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 28,
                                   color: Colors.black),
                             ),
-                            const Icon(
+                            Icon(
                               Icons.arrow_drop_down_rounded,
                               color: Colors.black,
                               size: 56,
@@ -109,25 +108,65 @@ class _ItemListViewState extends State<ItemListView> {
                       return FoodItemRow(foodItems: foodItems, index: index);
                     })),
             Container(
-              margin: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: const BorderRadius.all(Radius.circular(20))),
-              child: Row(children: [
-                Container(
-                    margin: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(
-                        border: Border(right: BorderSide(width: 1))),
-                    child: TextButton(
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            const Icon(Icons.sort_rounded),
-                            const Text("Sort")
-                          ],
-                        )))
-              ]),
-            )
+                margin: const EdgeInsets.all(20),
+                padding: const EdgeInsets.only(left: 10, top: 0, bottom: 0),
+                width: 270,
+                // height: 45,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: const BorderRadius.all(Radius.circular(20))),
+                child: IntrinsicHeight(
+                  child: Row(children: <Widget>[
+                    Container(
+                        // margin: const EdgeInsets.only(top: 8, bottom: 8),
+                        margin: const EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
+                        child: TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.all(0),
+                            ),
+                            child: Row(
+                              children: const [
+                                Icon(Icons.sort_rounded),
+                                Text("Sort")
+                              ],
+                            ))),
+                    const VerticalDivider(
+                      thickness: 1,
+                      indent: 5,
+                      endIndent: 5,
+                      color: Colors.black,
+                    ),
+                    Container(
+                        // margin: const EdgeInsets.all(4),
+                        child: TextButton(
+                            onPressed: () {},
+                            child: Row(
+                              children: const [
+                                Icon(Icons.filter_alt_outlined),
+                                Text("Filter")
+                              ],
+                            ))),
+                    const VerticalDivider(
+                      width: 20,
+                      thickness: 1,
+                      indent: 5,
+                      endIndent: 5,
+                      color: Colors.black,
+                    ),
+                    Container(
+                        // margin: const EdgeInsets.all(4),
+                        child: TextButton(
+                            onPressed: () {},
+                            child: Row(
+                              children: const [
+                                Icon(Icons.ios_share),
+                                Text("Share")
+                              ],
+                            ))),
+                  ]),
+                )),
           ],
         ));
   }
