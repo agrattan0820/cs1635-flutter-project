@@ -11,7 +11,7 @@ class FoodItemRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.all(16),
+        margin: const EdgeInsets.only(bottom: 32),
         padding: const EdgeInsets.all(16),
         decoration: const BoxDecoration(
             color: Color(0xD6D6D6D6),
