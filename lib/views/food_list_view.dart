@@ -5,21 +5,21 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-const List<String> inventories = <String>[
-  'All Food Items',
-  'Fridge',
-  'Freezer',
-  'Pantry'
-];
+// const List<String> inventories = <String>[
+//   'All Food Items',
+//   'Fridge',
+//   'Freezer',
+//   'Pantry'
+// ];
 
-class ItemListView extends StatefulWidget {
-  const ItemListView({super.key});
+class FoodListView extends StatefulWidget {
+  const FoodListView({super.key});
 
   @override
-  State<ItemListView> createState() => _ItemListViewState();
+  State<FoodListView> createState() => _FoodListViewState();
 }
 
-class _ItemListViewState extends State<ItemListView> {
+class _FoodListViewState extends State<FoodListView> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {

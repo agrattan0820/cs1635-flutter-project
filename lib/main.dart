@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       GoRoute(
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
-          return const ItemListView();
+          return const FoodListView();
         },
       ),
       GoRoute(
