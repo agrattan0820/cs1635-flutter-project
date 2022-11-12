@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/food_item.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../components/food_category_card.dart';
 
-class AddFoodItemView extends StatefulWidget {
-  const AddFoodItemView({super.key});
+class AddFoodCategoryView extends StatefulWidget {
+  const AddFoodCategoryView({super.key});
 
   @override
-  State<AddFoodItemView> createState() => _AddFoodItemViewState();
+  State<AddFoodCategoryView> createState() => _AddFoodCategoryViewState();
 }
 
-class _AddFoodItemViewState extends State<AddFoodItemView> {
+class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
   List foodCategories = [
     [
       "Produce",
@@ -73,17 +74,9 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
 
   List? _selectedCategory;
 
-  FoodItem? _selectedFoodItem;
-
   void _onCardTapped(int index) {
     setState(() {
       _selectedCategory = foodCategories[index];
-    });
-  }
-
-  void _onFoodSelection(FoodItem item) {
-    setState(() {
-      _selectedFoodItem = item;
     });
   }
 
@@ -93,9 +86,16 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
   Widget build(BuildContext context) {
     var foodItems = context.watch<FoodItemViewModel>().foodItems;
 
+    void onFoodSelection(FoodItem item) {
+      debugPrint('You just selected ${_foodItemDisplay(item)}');
+      context.read<FoodItemViewModel>().updateSelectedFoodItem(item);
+      GoRouter.of(context).go("/add_item/details/${item.id}");
+    }
+
     return SafeArea(
       child: Container(
         padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
+        color: Colors.yellow[200],
         child: Center(
           child: Column(
             children: [
@@ -112,9 +112,7 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
                   });
                 }),
                 onSelected: (FoodItem selection) {
-                  _onFoodSelection(selection);
-                  debugPrint(
-                      'You just selected ${_foodItemDisplay(selection)}');
+                  onFoodSelection(selection);
                 },
                 fieldViewBuilder: ((context, textEditingController, focusNode,
                     onFieldSubmitted) {
@@ -175,7 +173,7 @@ class _AddFoodItemViewState extends State<AddFoodItemView> {
                         itemBuilder: (((context, index) {
                           return ListTile(
                             title: Text(foodItems[index].name),
-                            onTap: () => _onFoodSelection(foodItems[index]),
+                            onTap: () => onFoodSelection(foodItems[index]),
                           );
                         })),
                       ),
