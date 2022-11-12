@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view_models/food_category_view_model.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 import 'package:flutter_application_1/view_models/user_view_model.dart';
@@ -18,6 +19,9 @@ void main() {
       ),
       ChangeNotifierProvider<FoodItemViewModel>(
         create: (_) => FoodItemViewModel(),
+      ),
+      ChangeNotifierProvider<FoodCategoryViewModel>(
+        create: (_) => FoodCategoryViewModel(),
       ),
       ChangeNotifierProvider<UserViewModel>(
         create: (_) => UserViewModel(),

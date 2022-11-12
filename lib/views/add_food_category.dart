@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/food_category.dart';
 import 'package:flutter_application_1/models/food_item.dart';
+import 'package:flutter_application_1/view_models/food_category_view_model.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -15,68 +17,11 @@ class AddFoodCategoryView extends StatefulWidget {
 }
 
 class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
-  List foodCategories = [
-    [
-      "Produce",
-      Colors.green,
-      const FaIcon(
-        FontAwesomeIcons.appleWhole,
-        size: 48,
-        color: Colors.green,
-      )
-    ],
-    [
-      "Dairy",
-      Colors.blue,
-      const FaIcon(
-        FontAwesomeIcons.cow,
-        size: 48,
-        color: Colors.blue,
-      )
-    ],
-    [
-      "Meat",
-      Colors.red,
-      const FaIcon(
-        FontAwesomeIcons.drumstickBite,
-        size: 48,
-        color: Colors.red,
-      )
-    ],
-    [
-      "Baking Goods",
-      Colors.yellow,
-      const FaIcon(
-        FontAwesomeIcons.breadSlice,
-        size: 48,
-        color: Colors.yellow,
-      )
-    ],
-    [
-      "Seafood",
-      Colors.blue,
-      const FaIcon(
-        FontAwesomeIcons.fish,
-        size: 48,
-        color: Colors.blue,
-      )
-    ],
-    [
-      "Snacks",
-      Colors.orange,
-      const FaIcon(
-        FontAwesomeIcons.cookieBite,
-        size: 48,
-        color: Colors.orange,
-      )
-    ],
-  ];
+  FoodCategory? _selectedCategory;
 
-  List? _selectedCategory;
-
-  void _onCardTapped(int index) {
+  void _onCardTapped(FoodCategory category) {
     setState(() {
-      _selectedCategory = foodCategories[index];
+      _selectedCategory = category;
     });
   }
 
@@ -85,6 +30,7 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
   @override
   Widget build(BuildContext context) {
     var foodItems = context.watch<FoodItemViewModel>().foodItems;
+    var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
 
     void onFoodSelection(FoodItem item) {
       debugPrint('You just selected ${_foodItemDisplay(item)}');
@@ -111,6 +57,37 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
                         .contains(textEditingValue.text.toLowerCase());
                   });
                 }),
+                optionsViewBuilder: (context, onAutoCompleteSelect, options) {
+                  return Align(
+                      alignment: Alignment.topLeft,
+                      child: Material(
+                        borderRadius: BorderRadius.circular(24),
+                        color: Colors.white,
+                        elevation: 0,
+                        child: SizedBox(
+                            width: MediaQuery.of(context).size.width - 60,
+                            height: 200,
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              padding: const EdgeInsets.all(8.0),
+                              itemCount: options.length,
+                              separatorBuilder: (context, i) {
+                                return const Divider();
+                              },
+                              itemBuilder: (BuildContext context, int index) {
+                                final FoodItem option =
+                                    options.elementAt(index);
+                                return InkWell(
+                                  onTap: () => onFoodSelection(option),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(option.name),
+                                  ),
+                                );
+                              },
+                            )),
+                      ));
+                },
                 onSelected: (FoodItem selection) {
                   onFoodSelection(selection);
                 },
@@ -152,30 +129,61 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
                 height: 24,
               ),
               _selectedCategory != null
-                  ? InkWell(
-                      onTap: (() => setState(() {
-                            _selectedCategory = null;
-                          })),
-                      borderRadius: BorderRadius.circular(100),
-                      child: Chip(
-                        backgroundColor: _selectedCategory?[1][100],
-                        label: Text(
-                          _selectedCategory?[0],
-                          style: TextStyle(color: _selectedCategory?[1]),
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: GestureDetector(
+                            onTap: (() => setState(() {
+                                  _selectedCategory = null;
+                                })),
+                            child: const FaIcon(
+                              FontAwesomeIcons.chevronLeft,
+                              size: 24,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
-                      ),
+                        Expanded(
+                          flex: 1,
+                          child: Center(
+                            child: Container(
+                              transform:
+                                  Matrix4.translationValues(-18.0, 0.0, 0.0),
+                              padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                              decoration: BoxDecoration(
+                                  color: _selectedCategory?.color[100],
+                                  borderRadius: BorderRadius.circular(32)),
+                              child: Text(
+                                _selectedCategory?.name ?? "Category",
+                                style: TextStyle(
+                                  color: _selectedCategory?.color,
+                                  fontSize: 24,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     )
                   : const SizedBox(),
               _selectedCategory != null
                   ? Expanded(
-                      child: ListView.builder(
-                        itemCount: foodItems.length,
-                        itemBuilder: (((context, index) {
-                          return ListTile(
-                            title: Text(foodItems[index].name),
-                            onTap: () => onFoodSelection(foodItems[index]),
-                          );
-                        })),
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: ListView.separated(
+                          itemCount: foodItems.length,
+                          separatorBuilder: (context, i) {
+                            return const Divider();
+                          },
+                          itemBuilder: (((context, index) {
+                            return ListTile(
+                              title: Text(foodItems[index].name),
+                              onTap: () => onFoodSelection(foodItems[index]),
+                            );
+                          })),
+                        ),
                       ),
                     )
                   : Expanded(
@@ -190,10 +198,11 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FoodCategoryCard(
-                              text: foodCategories[index][0],
-                              cardColor: foodCategories[index][1],
-                              icon: foodCategories[index][2],
-                              onPress: () => _onCardTapped(index),
+                              text: foodCategories[index].name,
+                              cardColor: foodCategories[index].color,
+                              icon: foodCategories[index].icon,
+                              onPress: () =>
+                                  _onCardTapped(foodCategories[index]),
                             ),
                           );
                         }),

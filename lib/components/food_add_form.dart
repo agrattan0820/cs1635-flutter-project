@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../models/food_item.dart';
+
 class FoodAddForm extends StatefulWidget {
-  const FoodAddForm({super.key});
+  final FoodItem foodItem;
+
+  const FoodAddForm({super.key, required this.foodItem});
 
   @override
   State<FoodAddForm> createState() => _FoodAddFormState();
@@ -15,8 +19,8 @@ class _FoodAddFormState extends State<FoodAddForm> {
       child: Column(
         children: [
           Row(
-            children: const [
-              Padding(
+            children: [
+              const Padding(
                 padding: EdgeInsets.only(right: 8.0),
                 child: Icon(
                   Icons.ac_unit,
@@ -24,8 +28,8 @@ class _FoodAddFormState extends State<FoodAddForm> {
                 ),
               ),
               Text(
-                "Chicken",
-                style: TextStyle(
+                widget.foodItem.name,
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                 ),
@@ -83,7 +87,7 @@ class _FoodAddFormState extends State<FoodAddForm> {
                 ),
               ),
               Chip(
-                label: Text("Fridge"),
+                label: Text("Oct 5th"),
               ),
             ],
           ),
@@ -98,7 +102,7 @@ class _FoodAddFormState extends State<FoodAddForm> {
                 ),
               ),
               Chip(
-                label: Text("Oct 5th"),
+                label: Text("Meat"),
               ),
             ],
           ),

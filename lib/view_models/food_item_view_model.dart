@@ -4,7 +4,7 @@ import 'package:flutter_application_1/models/food_item.dart';
 final List<FoodItem> initialData = List.generate(
   10,
   (index) => FoodItem(
-      id: index, name: "Food Item $index", category: "Produce", image: "image"),
+      id: index, name: "Food Item $index", category: 0, image: "image"),
 );
 
 class FoodItemViewModel with ChangeNotifier {
