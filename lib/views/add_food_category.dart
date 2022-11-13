@@ -4,9 +4,9 @@ import 'package:flutter_application_1/models/food_item.dart';
 import 'package:flutter_application_1/view_models/food_category_view_model.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../components/food_add_form.dart';
 import '../components/food_category_card.dart';
 
 class AddFoodCategoryView extends StatefulWidget {
@@ -31,11 +31,24 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
   Widget build(BuildContext context) {
     var foodItems = context.watch<FoodItemViewModel>().foodItems;
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
+    var selectedFoodItem = context.watch<FoodItemViewModel>().selectedFoodItem;
 
     void onFoodSelection(FoodItem item) {
       debugPrint('You just selected ${_foodItemDisplay(item)}');
       context.read<FoodItemViewModel>().updateSelectedFoodItem(item);
-      GoRouter.of(context).go("/add_item/details/${item.id}");
+      if (selectedFoodItem != null) {
+        showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Container(
+                height: 500,
+                decoration: BoxDecoration(color: Colors.yellow[100]),
+                padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
+                child: FoodAddForm(foodItem: item),
+              );
+            });
+      }
+      // GoRouter.of(context).go("/add_item/details/${item.id}");
     }
 
     return SafeArea(

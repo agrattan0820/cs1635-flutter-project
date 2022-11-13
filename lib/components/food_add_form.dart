@@ -58,18 +58,34 @@ class _FoodAddFormState extends State<FoodAddForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: foodCategories.elementAt(widget.foodItem.category).icon,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child:
+                        foodCategories.elementAt(widget.foodItem.category).icon,
+                  ),
+                  Text(
+                    widget.foodItem.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                    ),
+                  ),
+                ],
               ),
-              Text(
-                widget.foodItem.name,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 32,
+              IconButton(
+                icon: const Icon(
+                  Icons.close,
+                  size: 32,
                 ),
+                tooltip: 'Close add food form',
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ],
           ),
