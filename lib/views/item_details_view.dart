@@ -69,6 +69,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                   Expanded(flex: 2, child: Text("Quantity", style: style)),
                   InputQty(
                     initVal: listFoodEntry!.quantity,
+                    minVal: 1,
                     onQtyChanged: (val) {
                       listFoodEntry.quantity = val!.toInt();
                     },

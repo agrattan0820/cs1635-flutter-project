@@ -88,7 +88,7 @@ class _InputQtyState extends State<InputQty> {
     currentval = ValueNotifier(widget.initVal);
     _valCtrl = TextEditingController(text: "${widget.initVal}");
     widget.onQtyChanged(num.tryParse(_valCtrl.text));
-    if (widget.initVal == 0) {
+    if (widget.initVal <= 1) {
       setState(() {
         _icon = Icons.delete_outline;
       });
@@ -112,7 +112,7 @@ class _InputQtyState extends State<InputQty> {
       currentval = ValueNotifier(value);
     }
 
-    if (value > 0) {
+    if (value > 1) {
       setState(() {
         _icon = Icons.remove;
       });
@@ -142,7 +142,7 @@ class _InputQtyState extends State<InputQty> {
       currentval = ValueNotifier(value);
     }
 
-    if (value == 0) {
+    if (value <= 1) {
       setState(() {
         _icon = Icons.delete_outline;
       });
