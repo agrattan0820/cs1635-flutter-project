@@ -171,7 +171,7 @@ class _FoodAddFormState extends State<FoodAddForm> {
                       debugPrint(_formKey.currentState.toString());
 
                       context.read<FoodListEntryViewModel>().addFoodItemEntry(
-                          widget.foodItem.name,
+                          widget.foodItem.id,
                           storage,
                           quantity,
                           owner,

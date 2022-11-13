@@ -1,31 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/list_food_entry.dart';
+import 'package:flutter_application_1/models/food_item.dart';
+import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 
 final List<ListFoodEntry> initialData = List.generate(
   10,
   (index) => ListFoodEntry(
-    name: "Food Item $index",
-    storage: "Fridge",
-    quantity: 3,
-    owner: "Jennifer Zheng",
-    expirationDate: DateTime.now().subtract(const Duration(days: 5)),
-  ),
+      id: index,
+      storage: "Fridge",
+      quantity: 3,
+      owner: "Jennifer Zheng",
+      dateAdded: DateTime.now()),
 );
 
 class FoodListEntryViewModel with ChangeNotifier {
   final List<ListFoodEntry> _foodItems = initialData;
 
   List<ListFoodEntry> get foodItems => _foodItems;
+  set quantity(int q) => {quantity = q};
 
-  void addFoodItemEntry(String name, String storage, int quantity, String owner,
-      DateTime expirationDate) {
+  static FoodItem? getFoodItem(id) {
+    return FoodItemViewModel.getFoodItem(id);
+  }
+
+  static ListFoodEntry? getListFoodEntry(int id) {
+    for (var item in initialData) {
+      if (item.id == id) return item;
+    }
+    return null;
+  }
+
+  void addFoodItemEntry(
+      int id, String storage, int quantity, String owner, DateTime dateAdded) {
     _foodItems.add(
       ListFoodEntry(
-        name: name,
+        id: id,
         storage: storage,
         quantity: quantity,
         owner: owner,
-        expirationDate: expirationDate,
+        dateAdded: dateAdded,
       ),
     );
   }
@@ -40,23 +53,16 @@ class FoodListEntryViewModel with ChangeNotifier {
     return buffer.toString();
   }
 
-  static String expirationString(ListFoodEntry listFoodEntry) {
-    var expirationDate = listFoodEntry.expirationDate;
-    var dateDifference = expirationDate.difference(DateTime.now());
-
-    int daysLeft = dateDifference.inDays;
-
-    if (dateDifference.isNegative) {
-      daysLeft = dateDifference.inDays * -1;
-
-      if (daysLeft > 1) {
-        return "Expired $daysLeft Days Ago";
-      }
-      return "Expired $daysLeft Day Ago";
+  static String expirationString(int id) {
+    var foodItem = FoodItemViewModel.getFoodItem(id);
+    var daysLeft = foodItem?.daysToExpire;
+    if (daysLeft == 0) {
+      return "Expires Today";
     }
 
-    if (dateDifference.inDays == 0) {
-      return "Expires Today";
+    if (daysLeft! < 0) {
+      daysLeft = daysLeft * -1;
+      return "Expired $daysLeft Day Ago";
     }
 
     return "$daysLeft days left";

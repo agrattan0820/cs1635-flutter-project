@@ -8,6 +8,7 @@ import 'package:flutter_application_1/views/add_food_item_detail.dart';
 import 'package:flutter_application_1/views/app_scaffold.dart';
 import 'package:flutter_application_1/views/food_list_view.dart';
 import 'package:flutter_application_1/views/login_page.dart';
+import 'package:flutter_application_1/views/item_details_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -71,13 +72,18 @@ class MyApp extends StatelessWidget {
                     }),
                   ),
                 ]),
+            GoRoute(
+              path: '/login',
+              builder: (BuildContext context, GoRouterState state) {
+                return const LoginPage();
+              },
+            ),
+            GoRoute(
+                path: '/item_details/:id',
+                builder: (BuildContext context, GoRouterState state) {
+                  return ItemDetailsView(id: state.params['id']);
+                })
           ]),
-      GoRoute(
-        path: '/login',
-        builder: (BuildContext context, GoRouterState state) {
-          return const LoginPage();
-        },
-      ),
     ],
   );
 }
