@@ -28,7 +28,7 @@ class _FoodAddFormState extends State<FoodAddForm> {
   int quantity = 0;
   String storage = "";
   String owner = "";
-  DateTime dateTime = DateTime.now();
+  DateTime datePurchased = DateTime.now();
 
   final quanitityValidator = ValidationBuilder()
       .regExp(RegExp(r'(\d)'), "Quantity must be a number")
@@ -43,7 +43,7 @@ class _FoodAddFormState extends State<FoodAddForm> {
       lastDate: DateTime.now(),
     ).then((value) => setState(() {
           if (value != null) {
-            dateTime = value;
+            datePurchased = value;
           }
         }));
   }
@@ -148,7 +148,7 @@ class _FoodAddFormState extends State<FoodAddForm> {
                           "Date Purchased",
                         ),
                         Text(
-                          "${dateTime.month.toString()}-${dateTime.day.toString()}-${dateTime.year.toString()}",
+                          "${datePurchased.month.toString()}-${datePurchased.day.toString()}-${datePurchased.year.toString()}",
                         ),
                       ],
                     ),
@@ -171,7 +171,12 @@ class _FoodAddFormState extends State<FoodAddForm> {
                       debugPrint(_formKey.currentState.toString());
 
                       context.read<FoodListEntryViewModel>().addFoodItemEntry(
-                          widget.foodItem.name, storage, quantity, owner, 5);
+                          widget.foodItem.name,
+                          storage,
+                          quantity,
+                          owner,
+                          datePurchased.add(
+                              Duration(days: widget.foodItem.daysToExpire)));
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

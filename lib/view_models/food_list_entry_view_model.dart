@@ -4,11 +4,12 @@ import 'package:flutter_application_1/models/list_food_entry.dart';
 final List<ListFoodEntry> initialData = List.generate(
   10,
   (index) => ListFoodEntry(
-      name: "Food Item $index",
-      storage: "Fridge",
-      quantity: 3,
-      owner: "Jennifer Zheng",
-      daysToExpire: 2),
+    name: "Food Item $index",
+    storage: "Fridge",
+    quantity: 3,
+    owner: "Jennifer Zheng",
+    expirationDate: DateTime.now().subtract(const Duration(days: 5)),
+  ),
 );
 
 class FoodListEntryViewModel with ChangeNotifier {
@@ -17,14 +18,15 @@ class FoodListEntryViewModel with ChangeNotifier {
   List<ListFoodEntry> get foodItems => _foodItems;
 
   void addFoodItemEntry(String name, String storage, int quantity, String owner,
-      int daysToExpire) {
+      DateTime expirationDate) {
     _foodItems.add(
       ListFoodEntry(
-          name: name,
-          storage: storage,
-          quantity: quantity,
-          owner: owner,
-          daysToExpire: daysToExpire),
+        name: name,
+        storage: storage,
+        quantity: quantity,
+        owner: owner,
+        expirationDate: expirationDate,
+      ),
     );
   }
 
@@ -39,14 +41,22 @@ class FoodListEntryViewModel with ChangeNotifier {
   }
 
   static String expirationString(ListFoodEntry listFoodEntry) {
-    var daysLeft = listFoodEntry.daysToExpire;
-    if (daysLeft == 0) {
-      return "Expires Today";
+    var expirationDate = listFoodEntry.expirationDate;
+    var dateDifference = expirationDate.difference(DateTime.now());
+
+    int daysLeft = dateDifference.inDays;
+
+    if (dateDifference.isNegative) {
+      daysLeft = dateDifference.inDays * -1;
+
+      if (daysLeft > 1) {
+        return "Expired $daysLeft Days Ago";
+      }
+      return "Expired $daysLeft Day Ago";
     }
 
-    if (daysLeft < 0) {
-      daysLeft = daysLeft * -1;
-      return "Expired $daysLeft Day Ago";
+    if (dateDifference.inDays == 0) {
+      return "Expires Today";
     }
 
     return "$daysLeft days left";
