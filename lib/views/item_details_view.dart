@@ -32,6 +32,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
     return SafeArea(
       child: Container(
           margin: const EdgeInsets.only(left: 16, right: 16),
+          decoration: BoxDecoration(color: Colors.yellow[200]),
           child: Column(children: [
             Container(
                 padding: const EdgeInsets.only(top: 20, left: 8),
