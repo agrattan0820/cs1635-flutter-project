@@ -3,13 +3,6 @@ import 'package:flutter_application_1/view_models/food_list_entry_view_model.dar
 import 'package:flutter_application_1/components/food_item_row.dart';
 import 'package:provider/provider.dart';
 
-// const List<String> inventories = <String>[
-//   'All Food Items',
-//   'Fridge',
-//   'Freezer',
-//   'Pantry'
-// ];
-
 class FoodListView extends StatefulWidget {
   const FoodListView({super.key});
 
@@ -29,7 +22,7 @@ class _FoodListViewState extends State<FoodListView> {
             children: [
               Container(
                 // margin: const EdgeInsets.only(top: 24, left: 24),
-                padding: const EdgeInsets.only(top: 28),
+                padding: const EdgeInsets.only(top: 20),
                 child: Row(children: [
                   Expanded(
                       flex: 2,
@@ -51,15 +44,14 @@ class _FoodListViewState extends State<FoodListView> {
                               )
                             ],
                           ))),
-                  TextButton(
-                      onPressed: () {},
-                      child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(
-                            color: Color(0xD6D6D6D6),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(Icons.search,
+                  Ink(
+                      decoration: const ShapeDecoration(
+                        color: Color(0xD6D6D6D6),
+                        shape: CircleBorder(),
+                      ),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.search,
                               color: Colors.black, size: 28)))
                 ]),
               ),
@@ -71,14 +63,15 @@ class _FoodListViewState extends State<FoodListView> {
                         return FoodItemRow(foodItems: foodItems, index: index);
                       })),
               Container(
-                  margin: const EdgeInsets.all(20),
-                  padding: const EdgeInsets.only(left: 10, top: 0, bottom: 0),
-                  width: 270,
+                  margin: const EdgeInsets.only(
+                      top: 10, bottom: 10, left: 20, right: 20),
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(20))),
                   child: IntrinsicHeight(
+                      child: IntrinsicWidth(
                     child: Row(children: <Widget>[
                       Container(
                           // margin: const EdgeInsets.only(top: 8, bottom: 8),
@@ -91,8 +84,11 @@ class _FoodListViewState extends State<FoodListView> {
                               ),
                               child: Row(
                                 children: const [
-                                  Icon(Icons.sort_rounded),
-                                  Text("Sort")
+                                  Icon(Icons.sort_rounded, color: Colors.black),
+                                  Text(
+                                    "Sort",
+                                    style: TextStyle(color: Colors.black),
+                                  )
                                 ],
                               ))),
                       const VerticalDivider(
@@ -105,8 +101,12 @@ class _FoodListViewState extends State<FoodListView> {
                           onPressed: () {},
                           child: Row(
                             children: const [
-                              Icon(Icons.filter_alt_outlined),
-                              Text("Filter")
+                              Icon(
+                                Icons.filter_alt_outlined,
+                                color: Colors.black,
+                              ),
+                              Text("Filter",
+                                  style: TextStyle(color: Colors.black))
                             ],
                           )),
                       const VerticalDivider(
@@ -120,12 +120,13 @@ class _FoodListViewState extends State<FoodListView> {
                           onPressed: () {},
                           child: Row(
                             children: const [
-                              Icon(Icons.ios_share),
-                              Text("Share")
+                              Icon(Icons.ios_share, color: Colors.black),
+                              Text("Share",
+                                  style: TextStyle(color: Colors.black))
                             ],
                           )),
                     ]),
-                  )),
+                  ))),
             ],
           )),
     );
