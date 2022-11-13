@@ -3,13 +3,6 @@ import 'package:flutter_application_1/view_models/food_list_entry_view_model.dar
 import 'package:flutter_application_1/components/food_item_row.dart';
 import 'package:provider/provider.dart';
 
-// const List<String> inventories = <String>[
-//   'All Food Items',
-//   'Fridge',
-//   'Freezer',
-//   'Pantry'
-// ];
-
 class FoodListView extends StatefulWidget {
   const FoodListView({super.key});
 
@@ -51,8 +44,8 @@ class _FoodListViewState extends State<FoodListView> {
                               )
                             ],
                           ))),
-                  TextButton(
-                      onPressed: () {},
+                  InkWell(
+                      onTap: () {},
                       child: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: const BoxDecoration(
@@ -71,8 +64,9 @@ class _FoodListViewState extends State<FoodListView> {
                         return FoodItemRow(foodItems: foodItems, index: index);
                       })),
               Container(
-                  margin: const EdgeInsets.only(top: 10, left: 20, right: 20),
-                  padding: const EdgeInsets.only(left: 10, top: 0, bottom: 0),
+                  margin: const EdgeInsets.only(
+                      top: 10, bottom: 10, left: 20, right: 20),
+                  padding: const EdgeInsets.only(left: 10),
                   width: 270,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),

@@ -15,12 +15,12 @@ class FoodItemRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: const EdgeInsets.only(bottom: 20),
-        child: TextButton(
-            onPressed: () {
-              GoRouter.of(context).go("/item_details");
+        child: InkWell(
+            onTap: () {
+              GoRouter.of(context).go("/item_details/$index");
             },
             child: Container(
-                // margin: const EdgeInsets.only(bottom: 32),
+                margin: const EdgeInsets.only(top: 8, bottom: 8),
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
                     color: Color(0xD6D6D6D6),
@@ -31,7 +31,7 @@ class FoodItemRow extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        "${foodItems[index].quantity.toString()}x ${foodItems[index].name}",
+                        "${foodItems[index].quantity.toString()}x ${FoodListEntryViewModel.getFoodItem(foodItems[index].id)!.name}",
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -41,7 +41,7 @@ class FoodItemRow extends StatelessWidget {
                     UserBubble(user: foodItems[index]),
                     Tag(
                         text: FoodListEntryViewModel.expirationString(
-                            foodItems[index]))
+                            foodItems[index].id))
                   ],
                 ))));
   }
