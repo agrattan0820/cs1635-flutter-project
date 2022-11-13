@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/tag.dart';
 import 'package:flutter_application_1/components/input_qty.dart';
+import 'package:flutter_application_1/components/user_bubble.dart';
 import 'package:flutter_application_1/models/list_food_entry.dart';
+import 'package:flutter_application_1/models/food_item.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
-
-const List<String> inventories = <String>['Fridge', 'Freezer', 'Pantry'];
 
 class ItemDetailsView extends StatefulWidget {
   final String? id;
@@ -20,6 +20,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
   Widget build(BuildContext context) {
     int id = int.parse(widget.id!);
     ListFoodEntry? listFoodEntry = FoodListEntryViewModel.getListFoodEntry(id);
+    FoodItem? foodItem = FoodListEntryViewModel.getFoodItem(id);
     TextStyle style =
         const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
 
@@ -34,7 +35,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     Expanded(
                         flex: 2,
                         child: Text(
-                          "${FoodListEntryViewModel.getFoodItem(id)!.name}",
+                          "${foodItem!.name}",
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 28,
@@ -57,13 +58,12 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     borderRadius: BorderRadius.circular(16),
                     child: Image(
                         fit: BoxFit.cover,
-                        image: NetworkImage(
-                            FoodListEntryViewModel.getFoodItem(id)!.image)))),
-            TextButton(
-                onPressed: () {},
+                        image: NetworkImage(foodItem!.image)))),
+            InkWell(
+                onTap: () {},
                 child: Tag(text: FoodListEntryViewModel.expirationString(id))),
             Container(
-                margin: const EdgeInsets.only(top: 24, bottom: 24),
+                margin: const EdgeInsets.only(top: 24, bottom: 16),
                 padding: const EdgeInsets.only(left: 8),
                 child: Row(children: [
                   Expanded(flex: 2, child: Text("Quantity", style: style)),
@@ -73,17 +73,21 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                       listFoodEntry.quantity = val!.toInt();
                     },
                   ),
-                  // Text("picker here")
                 ])),
             Container(
-                margin: const EdgeInsets.only(top: 24, bottom: 24),
+                margin: const EdgeInsets.only(top: 16, bottom: 16),
                 padding: const EdgeInsets.only(left: 8),
                 child: Row(children: [
                   Expanded(flex: 2, child: Text("Storage", style: style)),
-                  Text("dropdown here")
+                  InkWell(
+                      onTap: () {},
+                      child: Tag(
+                        text: listFoodEntry.storage,
+                        // padding: 12,
+                      ))
                 ])),
             Container(
-                margin: const EdgeInsets.only(top: 24, bottom: 24),
+                margin: const EdgeInsets.only(top: 16, bottom: 16),
                 padding: const EdgeInsets.only(left: 8),
                 child: Row(children: [
                   Expanded(
@@ -92,10 +96,15 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                         "Category",
                         style: style,
                       )),
-                  Text("dropdown here")
+                  InkWell(
+                      onTap: () {},
+                      child: Tag(
+                        text: foodItem.category,
+                        // padding: 12,
+                      ))
                 ])),
             Container(
-                margin: const EdgeInsets.only(top: 24, bottom: 24),
+                margin: const EdgeInsets.only(top: 16, bottom: 16),
                 padding: const EdgeInsets.only(left: 8),
                 child: Row(children: [
                   Expanded(
@@ -104,7 +113,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                         "Belongs To",
                         style: style,
                       )),
-                  Text("button here")
+                  InkWell(onTap: () {}, child: UserBubble(user: listFoodEntry))
                 ])),
           ])),
     );
