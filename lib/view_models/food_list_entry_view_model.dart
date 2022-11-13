@@ -17,9 +17,17 @@ class FoodListEntryViewModel with ChangeNotifier {
   final List<ListFoodEntry> _foodItems = initialData;
 
   List<ListFoodEntry> get foodItems => _foodItems;
+  set quantity(int q) => {quantity = q};
 
   static FoodItem? getFoodItem(id) {
     return FoodItemViewModel.getFoodItem(id);
+  }
+
+  static ListFoodEntry? getListFoodEntry(int id) {
+    for (var item in initialData) {
+      if (item.id == id) return item;
+    }
+    return null;
   }
 
   static String getInitials(ListFoodEntry listFoodEntry) {

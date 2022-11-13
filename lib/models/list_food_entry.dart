@@ -1,8 +1,8 @@
 class ListFoodEntry {
   final int id;
-  final String storage;
-  final int quantity;
-  final String owner;
+  String storage;
+  int quantity;
+  String owner;
   final DateTime dateAdded;
 
   ListFoodEntry({

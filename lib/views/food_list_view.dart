@@ -44,15 +44,14 @@ class _FoodListViewState extends State<FoodListView> {
                               )
                             ],
                           ))),
-                  InkWell(
-                      onTap: () {},
-                      child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(
-                            color: Color(0xD6D6D6D6),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(Icons.search,
+                  Ink(
+                      decoration: const ShapeDecoration(
+                        color: Color(0xD6D6D6D6),
+                        shape: CircleBorder(),
+                      ),
+                      child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.search,
                               color: Colors.black, size: 28)))
                 ]),
               ),
@@ -66,13 +65,13 @@ class _FoodListViewState extends State<FoodListView> {
               Container(
                   margin: const EdgeInsets.only(
                       top: 10, bottom: 10, left: 20, right: 20),
-                  padding: const EdgeInsets.only(left: 10),
-                  width: 270,
+                  padding: const EdgeInsets.only(left: 10, right: 10),
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
                       borderRadius:
                           const BorderRadius.all(Radius.circular(20))),
                   child: IntrinsicHeight(
+                      child: IntrinsicWidth(
                     child: Row(children: <Widget>[
                       Container(
                           // margin: const EdgeInsets.only(top: 8, bottom: 8),
@@ -127,7 +126,7 @@ class _FoodListViewState extends State<FoodListView> {
                             ],
                           )),
                     ]),
-                  )),
+                  ))),
             ],
           )),
     );

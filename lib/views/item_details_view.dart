@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/tag.dart';
+import 'package:flutter_application_1/components/input_qty.dart';
 import 'package:flutter_application_1/models/list_food_entry.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
+
+const List<String> inventories = <String>['Fridge', 'Freezer', 'Pantry'];
 
 class ItemDetailsView extends StatefulWidget {
   final String? id;
@@ -13,11 +16,10 @@ class ItemDetailsView extends StatefulWidget {
 }
 
 class _ItemDetailsViewState extends State<ItemDetailsView> {
-  // var listFoodEntry = widget.listFoodEntry;
-
   @override
   Widget build(BuildContext context) {
     int id = int.parse(widget.id!);
+    ListFoodEntry? listFoodEntry = FoodListEntryViewModel.getListFoodEntry(id);
     TextStyle style =
         const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
 
@@ -38,9 +40,9 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                               fontSize: 28,
                               color: Colors.black),
                         )),
-                    TextButton(
+                    IconButton(
                         onPressed: () {},
-                        child: const Icon(
+                        icon: const Icon(
                           Icons.ios_share,
                           color: Colors.black,
                           size: 28,
@@ -65,7 +67,13 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                 padding: const EdgeInsets.only(left: 8),
                 child: Row(children: [
                   Expanded(flex: 2, child: Text("Quantity", style: style)),
-                  Text("picker here")
+                  InputQty(
+                    initVal: listFoodEntry!.quantity,
+                    onQtyChanged: (val) {
+                      listFoodEntry.quantity = val!.toInt();
+                    },
+                  ),
+                  // Text("picker here")
                 ])),
             Container(
                 margin: const EdgeInsets.only(top: 24, bottom: 24),
