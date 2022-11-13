@@ -30,6 +30,19 @@ class FoodListEntryViewModel with ChangeNotifier {
     return null;
   }
 
+  void addFoodItemEntry(
+      int id, String storage, int quantity, String owner, DateTime dateAdded) {
+    _foodItems.add(
+      ListFoodEntry(
+        id: id,
+        storage: storage,
+        quantity: quantity,
+        owner: owner,
+        dateAdded: dateAdded,
+      ),
+    );
+  }
+
   static String getInitials(ListFoodEntry listFoodEntry) {
     var buffer = StringBuffer();
     var split = listFoodEntry.owner.split(' ');
