@@ -152,14 +152,16 @@ class _FoodAddFormState extends State<FoodAddForm> {
                       // you'd often call a server or save the information in a database.
                       _formKey.currentState?.save();
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Quantity $quantity')),
-                      );
-
                       debugPrint(_formKey.currentState.toString());
 
                       context.read<FoodListEntryViewModel>().addFoodItemEntry(
                           widget.foodItem.name, storage, quantity, owner, 5);
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content:
+                                Text('${widget.foodItem.name} saved to list')),
+                      );
                     }
                   },
                   child: const Text('Submit'),
