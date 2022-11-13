@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:form_validator/form_validator.dart';
 
@@ -24,9 +25,9 @@ class _FoodAddFormState extends State<FoodAddForm> {
     "Crystal Li"
   ];
 
-  int? quantity;
-  String? storage = "";
-  List<String> belongsTo = [];
+  int quantity = 0;
+  String storage = "";
+  String owner = "";
   DateTime dateTime = DateTime.now();
 
   final quanitityValidator = ValidationBuilder()
@@ -101,8 +102,8 @@ class _FoodAddFormState extends State<FoodAddForm> {
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: ((value) => setState(() => storage = value)),
-                  onSaved: ((value) => setState(() => storage = value)),
+                  onChanged: ((value) => setState(() => storage = value!)),
+                  onSaved: ((value) => setState(() => storage = value!)),
                 ),
                 DropdownButtonFormField(
                   decoration:
@@ -115,14 +116,8 @@ class _FoodAddFormState extends State<FoodAddForm> {
                       child: Text(value),
                     );
                   }).toList(),
-                  onChanged: ((value) => setState(() {
-                        if (belongsTo.contains(value)) {
-                          belongsTo.remove(value);
-                        } else {
-                          belongsTo.add(value!);
-                        }
-                      })),
-                  onSaved: ((value) => setState(() => storage = value)),
+                  onChanged: ((value) => setState(() => owner = value!)),
+                  onSaved: ((value) => setState(() => owner = value!)),
                 ),
                 const SizedBox(
                   height: 26,
@@ -162,6 +157,9 @@ class _FoodAddFormState extends State<FoodAddForm> {
                       );
 
                       debugPrint(_formKey.currentState.toString());
+
+                      context.read<FoodListEntryViewModel>().addFoodItemEntry(
+                          widget.foodItem.name, storage, quantity, owner, 5);
                     }
                   },
                   child: const Text('Submit'),
