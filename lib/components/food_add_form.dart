@@ -17,11 +17,6 @@ class FoodAddForm extends StatefulWidget {
 class _FoodAddFormState extends State<FoodAddForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final quanitityValidator = ValidationBuilder()
-      .regExp(RegExp(r'(\d)'), "Quantity must be a number")
-      .build();
-  final storageValidator = ValidationBuilder().build();
-
   List<String> storageList = ["Fridge", "Pantry", "Freezer"];
   List<String> peopleList = [
     "Alexander Grattan",
@@ -29,11 +24,28 @@ class _FoodAddFormState extends State<FoodAddForm> {
     "Crystal Li"
   ];
 
-  String? quantity = "";
+  int? quantity;
   String? storage = "";
-  String? expirationDate = "";
-  String? category = "";
   List<String> belongsTo = [];
+  DateTime dateTime = DateTime.now();
+
+  final quanitityValidator = ValidationBuilder()
+      .regExp(RegExp(r'(\d)'), "Quantity must be a number")
+      .build();
+  final storageValidator = ValidationBuilder().build();
+
+  void _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    ).then((value) => setState(() {
+          if (value != null) {
+            dateTime = value;
+          }
+        }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,95 +75,6 @@ class _FoodAddFormState extends State<FoodAddForm> {
           const SizedBox(
             height: 24,
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: const [
-          //     Text(
-          //       "Quantity",
-          //       style: TextStyle(
-          //         fontWeight: FontWeight.bold,
-          //         fontSize: 16,
-          //       ),
-          //     ),
-          //     Text(
-          //       "4",
-          //       style: TextStyle(
-          //         fontWeight: FontWeight.bold,
-          //         fontSize: 16,
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // const SizedBox(
-          //   height: 8,
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: const [
-          //     Text(
-          //       "Storage",
-          //       style: TextStyle(
-          //         fontWeight: FontWeight.bold,
-          //         fontSize: 16,
-          //       ),
-          //     ),
-          //     Chip(
-          //       label: Text("Fridge"),
-          //     ),
-          //   ],
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: const [
-          //     Text(
-          //       "Expires on",
-          //       style: TextStyle(
-          //         fontWeight: FontWeight.bold,
-          //         fontSize: 16,
-          //       ),
-          //     ),
-          //     Chip(
-          //       label: Text("Oct 5th"),
-          //     ),
-          //   ],
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: const [
-          //     Text(
-          //       "Category",
-          //       style: TextStyle(
-          //         fontWeight: FontWeight.bold,
-          //         fontSize: 16,
-          //       ),
-          //     ),
-          //     Chip(
-          //       label: Text("Meat"),
-          //     ),
-          //   ],
-          // ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: [
-          //     const Text(
-          //       "Belongs to",
-          //       style: TextStyle(
-          //         fontWeight: FontWeight.bold,
-          //         fontSize: 16,
-          //       ),
-          //     ),
-          //     CircleAvatar(
-          //       backgroundColor: Colors.grey[300],
-          //       child: const Text(
-          //         "AG",
-          //         style: TextStyle(color: Colors.black),
-          //       ),
-          //     )
-          //   ],
-          // ),
-          // const SizedBox(
-          //   height: 48,
-          // ),
           Form(
             key: _formKey,
             child: Column(
@@ -161,7 +84,8 @@ class _FoodAddFormState extends State<FoodAddForm> {
                       const InputDecoration(labelText: "Enter item quantity"),
                   keyboardType: TextInputType.number,
                   validator: quanitityValidator,
-                  onSaved: ((value) => setState(() => quantity = value)),
+                  onSaved: ((value) =>
+                      setState(() => quantity = int.parse(value!))),
                 ),
                 const SizedBox(
                   height: 16,
@@ -199,6 +123,28 @@ class _FoodAddFormState extends State<FoodAddForm> {
                         }
                       })),
                   onSaved: ((value) => setState(() => storage = value)),
+                ),
+                const SizedBox(
+                  height: 26,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Date Purchased",
+                        ),
+                        Text(
+                          "${dateTime.month.toString()}-${dateTime.day.toString()}-${dateTime.year.toString()}",
+                        ),
+                      ],
+                    ),
+                    OutlinedButton(
+                        onPressed: _showDatePicker,
+                        child: const Text("Choose Date"))
+                  ],
                 ),
                 const SizedBox(
                   height: 32,
