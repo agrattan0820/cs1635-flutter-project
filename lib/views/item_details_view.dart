@@ -35,7 +35,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     Expanded(
                         flex: 2,
                         child: Text(
-                          "${foodItem!.name}",
+                          foodItem!.name,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 28,
@@ -58,7 +58,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     borderRadius: BorderRadius.circular(16),
                     child: Image(
                         fit: BoxFit.cover,
-                        image: NetworkImage(foodItem!.image)))),
+                        image: NetworkImage(foodItem.image)))),
             InkWell(
                 onTap: () {},
                 child: Tag(text: FoodListEntryViewModel.expirationString(id))),
