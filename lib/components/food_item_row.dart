@@ -36,7 +36,8 @@ class FoodItemRow extends StatelessWidget {
             ]),
             child: InkWell(
                 onTap: () {
-                  GoRouter.of(context).go("/item_details/$index");
+                  GoRouter.of(context)
+                      .go("/item_details/${foodItems[index].id}");
                 },
                 child: Container(
                     // margin: const EdgeInsets.only(top: 8, bottom: 8),
