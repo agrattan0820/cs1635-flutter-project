@@ -90,12 +90,15 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
                               itemBuilder: (BuildContext context, int index) {
                                 final FoodItem option =
                                     options.elementAt(index);
-                                return InkWell(
+                                return ListTile(
                                   onTap: () => onFoodSelection(option),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Text(option.name),
-                                  ),
+                                  title: Text(option.name),
+                                  trailing:
+                                      foodCategories[option.category].icon,
+                                  // child: Padding(
+                                  //   padding: const EdgeInsets.all(16.0),
+                                  //   child: Text(option.name),
+                                  // ),
                                 );
                               },
                             )),
@@ -191,9 +194,19 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
                             return const Divider();
                           },
                           itemBuilder: (((context, index) {
-                            return ListTile(
-                              title: Text(foodItems[index].name),
-                              onTap: () => onFoodSelection(foodItems[index]),
+                            return Card(
+                              // color: Colors.yellow[50],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: ListTile(
+                                title: Text(foodItems[index].name),
+                                onTap: () => onFoodSelection(foodItems[index]),
+                                // trailing: CircleAvatar(
+                                //   backgroundImage:
+                                //       NetworkImage(foodItems[index].image),
+                                // ),
+                              ),
                             );
                           })),
                         ),
