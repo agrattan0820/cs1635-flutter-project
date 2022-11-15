@@ -26,7 +26,9 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
     int id = int.parse(widget.id!);
     ListFoodEntry? listFoodEntry =
         context.read<FoodListEntryViewModel>().getListFoodEntry(id);
-    FoodItem? foodItem = context.read<FoodListEntryViewModel>().getFoodItem(id);
+    FoodItem? foodItem = context
+        .read<FoodListEntryViewModel>()
+        .getFoodItem(listFoodEntry!.foodId);
     TextStyle style =
         const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
 

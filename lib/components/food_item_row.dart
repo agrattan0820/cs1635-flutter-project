@@ -23,7 +23,7 @@ class FoodItemRow extends StatelessWidget {
                 onPressed: (context) => {
                   context
                       .read<FoodListEntryViewModel>()
-                      .removeFoodItemEntry(foodItems[index].id)
+                      .removeFoodItemEntry(foodItems[index].entryId)
                 },
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
@@ -37,7 +37,7 @@ class FoodItemRow extends StatelessWidget {
             child: InkWell(
                 onTap: () {
                   GoRouter.of(context)
-                      .go("/item_details/${foodItems[index].id}");
+                      .go("/item_details/${foodItems[index].entryId}");
                 },
                 child: Container(
                     // margin: const EdgeInsets.only(top: 8, bottom: 8),
@@ -51,7 +51,7 @@ class FoodItemRow extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            "${foodItems[index].quantity.toString()}x ${context.read<FoodListEntryViewModel>().getFoodItem(foodItems[index].id)!.name}",
+                            "${foodItems[index].quantity.toString()}x ${context.read<FoodListEntryViewModel>().getFoodItem(foodItems[index].foodId)!.name}",
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
@@ -62,7 +62,7 @@ class FoodItemRow extends StatelessWidget {
                         Tag(
                             text: context
                                 .read<FoodListEntryViewModel>()
-                                .expirationString(foodItems[index].id))
+                                .expirationString(foodItems[index].entryId))
                       ],
                     )))));
   }

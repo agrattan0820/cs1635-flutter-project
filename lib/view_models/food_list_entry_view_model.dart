@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:flutter_application_1/models/list_food_entry.dart';
 import 'package:flutter_application_1/models/food_item.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 
+final Random _random = Random();
+const int max = 1000000000;
+
 final List<ListFoodEntry> initialData = List.generate(
   10,
   (index) => ListFoodEntry(
-      id: index,
+      entryId: _random.nextInt(max),
+      foodId: index,
       storage: "Fridge",
       quantity: 3,
       owner: "Jennifer Zheng",
@@ -19,13 +24,13 @@ class FoodListEntryViewModel with ChangeNotifier {
   List<ListFoodEntry> get foodItems => _foodItems;
   set quantity(int q) => {quantity = q};
 
-  FoodItem? getFoodItem(id) {
-    return FoodItemViewModel.getFoodItem(id);
+  FoodItem? getFoodItem(foodId) {
+    return FoodItemViewModel.getFoodItem(foodId);
   }
 
-  ListFoodEntry? getListFoodEntry(int id) {
+  ListFoodEntry? getListFoodEntry(int entryId) {
     for (var item in initialData) {
-      if (item.id == id) return item;
+      if (item.entryId == entryId) return item;
     }
     return null;
   }
@@ -34,7 +39,8 @@ class FoodListEntryViewModel with ChangeNotifier {
       int id, String storage, int quantity, String owner, DateTime dateAdded) {
     _foodItems.add(
       ListFoodEntry(
-        id: id,
+        entryId: _random.nextInt(max),
+        foodId: id,
         storage: storage,
         quantity: quantity,
         owner: owner,
@@ -43,9 +49,9 @@ class FoodListEntryViewModel with ChangeNotifier {
     );
   }
 
-  void removeFoodItemEntry(int id) {
+  void removeFoodItemEntry(int entryId) {
     for (int i = 0; i < _foodItems.length; i++) {
-      if (_foodItems[i].id == id) {
+      if (_foodItems[i].entryId == entryId) {
         _foodItems.removeAt(i);
         notifyListeners();
 
@@ -64,10 +70,10 @@ class FoodListEntryViewModel with ChangeNotifier {
     return buffer.toString();
   }
 
-  String expirationString(int id) {
-    ListFoodEntry? listFoodEntry = getListFoodEntry(id);
-    FoodItem? foodItem = FoodItemViewModel.getFoodItem(id);
-    Duration timePassed = DateTime.now().difference(listFoodEntry!.dateAdded);
+  String expirationString(int entryId) {
+    ListFoodEntry? listFoodEntry = getListFoodEntry(entryId);
+    FoodItem? foodItem = FoodItemViewModel.getFoodItem(listFoodEntry!.foodId);
+    Duration timePassed = DateTime.now().difference(listFoodEntry.dateAdded);
 
     if (timePassed.inDays == foodItem!.daysToExpire) {
       return "Expires Today";
