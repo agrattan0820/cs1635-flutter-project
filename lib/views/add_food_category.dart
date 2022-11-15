@@ -19,6 +19,8 @@ class AddFoodCategoryView extends StatefulWidget {
 class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
   FoodCategory? _selectedCategory;
 
+  List<FoodItem>? _filteredList;
+
   void _onCardTapped(FoodCategory category) {
     setState(() {
       _selectedCategory = category;
@@ -48,7 +50,23 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
               );
             });
       }
-      // GoRouter.of(context).go("/add_item/details/${item.id}");
+    }
+
+    void getFilteredList(List<FoodItem> inputlist) {
+      if (_selectedCategory != null) {
+        List<FoodItem> outputList = inputlist
+            .where(
+                (o) => foodCategories[o.category].id == _selectedCategory?.id)
+            .toList();
+
+        setState(() {
+          _filteredList = outputList;
+        });
+      } else {
+        setState(() {
+          _filteredList = inputlist;
+        });
+      }
     }
 
     return SafeArea(
@@ -184,24 +202,24 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
                       ],
                     )
                   : const SizedBox(),
-              _selectedCategory != null
+              _selectedCategory != null && _filteredList != null
                   ? Expanded(
                       child: Container(
                         padding: const EdgeInsets.only(top: 8),
                         child: ListView.separated(
-                          itemCount: foodItems.length,
+                          itemCount: _filteredList!.length,
                           separatorBuilder: (context, i) {
                             return const Divider();
                           },
                           itemBuilder: (((context, index) {
                             return Card(
-                              // color: Colors.yellow[50],
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: ListTile(
-                                title: Text(foodItems[index].name),
-                                onTap: () => onFoodSelection(foodItems[index]),
+                                title: Text(_filteredList![index].name),
+                                onTap: () =>
+                                    onFoodSelection(_filteredList![index]),
                                 // trailing: CircleAvatar(
                                 //   backgroundImage:
                                 //       NetworkImage(foodItems[index].image),
@@ -224,12 +242,13 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: FoodCategoryCard(
-                              text: foodCategories[index].name,
-                              cardColor: foodCategories[index].color,
-                              icon: foodCategories[index].icon,
-                              onPress: () =>
-                                  _onCardTapped(foodCategories[index]),
-                            ),
+                                text: foodCategories[index].name,
+                                cardColor: foodCategories[index].color,
+                                icon: foodCategories[index].icon,
+                                onPress: () {
+                                  _onCardTapped(foodCategories[index]);
+                                  getFilteredList(foodItems);
+                                }),
                           );
                         }),
                       ),

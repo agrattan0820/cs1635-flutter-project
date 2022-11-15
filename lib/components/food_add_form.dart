@@ -64,7 +64,7 @@ class _FoodAddFormState extends State<FoodAddForm> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
+                    padding: const EdgeInsets.only(right: 12.0),
                     child:
                         foodCategories.elementAt(widget.foodItem.category).icon,
                   ),
@@ -153,8 +153,9 @@ class _FoodAddFormState extends State<FoodAddForm> {
                       ],
                     ),
                     OutlinedButton(
-                        onPressed: _showDatePicker,
-                        child: const Text("Choose Date"))
+                      onPressed: _showDatePicker,
+                      child: const Text("Choose Date"),
+                    )
                   ],
                 ),
                 const SizedBox(

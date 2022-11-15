@@ -1,12 +1,19 @@
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_application_1/models/food_item.dart';
+
+final _random = Random();
+
+/// Generates a positive random integer uniformly distributed on the range
+/// from [min], inclusive, to [max], exclusive.
+int next(int min, int max) => min + _random.nextInt(max - min);
 
 final List<FoodItem> initialData = List.generate(
   10,
   (index) => FoodItem(
       id: index,
       name: "Food Item $index",
-      category: 0,
+      category: next(0, 5),
       image:
           "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"),
 );
