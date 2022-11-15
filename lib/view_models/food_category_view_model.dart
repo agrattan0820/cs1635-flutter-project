@@ -32,29 +32,29 @@ final List<FoodCategory> initialData = [
   ),
   FoodCategory(
     name: "Baking Goods",
-    color: Colors.yellow,
+    color: Colors.orange,
     icon: const FaIcon(
       FontAwesomeIcons.breadSlice,
       size: 48,
-      color: Colors.yellow,
+      color: Colors.orange,
     ),
   ),
   FoodCategory(
     name: "Seafood",
-    color: Colors.blue,
+    color: Colors.purple,
     icon: const FaIcon(
       FontAwesomeIcons.fish,
       size: 48,
-      color: Colors.blue,
+      color: Colors.purple,
     ),
   ),
   FoodCategory(
     name: "Snacks",
-    color: Colors.orange,
+    color: Colors.yellow,
     icon: const FaIcon(
       FontAwesomeIcons.cookieBite,
       size: 48,
-      color: Colors.orange,
+      color: Colors.yellow,
     ),
   ),
 ];

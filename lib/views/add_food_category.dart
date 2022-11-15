@@ -170,8 +170,8 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
                                   borderRadius: BorderRadius.circular(32)),
                               child: Text(
                                 _selectedCategory?.name ?? "Category",
-                                style: TextStyle(
-                                  color: _selectedCategory?.color,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
                                   fontSize: 24,
                                 ),
                               ),
