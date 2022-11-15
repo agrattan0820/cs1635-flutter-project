@@ -43,6 +43,15 @@ class FoodListEntryViewModel with ChangeNotifier {
     );
   }
 
+  void removeFoodItemEntry(int id) {
+    for (int i = 0; i < _foodItems.length; i++) {
+      if (_foodItems[i].id == id) {
+        _foodItems.removeAt(i);
+        break;
+      }
+    }
+  }
+
   static String getInitials(ListFoodEntry listFoodEntry) {
     var buffer = StringBuffer();
     var split = listFoodEntry.owner.split(' ');

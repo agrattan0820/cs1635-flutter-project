@@ -80,12 +80,12 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                 child: Row(children: [
                   Expanded(flex: 2, child: Text("Quantity", style: style)),
                   InputQty(
-                    initVal: listFoodEntry!.quantity,
-                    minVal: 1,
-                    onQtyChanged: (val) {
-                      listFoodEntry.quantity = val!.toInt();
-                    },
-                  ),
+                      initVal: listFoodEntry!.quantity,
+                      minVal: 1,
+                      onQtyChanged: (val) {
+                        listFoodEntry.quantity = val!.toInt();
+                      },
+                      id: id),
                 ])),
             Container(
                 margin: const EdgeInsets.only(top: 16, bottom: 16),
