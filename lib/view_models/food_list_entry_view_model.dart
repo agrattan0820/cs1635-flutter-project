@@ -47,6 +47,8 @@ class FoodListEntryViewModel with ChangeNotifier {
     for (int i = 0; i < _foodItems.length; i++) {
       if (_foodItems[i].id == id) {
         _foodItems.removeAt(i);
+        notifyListeners();
+
         break;
       }
     }

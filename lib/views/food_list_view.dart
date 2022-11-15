@@ -15,8 +15,9 @@ class _FoodListViewState extends State<FoodListView> {
   Widget build(BuildContext context) {
     var foodItems = context.watch<FoodListEntryViewModel>().foodItems;
 
-    return SafeArea(
-      child: Container(
+    return SafeArea(child:
+        Consumer<FoodListEntryViewModel>(builder: (context, viewModel, child) {
+      return Container(
           color: Colors.yellow[200],
           margin: const EdgeInsets.only(left: 16, right: 16),
           child: Column(
@@ -131,7 +132,7 @@ class _FoodListViewState extends State<FoodListView> {
                     ]),
                   ))),
             ],
-          )),
-    );
+          ));
+    }));
   }
 }
