@@ -97,8 +97,9 @@ class _FoodAddFormState extends State<FoodAddForm> {
             child: Column(
               children: [
                 TextFormField(
-                  decoration:
-                      const InputDecoration(labelText: "Enter item quantity"),
+                  decoration: const InputDecoration(
+                    labelText: "Enter item quantity",
+                  ),
                   keyboardType: TextInputType.number,
                   validator: quanitityValidator,
                   onSaved: ((value) =>

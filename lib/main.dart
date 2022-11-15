@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Grosseries',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.orange,
       ),
       routerConfig: _router,
     );
