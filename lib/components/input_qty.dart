@@ -3,6 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
+import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
 class InputQty extends StatefulWidget {
   /// maximum value input
@@ -25,6 +28,8 @@ class InputQty extends StatefulWidget {
   /// also support for decimal steps
   /// eg: [steps] = 3.14
   final num steps;
+
+  final int id;
 
   /// Function([num] value) [onChanged]
   /// update value every changes
@@ -60,6 +65,7 @@ class InputQty extends StatefulWidget {
     this.maxVal = double.maxFinite,
     this.minVal = 0,
     this.steps = 1,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -132,7 +138,7 @@ class _InputQtyState extends State<InputQty> {
   /// When the current [value] is empty string, and press [minus] button
   /// then firstly, it set the [value]= [initVal],
   /// after that [value] -= [steps]
-  void minus() {
+  void minus(BuildContext context) {
     num value = num.tryParse(_valCtrl.text) ?? widget.initVal;
     if (value > widget.minVal) {
       value -= widget.steps;
@@ -140,6 +146,8 @@ class _InputQtyState extends State<InputQty> {
     } else {
       value = widget.minVal;
       currentval = ValueNotifier(value);
+      context.read<FoodListEntryViewModel>().removeFoodItemEntry(widget.id);
+      GoRouter.of(context).go("/");
     }
 
     if (value <= widget.minVal) {
@@ -160,12 +168,12 @@ class _InputQtyState extends State<InputQty> {
   @override
   Widget build(BuildContext context) {
     return widget.isIntrinsicWidth
-        ? IntrinsicWidth(child: _buildInputQty())
-        : _buildInputQty();
+        ? IntrinsicWidth(child: _buildInputQty(context))
+        : _buildInputQty(context);
   }
 
   /// build widget input quantity
-  Widget _buildInputQty() => Container(
+  Widget _buildInputQty(BuildContext context) => Container(
         padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
         alignment: Alignment.center,
         decoration: BoxDecoration(
@@ -179,7 +187,7 @@ class _InputQtyState extends State<InputQty> {
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              onPressed: minus,
+              onPressed: () => minus(context),
               constraints: const BoxConstraints(),
               padding: EdgeInsets.zero,
               icon: Icon(

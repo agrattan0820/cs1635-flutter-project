@@ -57,8 +57,9 @@ class _FoodListViewState extends State<FoodListView> {
           });
     }
 
-    return SafeArea(
-      child: Container(
+    return SafeArea(child:
+        Consumer<FoodListEntryViewModel>(builder: (context, viewModel, child) {
+      return Container(
           color: Colors.yellow[200],
           margin: const EdgeInsets.only(left: 16, right: 16),
           child: Column(
@@ -93,9 +94,11 @@ class _FoodListViewState extends State<FoodListView> {
                         shape: CircleBorder(),
                       ),
                       child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.search,
-                              color: Colors.black, size: 28)))
+                        onPressed: () {},
+                        icon: const Icon(Icons.search),
+                        color: Colors.black,
+                        iconSize: 28,
+                      ))
                 ]),
               ),
               Expanded(
@@ -171,7 +174,7 @@ class _FoodListViewState extends State<FoodListView> {
                     ]),
                   ))),
             ],
-          )),
-    );
+          ));
+    }));
   }
 }
