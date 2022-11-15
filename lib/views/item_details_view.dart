@@ -24,8 +24,9 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
 
     int id = int.parse(widget.id!);
-    ListFoodEntry? listFoodEntry = FoodListEntryViewModel.getListFoodEntry(id);
-    FoodItem? foodItem = FoodListEntryViewModel.getFoodItem(id);
+    ListFoodEntry? listFoodEntry =
+        context.read<FoodListEntryViewModel>().getListFoodEntry(id);
+    FoodItem? foodItem = context.read<FoodListEntryViewModel>().getFoodItem(id);
     TextStyle style =
         const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
 
@@ -70,7 +71,9 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                 child: Container(
                     constraints: const BoxConstraints(maxWidth: 150),
                     child: Tag(
-                        text: FoodListEntryViewModel.expirationString(id)))),
+                        text: context
+                            .read<FoodListEntryViewModel>()
+                            .expirationString(id)))),
             Container(
                 margin: const EdgeInsets.only(top: 24, bottom: 16),
                 padding: const EdgeInsets.only(left: 8),

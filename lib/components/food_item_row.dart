@@ -4,6 +4,7 @@ import 'package:flutter_application_1/components/user_bubble.dart';
 import 'package:flutter_application_1/models/list_food_entry.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class FoodItemRow extends StatelessWidget {
   final List<ListFoodEntry> foodItems;
@@ -31,7 +32,7 @@ class FoodItemRow extends StatelessWidget {
                     Expanded(
                       flex: 2,
                       child: Text(
-                        "${foodItems[index].quantity.toString()}x ${FoodListEntryViewModel.getFoodItem(foodItems[index].id)!.name}",
+                        "${foodItems[index].quantity.toString()}x ${context.read<FoodListEntryViewModel>().getFoodItem(foodItems[index].id)!.name}",
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -40,8 +41,9 @@ class FoodItemRow extends StatelessWidget {
                     ),
                     UserBubble(user: foodItems[index]),
                     Tag(
-                        text: FoodListEntryViewModel.expirationString(
-                            foodItems[index].id))
+                        text: context
+                            .read<FoodListEntryViewModel>()
+                            .expirationString(foodItems[index].id))
                   ],
                 ))));
   }

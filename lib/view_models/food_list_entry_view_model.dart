@@ -19,11 +19,11 @@ class FoodListEntryViewModel with ChangeNotifier {
   List<ListFoodEntry> get foodItems => _foodItems;
   set quantity(int q) => {quantity = q};
 
-  static FoodItem? getFoodItem(id) {
+  FoodItem? getFoodItem(id) {
     return FoodItemViewModel.getFoodItem(id);
   }
 
-  static ListFoodEntry? getListFoodEntry(int id) {
+  ListFoodEntry? getListFoodEntry(int id) {
     for (var item in initialData) {
       if (item.id == id) return item;
     }
@@ -53,11 +53,10 @@ class FoodListEntryViewModel with ChangeNotifier {
     return buffer.toString();
   }
 
-  static String expirationString(int id) {
-    ListFoodEntry? listFoodEntry = FoodListEntryViewModel.getListFoodEntry(id);
+  String expirationString(int id) {
+    ListFoodEntry? listFoodEntry = getListFoodEntry(id);
     FoodItem? foodItem = FoodItemViewModel.getFoodItem(id);
     Duration timePassed = DateTime.now().difference(listFoodEntry!.dateAdded);
-    // Duration? daysToExpire = Duration(days: foodItem!.daysToExpire);
 
     if (timePassed.inDays == foodItem!.daysToExpire) {
       return "Expires Today";
