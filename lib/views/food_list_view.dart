@@ -15,8 +15,51 @@ class _FoodListViewState extends State<FoodListView> {
   Widget build(BuildContext context) {
     var foodItems = context.watch<FoodListEntryViewModel>().foodItems;
 
-    return SafeArea(
-      child: Container(
+    void onSortPress() {
+      debugPrint('You just pressed the sort button');
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              height: 500,
+              decoration: BoxDecoration(color: Colors.yellow[100]),
+              padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
+              child: const Text("Sort Container"),
+            );
+          });
+    }
+
+    void onFilterPress() {
+      debugPrint('You just pressed the filter button');
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              height: 500,
+              decoration: BoxDecoration(color: Colors.yellow[100]),
+              padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
+              child: const Text("Filter Container"),
+            );
+          });
+    }
+
+    void onSharePress() {
+      debugPrint('You just pressed the share button');
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              height: 500,
+              decoration: BoxDecoration(color: Colors.yellow[100]),
+              padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
+              child: const Text("Share Container"),
+            );
+          });
+    }
+
+    return SafeArea(child:
+        Consumer<FoodListEntryViewModel>(builder: (context, viewModel, child) {
+      return Container(
           color: Colors.yellow[200],
           margin: const EdgeInsets.only(left: 16, right: 16),
           child: Column(
@@ -51,9 +94,11 @@ class _FoodListViewState extends State<FoodListView> {
                         shape: CircleBorder(),
                       ),
                       child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.search,
-                              color: Colors.black, size: 28)))
+                        onPressed: () {},
+                        icon: const Icon(Icons.search),
+                        color: Colors.black,
+                        iconSize: 28,
+                      ))
                 ]),
               ),
               Expanded(
@@ -79,7 +124,7 @@ class _FoodListViewState extends State<FoodListView> {
                           margin: const EdgeInsets.all(0),
                           padding: const EdgeInsets.all(0),
                           child: TextButton(
-                              onPressed: () {},
+                              onPressed: onSortPress,
                               style: TextButton.styleFrom(
                                 padding: const EdgeInsets.all(0),
                               ),
@@ -99,7 +144,7 @@ class _FoodListViewState extends State<FoodListView> {
                         color: Colors.black,
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: onFilterPress,
                           child: Row(
                             children: const [
                               Icon(
@@ -118,7 +163,7 @@ class _FoodListViewState extends State<FoodListView> {
                         color: Colors.black,
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: onSharePress,
                           child: Row(
                             children: const [
                               Icon(Icons.ios_share, color: Colors.black),
@@ -129,7 +174,7 @@ class _FoodListViewState extends State<FoodListView> {
                     ]),
                   ))),
             ],
-          )),
-    );
+          ));
+    }));
   }
 }

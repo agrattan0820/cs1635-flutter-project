@@ -24,8 +24,11 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
 
     int id = int.parse(widget.id!);
-    ListFoodEntry? listFoodEntry = FoodListEntryViewModel.getListFoodEntry(id);
-    FoodItem? foodItem = FoodListEntryViewModel.getFoodItem(id);
+    ListFoodEntry? listFoodEntry =
+        context.read<FoodListEntryViewModel>().getListFoodEntry(id);
+    FoodItem? foodItem = context
+        .read<FoodListEntryViewModel>()
+        .getFoodItem(listFoodEntry!.foodId);
     TextStyle style =
         const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
 
@@ -67,19 +70,24 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                         image: NetworkImage(foodItem.image)))),
             InkWell(
                 onTap: () {},
-                child: Tag(text: FoodListEntryViewModel.expirationString(id))),
+                child: Container(
+                    constraints: const BoxConstraints(maxWidth: 150),
+                    child: Tag(
+                        text: context
+                            .read<FoodListEntryViewModel>()
+                            .expirationString(id)))),
             Container(
                 margin: const EdgeInsets.only(top: 24, bottom: 16),
                 padding: const EdgeInsets.only(left: 8),
                 child: Row(children: [
                   Expanded(flex: 2, child: Text("Quantity", style: style)),
                   InputQty(
-                    initVal: listFoodEntry!.quantity,
-                    minVal: 1,
-                    onQtyChanged: (val) {
-                      listFoodEntry.quantity = val!.toInt();
-                    },
-                  ),
+                      initVal: listFoodEntry!.quantity,
+                      minVal: 1,
+                      onQtyChanged: (val) {
+                        listFoodEntry.quantity = val!.toInt();
+                      },
+                      id: id),
                 ])),
             Container(
                 margin: const EdgeInsets.only(top: 16, bottom: 16),

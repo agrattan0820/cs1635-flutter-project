@@ -1,12 +1,14 @@
 class ListFoodEntry {
-  final int id;
+  final int entryId;
+  final int foodId;
   String storage;
   int quantity;
   String owner;
   final DateTime dateAdded;
 
   ListFoodEntry({
-    required this.id,
+    required this.entryId,
+    required this.foodId,
     this.storage = "any",
     this.quantity = 1,
     this.owner = "",
@@ -15,7 +17,8 @@ class ListFoodEntry {
 
   factory ListFoodEntry.fromJson(Map<String, dynamic> json) {
     return ListFoodEntry(
-      id: json["id"],
+      entryId: json['entryId'],
+      foodId: json["foodId"],
       storage: json["storage"],
       quantity: json["quantity"],
       owner: json["owner"],
