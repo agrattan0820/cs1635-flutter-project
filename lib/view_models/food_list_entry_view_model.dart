@@ -54,17 +54,23 @@ class FoodListEntryViewModel with ChangeNotifier {
   }
 
   static String expirationString(int id) {
-    var foodItem = FoodItemViewModel.getFoodItem(id);
-    var daysLeft = foodItem?.daysToExpire;
-    if (daysLeft == 0) {
+    ListFoodEntry? listFoodEntry = FoodListEntryViewModel.getListFoodEntry(id);
+    FoodItem? foodItem = FoodItemViewModel.getFoodItem(id);
+    Duration timePassed = DateTime.now().difference(listFoodEntry!.dateAdded);
+    // Duration? daysToExpire = Duration(days: foodItem!.daysToExpire);
+
+    if (timePassed.inDays == foodItem!.daysToExpire) {
       return "Expires Today";
     }
 
-    if (daysLeft! < 0) {
-      daysLeft = daysLeft * -1;
-      return "Expired $daysLeft Day Ago";
+    if (timePassed.inDays > foodItem.daysToExpire) {
+      return "Expired by ${timePassed.inDays - foodItem.daysToExpire} Day";
     }
 
-    return "$daysLeft days left";
+    if (foodItem.daysToExpire - timePassed.inDays > 1) {
+      return "${foodItem.daysToExpire - timePassed.inDays} days left";
+    } else {
+      return "${foodItem.daysToExpire - timePassed.inDays} day left";
+    }
   }
 }

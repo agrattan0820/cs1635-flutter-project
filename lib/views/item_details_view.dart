@@ -67,7 +67,10 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                         image: NetworkImage(foodItem.image)))),
             InkWell(
                 onTap: () {},
-                child: Tag(text: FoodListEntryViewModel.expirationString(id))),
+                child: Container(
+                    constraints: const BoxConstraints(maxWidth: 150),
+                    child: Tag(
+                        text: FoodListEntryViewModel.expirationString(id)))),
             Container(
                 margin: const EdgeInsets.only(top: 24, bottom: 16),
                 padding: const EdgeInsets.only(left: 8),

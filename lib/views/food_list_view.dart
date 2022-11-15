@@ -51,9 +51,11 @@ class _FoodListViewState extends State<FoodListView> {
                         shape: CircleBorder(),
                       ),
                       child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.search,
-                              color: Colors.black, size: 28)))
+                        onPressed: () {},
+                        icon: const Icon(Icons.search),
+                        color: Colors.black,
+                        iconSize: 28,
+                      ))
                 ]),
               ),
               Expanded(
