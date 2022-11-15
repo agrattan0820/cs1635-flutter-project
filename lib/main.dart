@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view_models/food_category_view_model.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 import 'package:flutter_application_1/view_models/food_item_view_model.dart';
 import 'package:flutter_application_1/view_models/user_view_model.dart';
+import 'package:flutter_application_1/views/add_food_category.dart';
+import 'package:flutter_application_1/views/add_food_item_detail.dart';
 import 'package:flutter_application_1/views/app_scaffold.dart';
 import 'package:flutter_application_1/views/food_list_view.dart';
-import 'package:flutter_application_1/views/add_food_item.dart';
 import 'package:flutter_application_1/views/login_page.dart';
 import 'package:flutter_application_1/views/item_details_view.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +20,9 @@ void main() {
       ),
       ChangeNotifierProvider<FoodItemViewModel>(
         create: (_) => FoodItemViewModel(),
+      ),
+      ChangeNotifierProvider<FoodCategoryViewModel>(
+        create: (_) => FoodCategoryViewModel(),
       ),
       ChangeNotifierProvider<UserViewModel>(
         create: (_) => UserViewModel(),
@@ -55,11 +60,18 @@ class MyApp extends StatelessWidget {
               ),
             ),
             GoRoute(
-              path: '/add_item',
-              pageBuilder: (context, state) => const NoTransitionPage(
-                child: AddFoodItemView(),
-              ),
-            ),
+                path: '/add_item',
+                pageBuilder: (context, state) => const NoTransitionPage(
+                      child: AddFoodCategoryView(),
+                    ),
+                routes: [
+                  GoRoute(
+                    path: "details/:item",
+                    builder: ((context, state) {
+                      return const AddFoodDetailView();
+                    }),
+                  ),
+                ]),
             GoRoute(
               path: '/login',
               builder: (BuildContext context, GoRouterState state) {

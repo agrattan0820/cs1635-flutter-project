@@ -1,7 +1,7 @@
 class FoodItem {
   final int id;
   final String name;
-  final String category;
+  final int category;
   final String image;
   final int daysToExpire;
 

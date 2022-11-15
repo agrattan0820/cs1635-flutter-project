@@ -17,6 +17,7 @@ class _FoodListViewState extends State<FoodListView> {
 
     return SafeArea(
       child: Container(
+          color: Colors.yellow[200],
           margin: const EdgeInsets.only(left: 16, right: 16),
           child: Column(
             children: [

@@ -5,6 +5,9 @@ import 'package:flutter_application_1/components/user_bubble.dart';
 import 'package:flutter_application_1/models/list_food_entry.dart';
 import 'package:flutter_application_1/models/food_item.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
+import 'package:provider/provider.dart';
+
+import '../view_models/food_category_view_model.dart';
 
 class ItemDetailsView extends StatefulWidget {
   final String? id;
@@ -18,6 +21,8 @@ class ItemDetailsView extends StatefulWidget {
 class _ItemDetailsViewState extends State<ItemDetailsView> {
   @override
   Widget build(BuildContext context) {
+    var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
+
     int id = int.parse(widget.id!);
     ListFoodEntry? listFoodEntry = FoodListEntryViewModel.getListFoodEntry(id);
     FoodItem? foodItem = FoodListEntryViewModel.getFoodItem(id);
@@ -27,6 +32,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
     return SafeArea(
       child: Container(
           margin: const EdgeInsets.only(left: 16, right: 16),
+          decoration: BoxDecoration(color: Colors.yellow[200]),
           child: Column(children: [
             Container(
                 padding: const EdgeInsets.only(top: 20, left: 8),
@@ -35,7 +41,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     Expanded(
                         flex: 2,
                         child: Text(
-                          "${foodItem!.name}",
+                          foodItem!.name,
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 28,
@@ -58,7 +64,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     borderRadius: BorderRadius.circular(16),
                     child: Image(
                         fit: BoxFit.cover,
-                        image: NetworkImage(foodItem!.image)))),
+                        image: NetworkImage(foodItem.image)))),
             InkWell(
                 onTap: () {},
                 child: Tag(text: FoodListEntryViewModel.expirationString(id))),
@@ -100,7 +106,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                   InkWell(
                       onTap: () {},
                       child: Tag(
-                        text: foodItem.category,
+                        text: foodCategories[foodItem.category].name,
                         // padding: 12,
                       ))
                 ])),
