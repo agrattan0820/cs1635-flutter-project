@@ -24,6 +24,7 @@ class _FoodListViewState extends State<FoodListView> {
       setState(() {
         sortOptionChoice = value ? index : sortOptionChoice;
       });
+      debugPrint("sortOptionChoice $sortOptionChoice");
     }
 
     void onSortPress() {
@@ -35,11 +36,10 @@ class _FoodListViewState extends State<FoodListView> {
               height: 300,
               decoration: BoxDecoration(color: Colors.yellow[100]),
               padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
-              child: const SortForm(
-                  // selectedOption: sortOptionChoice,
-                  // options: _sortOptionsList,
-                  // onOptionSelect: onOptionSelect,
-                  ),
+              child: SortForm(
+                options: _sortOptionsList,
+                onOptionSelect: onOptionSelect,
+              ),
             );
           });
     }

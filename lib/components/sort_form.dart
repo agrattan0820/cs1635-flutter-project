@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SortForm extends StatefulWidget {
-  // final List<String> options;
-  // final Function(bool, int) onOptionSelect;
+  final List<String> options;
+  final Function(bool, int) onOptionSelect;
 
-  const SortForm({super.key});
+  const SortForm({
+    super.key,
+    required this.options,
+    required this.onOptionSelect,
+  });
 
   @override
   State<SortForm> createState() => _SortFormState();
@@ -12,7 +16,6 @@ class SortForm extends StatefulWidget {
 
 class _SortFormState extends State<SortForm> {
   int defaultChoiceIndex = 0;
-  final List<String> _choicesList = ['Expiration', 'Name', 'Newest'];
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +50,10 @@ class _SortFormState extends State<SortForm> {
           ),
           Wrap(
             spacing: 8,
-            children: List.generate(_choicesList.length, (index) {
+            children: List.generate(widget.options.length, (index) {
               return ChoiceChip(
                 label: Text(
-                  _choicesList[index],
+                  widget.options[index],
                 ),
                 labelStyle: const TextStyle(
                   color: Colors.black,
@@ -60,10 +63,10 @@ class _SortFormState extends State<SortForm> {
                 backgroundColor: Colors.yellow[100],
                 shape: const StadiumBorder(side: BorderSide()),
                 onSelected: (value) {
-                  debugPrint("selected");
                   setState(() {
                     defaultChoiceIndex = value ? index : defaultChoiceIndex;
                   });
+                  widget.onOptionSelect(value, index);
                 },
               );
             }),
