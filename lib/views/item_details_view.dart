@@ -46,9 +46,10 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                         child: Text(
                           foodItem!.name,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 28,
-                              color: Colors.black),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28,
+                            color: Colors.black,
+                          ),
                         )),
                     IconButton(
                         onPressed: () {},
@@ -82,7 +83,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                 child: Row(children: [
                   Expanded(flex: 2, child: Text("Quantity", style: style)),
                   InputQty(
-                      initVal: listFoodEntry!.quantity,
+                      initVal: listFoodEntry.quantity,
                       minVal: 1,
                       onQtyChanged: (val) {
                         listFoodEntry.quantity = val!.toInt();

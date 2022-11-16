@@ -3,6 +3,8 @@ import 'package:flutter_application_1/view_models/food_list_entry_view_model.dar
 import 'package:flutter_application_1/components/food_item_row.dart';
 import 'package:provider/provider.dart';
 
+import '../components/sort_form.dart';
+
 class FoodListView extends StatefulWidget {
   const FoodListView({super.key});
 
@@ -11,9 +13,18 @@ class FoodListView extends StatefulWidget {
 }
 
 class _FoodListViewState extends State<FoodListView> {
+  int sortOptionChoice = 0;
+  final List<String> _sortOptionsList = ['Expiration', 'Name', 'Newest'];
+
   @override
   Widget build(BuildContext context) {
     var foodItems = context.watch<FoodListEntryViewModel>().foodItems;
+
+    void onOptionSelect(bool value, int index) {
+      setState(() {
+        sortOptionChoice = value ? index : sortOptionChoice;
+      });
+    }
 
     void onSortPress() {
       debugPrint('You just pressed the sort button');
@@ -21,10 +32,14 @@ class _FoodListViewState extends State<FoodListView> {
           context: context,
           builder: (context) {
             return Container(
-              height: 500,
+              height: 300,
               decoration: BoxDecoration(color: Colors.yellow[100]),
               padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
-              child: const Text("Sort Container"),
+              child: const SortForm(
+                  // selectedOption: sortOptionChoice,
+                  // options: _sortOptionsList,
+                  // onOptionSelect: onOptionSelect,
+                  ),
             );
           });
     }
