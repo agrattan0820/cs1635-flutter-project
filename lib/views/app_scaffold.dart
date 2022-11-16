@@ -22,6 +22,7 @@ class _AppScaffoldState extends State<AppScaffold> {
         GoRouter.of(context).go("/add_item");
       } else if (_selectedIndex == 2) {
         GoRouter.of(context).go("/login");
+        // GoRouter.of(context).go("/profile");
       }
     });
   }
