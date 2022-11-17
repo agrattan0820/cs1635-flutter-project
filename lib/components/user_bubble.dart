@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/list_food_entry.dart';
-import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 
 class UserBubble extends StatelessWidget {
-  final ListFoodEntry user;
+  final String user;
 
   const UserBubble({super.key, required this.user});
+
+  String _getInitials() {
+    var buffer = StringBuffer();
+    var split = user.split(' ');
+    for (var i = 0; i < split.length; i++) {
+      buffer.write(split[i][0].toUpperCase());
+    }
+
+    return buffer.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +24,7 @@ class UserBubble extends StatelessWidget {
         border: Border.all(color: Colors.black),
         shape: BoxShape.circle,
       ),
-      child: Text(FoodListEntryViewModel.getInitials(user),
-          style: const TextStyle(color: Colors.black)),
+      child: Text(_getInitials(), style: const TextStyle(color: Colors.black)),
     );
   }
 }
