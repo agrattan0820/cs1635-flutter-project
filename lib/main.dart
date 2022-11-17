@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       title: 'Grosseries',
       theme: ThemeData(
         primarySwatch: Colors.orange,
-      // scaffoldBackgroundColor: Colors.white,
+        // scaffoldBackgroundColor: Colors.white,
       ),
       routerConfig: _router,
     );
@@ -64,7 +64,6 @@ class MyApp extends StatelessWidget {
                 child: FoodListView(),
               ),
             ),
-            
             GoRoute(
                 path: '/add_item',
                 pageBuilder: (context, state) => const NoTransitionPage(
@@ -78,41 +77,35 @@ class MyApp extends StatelessWidget {
                     }),
                   ),
                 ]),
-
-            GoRoute(
-              path: '/welcome',
-              builder: (BuildContext context, GoRouterState state) {
-                return const WelcomePage();
-              },
-            ),
-
-            GoRoute(
-              path: '/login',
-              builder: (BuildContext context, GoRouterState state) {
-                return const LoginPage();
-              },
-            ),
-
-            GoRoute(
-              path: '/create_account',
-              builder: (BuildContext context, GoRouterState state) {
-                return const CreateAccountPage();
-              },
-            ),
-
-            GoRoute(
-              path: '/profile',
-              builder: (BuildContext context, GoRouterState state) {
-                return const ProfilePage();
-              },
-            ),
-
             GoRoute(
                 path: '/item_details/:id',
                 builder: (BuildContext context, GoRouterState state) {
                   return ItemDetailsView(id: state.params['id']);
                 })
-          ]
+          ]),
+      GoRoute(
+        path: '/welcome',
+        builder: (BuildContext context, GoRouterState state) {
+          return const WelcomePage();
+        },
+      ),
+      GoRoute(
+        path: '/login',
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginPage();
+        },
+      ),
+      GoRoute(
+        path: '/create_account',
+        builder: (BuildContext context, GoRouterState state) {
+          return const CreateAccountPage();
+        },
+      ),
+      GoRoute(
+        path: '/profile',
+        builder: (BuildContext context, GoRouterState state) {
+          return const ProfilePage();
+        },
       ),
     ],
   );
