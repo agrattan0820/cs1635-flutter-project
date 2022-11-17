@@ -16,7 +16,7 @@ class FoodItemRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: const EdgeInsets.only(top: 8, bottom: 28),
+        padding: const EdgeInsets.only(top: 8, bottom: 28, left: 8, right: 8),
         child: Slidable(
             endActionPane: ActionPane(motion: const ScrollMotion(), children: [
               SlidableAction(
@@ -42,9 +42,21 @@ class FoodItemRow extends StatelessWidget {
                 child: Container(
                     // margin: const EdgeInsets.only(top: 8, bottom: 8),
                     padding: const EdgeInsets.all(16),
-                    decoration: const BoxDecoration(
-                        color: Color(0xD6D6D6D6),
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.25),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset:
+                              const Offset(0, 2), // changes position of shadow
+                        ),
+                      ],
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
