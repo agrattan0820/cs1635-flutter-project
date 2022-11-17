@@ -9,15 +9,6 @@ class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //     backgroundColor: Colors.white,
-    //     body: 
-    //       Center(
-    //         child: Image(
-    //           image: AssetImage('assets/grocery_family.jpg')
-    //         )
-    //       ),
-    // );
   return Scaffold(
         backgroundColor: Colors.white,
           body: SafeArea(

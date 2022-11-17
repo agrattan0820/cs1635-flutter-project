@@ -7,10 +7,13 @@ import 'package:flutter_application_1/views/add_food_category.dart';
 import 'package:flutter_application_1/views/add_food_item_detail.dart';
 import 'package:flutter_application_1/views/app_scaffold.dart';
 import 'package:flutter_application_1/views/food_list_view.dart';
+import 'package:flutter_application_1/views/settings/household/household_send_invite.dart';
+import 'package:flutter_application_1/views/settings/edit_profile.dart';
+import 'package:flutter_application_1/views/settings/manage_reminders.dart';
 import 'package:flutter_application_1/views/user_auth/login.dart';
 import 'package:flutter_application_1/views/item_details_view.dart';
 import 'package:flutter_application_1/views/user_auth/create_account.dart';
-import 'package:flutter_application_1/views/user_auth/profile.dart';
+import 'package:flutter_application_1/views/settings/profile.dart';
 import 'package:flutter_application_1/views/user_auth/welcome.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -104,6 +107,27 @@ class MyApp extends StatelessWidget {
               path: '/profile',
               builder: (BuildContext context, GoRouterState state) {
                 return const ProfilePage();
+              },
+            ),
+
+            GoRoute(
+              path: '/edit_profile',
+              builder: (BuildContext context, GoRouterState state) {
+                return const EditProfile();
+              },
+            ),
+            
+            GoRoute(
+              path: '/household_send_invite',
+              builder: (BuildContext context, GoRouterState state) {
+                return const HouseholdSendInvite();
+              },
+            ),
+
+            GoRoute(
+              path: '/manage_reminders',
+              builder: (BuildContext context, GoRouterState state) {
+                return const ManageReminders();
               },
             ),
 
