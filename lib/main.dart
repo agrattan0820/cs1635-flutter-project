@@ -105,7 +105,14 @@ class MyApp extends StatelessWidget {
                 path: '/item_details/:id',
                 builder: (BuildContext context, GoRouterState state) {
                   return ItemDetailsView(id: state.params['id']);
-                })
+                }),
+            
+            GoRoute(
+                path: '/profile',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const ProfilePage();
+                },
+              ),
           ]),
       GoRoute(
         path: '/welcome',
@@ -125,12 +132,7 @@ class MyApp extends StatelessWidget {
           return const CreateAccountPage();
         },
       ),
-      GoRoute(
-        path: '/profile',
-        builder: (BuildContext context, GoRouterState state) {
-          return const ProfilePage();
-        },
-      ),
+
     ],
   );
 }

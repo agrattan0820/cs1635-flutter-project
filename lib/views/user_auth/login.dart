@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: GestureDetector(
-                  onTap: () => GoRouter.of(context).go("/profile"),
+                  onTap: () => GoRouter.of(context).go("/"),
                   child: Container(
                     padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
