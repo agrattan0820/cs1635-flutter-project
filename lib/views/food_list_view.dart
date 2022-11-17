@@ -4,6 +4,8 @@ import 'package:flutter_application_1/components/food_item_row.dart';
 import 'package:provider/provider.dart';
 
 import '../components/sort_form.dart';
+import '../models/food_item.dart';
+import '../view_models/food_item_view_model.dart';
 
 class FoodListView extends StatefulWidget {
   const FoodListView({super.key});
@@ -121,6 +123,48 @@ class _FoodListViewState extends State<FoodListView> {
                       // padding: const EdgeInsets.all(8),
                       itemCount: foodItems.length,
                       itemBuilder: (BuildContext context, int index) {
+                        foodItems.sort(((a, b) {
+                          switch (sortOptionChoice) {
+                            case 0:
+                              {
+                                FoodItem? foodItemA =
+                                    FoodItemViewModel.getFoodItem(a.foodId);
+                                FoodItem? foodItemB =
+                                    FoodItemViewModel.getFoodItem(b.foodId);
+                                Duration timePassedA =
+                                    DateTime.now().difference(a.dateAdded);
+                                Duration timePassedB =
+                                    DateTime.now().difference(b.dateAdded);
+                                int aDifference = foodItemA!.daysToExpire -
+                                    timePassedA.inDays;
+                                int bDifference = foodItemB!.daysToExpire -
+                                    timePassedB.inDays;
+                                return aDifference.compareTo(bDifference);
+                              }
+                            case 1:
+                              {
+                                FoodItem? foodItemA =
+                                    FoodItemViewModel.getFoodItem(a.foodId);
+                                FoodItem? foodItemB =
+                                    FoodItemViewModel.getFoodItem(b.foodId);
+                                return foodItemA!.name
+                                    .compareTo(foodItemB!.name);
+                              }
+                            case 2:
+                              {
+                                Duration timePassedA =
+                                    DateTime.now().difference(a.dateAdded);
+                                Duration timePassedB =
+                                    DateTime.now().difference(b.dateAdded);
+                                return timePassedA.compareTo(timePassedB);
+                              }
+                            default:
+                              {
+                                return 0;
+                              }
+                          }
+                        }));
+
                         return FoodItemRow(foodItems: foodItems, index: index);
                       })),
               Container(
