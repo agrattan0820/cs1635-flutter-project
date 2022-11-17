@@ -129,7 +129,9 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                         "Belongs To",
                         style: style,
                       )),
-                  InkWell(onTap: () {}, child: UserBubble(user: listFoodEntry))
+                  InkWell(
+                      onTap: () {},
+                      child: UserBubble(user: listFoodEntry.owner))
                 ])),
           ])),
     );
