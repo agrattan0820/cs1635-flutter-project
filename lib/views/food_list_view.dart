@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/components/filter_form.dart';
+import 'package:flutter_application_1/view_models/food_category_view_model.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 import 'package:flutter_application_1/components/food_item_row.dart';
 import 'package:provider/provider.dart';
@@ -15,19 +17,40 @@ class FoodListView extends StatefulWidget {
 }
 
 class _FoodListViewState extends State<FoodListView> {
-  int sortOptionChoice = 0;
-  final List<String> _sortOptionsList = ['Expiration', 'Name', 'Newest'];
-
   @override
   Widget build(BuildContext context) {
-    var foodItems = context.watch<FoodListEntryViewModel>().foodItems;
+    // Sorting and Filtering
+    int sortOptionChoice =
+        context.watch<FoodListEntryViewModel>().sortOptionChoice;
+    final List<String> categoryFilters =
+        context.watch<FoodListEntryViewModel>().categoryFilters;
+    final List<String> userFilters =
+        context.watch<FoodListEntryViewModel>().userFilters;
 
-    void onOptionSelect(bool value, int index) {
-      setState(() {
-        sortOptionChoice = value ? index : sortOptionChoice;
-      });
-      debugPrint("sortOptionChoice $sortOptionChoice");
-    }
+    // Food Categories
+    var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
+
+    // Food Items
+    var foodItems = context.watch<FoodListEntryViewModel>().foodItems.where(
+      (item) {
+        if (categoryFilters.isEmpty && userFilters.isEmpty) {
+          return true;
+        }
+
+        // Filter by Categories
+        if (categoryFilters.isNotEmpty) {
+          FoodItem? foodItem = FoodItemViewModel.getFoodItem(item.foodId);
+          return categoryFilters
+              .contains(foodCategories[foodItem!.category].name);
+        }
+        // Filter by Users
+        if (userFilters.isNotEmpty) {
+          return userFilters.contains(item.owner);
+        }
+
+        return true;
+      },
+    ).toList();
 
     void onSortPress() {
       debugPrint('You just pressed the sort button');
@@ -38,10 +61,7 @@ class _FoodListViewState extends State<FoodListView> {
               height: 300,
               decoration: BoxDecoration(color: Colors.yellow[100]),
               padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
-              child: SortForm(
-                options: _sortOptionsList,
-                onOptionSelect: onOptionSelect,
-              ),
+              child: const SortForm(),
             );
           });
     }
@@ -55,7 +75,7 @@ class _FoodListViewState extends State<FoodListView> {
               height: 500,
               decoration: BoxDecoration(color: Colors.yellow[100]),
               padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
-              child: const Text("Filter Container"),
+              child: const FilterForm(),
             );
           });
     }
@@ -124,6 +144,7 @@ class _FoodListViewState extends State<FoodListView> {
                       itemCount: foodItems.length,
                       itemBuilder: (BuildContext context, int index) {
                         foodItems.sort(((a, b) {
+                          debugPrint("$sortOptionChoice");
                           switch (sortOptionChoice) {
                             case 0:
                               {
