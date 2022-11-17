@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../view_models/food_list_entry_view_model.dart';
 
 class SortForm extends StatefulWidget {
-  final List<String> options;
-  final Function(bool, int) onOptionSelect;
-
   const SortForm({
     super.key,
-    required this.options,
-    required this.onOptionSelect,
   });
 
   @override
@@ -15,10 +13,13 @@ class SortForm extends StatefulWidget {
 }
 
 class _SortFormState extends State<SortForm> {
-  int defaultChoiceIndex = 0;
-
   @override
   Widget build(BuildContext context) {
+    int sortOptionChoice =
+        context.watch<FoodListEntryViewModel>().sortOptionChoice;
+    List<String> options =
+        context.watch<FoodListEntryViewModel>().sortOptionsList;
+
     return Container(
       padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
       child: Column(
@@ -50,24 +51,23 @@ class _SortFormState extends State<SortForm> {
           ),
           Wrap(
             spacing: 8,
-            children: List.generate(widget.options.length, (index) {
+            children: List.generate(options.length, (index) {
               return ChoiceChip(
                 label: Text(
-                  widget.options[index],
+                  options[index],
                 ),
                 labelStyle: const TextStyle(
                   color: Colors.black,
                 ),
-                selected: defaultChoiceIndex == index,
+                selected: sortOptionChoice == index,
                 selectedColor: Colors.amber,
                 backgroundColor: Colors.yellow[100],
                 shape: const StadiumBorder(side: BorderSide()),
                 elevation: 2,
                 onSelected: (value) {
-                  setState(() {
-                    defaultChoiceIndex = value ? index : defaultChoiceIndex;
-                  });
-                  widget.onOptionSelect(value, index);
+                  context
+                      .read<FoodListEntryViewModel>()
+                      .onOptionSelect(value, index);
                 },
               );
             }),
@@ -79,13 +79,15 @@ class _SortFormState extends State<SortForm> {
             child: ElevatedButton(
               onPressed: () => Navigator.pop(context),
               style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
                   ),
-                  fixedSize:
-                      MaterialStateProperty.all<Size>(const Size(150, 24))),
+                ),
+                fixedSize: MaterialStateProperty.all<Size>(
+                  const Size(150, 24),
+                ),
+              ),
               child: const Text("Save"),
             ),
           )

@@ -21,7 +21,32 @@ final List<ListFoodEntry> initialData = List.generate(
 class FoodListEntryViewModel with ChangeNotifier {
   final List<ListFoodEntry> _foodItems = initialData;
 
+  int _sortOptionChoice = 0;
+  final List<String> _sortOptionsList = ['Expiration', 'Name', 'Newest'];
+  final List<String> _categoryFilters = [];
+  final List<String> _userFilters = [];
+  final List<String> _categoryOptions = [
+    "Produce",
+    "Dairy",
+    "Meat",
+    "Baking Goods",
+    "Seafood",
+    "Snacks"
+  ];
+  final List<String> _userOptions = [
+    "Alexander Grattan",
+    "Crystal Li",
+    "Jennifer Zheng"
+  ];
+
   List<ListFoodEntry> get foodItems => _foodItems;
+  int get sortOptionChoice => _sortOptionChoice;
+  List<String> get sortOptionsList => _sortOptionsList;
+  List<String> get categoryFilters => _categoryFilters;
+  List<String> get userFilters => _userFilters;
+  List<String> get categoryOptions => _categoryOptions;
+  List<String> get userOptions => _userOptions;
+
   set quantity(int q) => {quantity = q};
 
   FoodItem? getFoodItem(foodId) {
@@ -88,5 +113,33 @@ class FoodListEntryViewModel with ChangeNotifier {
     } else {
       return "${foodItem.daysToExpire - timePassed.inDays} day left";
     }
+  }
+
+  void onOptionSelect(bool value, int index) {
+    _sortOptionChoice = value ? index : sortOptionChoice;
+    debugPrint("sortOptionChoice $sortOptionChoice");
+    notifyListeners();
+  }
+
+  void onCategorySelect(bool value, int index) {
+    if (value) {
+      _categoryFilters.add(_categoryOptions[index]);
+    } else {
+      _categoryFilters.removeWhere((String filter) {
+        return filter == _categoryOptions[index];
+      });
+    }
+    notifyListeners();
+  }
+
+  void onUserSelect(bool value, int index) {
+    if (value) {
+      _userFilters.add(_userOptions[index]);
+    } else {
+      _userFilters.removeWhere((String filter) {
+        return filter == _userOptions[index];
+      });
+    }
+    notifyListeners();
   }
 }
