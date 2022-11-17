@@ -3,6 +3,10 @@ import 'package:flutter_application_1/view_models/food_list_entry_view_model.dar
 import 'package:flutter_application_1/components/food_item_row.dart';
 import 'package:provider/provider.dart';
 
+import '../components/sort_form.dart';
+import '../models/food_item.dart';
+import '../view_models/food_item_view_model.dart';
+
 class FoodListView extends StatefulWidget {
   const FoodListView({super.key});
 
@@ -11,9 +15,19 @@ class FoodListView extends StatefulWidget {
 }
 
 class _FoodListViewState extends State<FoodListView> {
+  int sortOptionChoice = 0;
+  final List<String> _sortOptionsList = ['Expiration', 'Name', 'Newest'];
+
   @override
   Widget build(BuildContext context) {
     var foodItems = context.watch<FoodListEntryViewModel>().foodItems;
+
+    void onOptionSelect(bool value, int index) {
+      setState(() {
+        sortOptionChoice = value ? index : sortOptionChoice;
+      });
+      debugPrint("sortOptionChoice $sortOptionChoice");
+    }
 
     void onSortPress() {
       debugPrint('You just pressed the sort button');
@@ -21,10 +35,13 @@ class _FoodListViewState extends State<FoodListView> {
           context: context,
           builder: (context) {
             return Container(
-              height: 500,
+              height: 300,
               decoration: BoxDecoration(color: Colors.yellow[100]),
               padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
-              child: const Text("Sort Container"),
+              child: SortForm(
+                options: _sortOptionsList,
+                onOptionSelect: onOptionSelect,
+              ),
             );
           });
     }
@@ -106,6 +123,48 @@ class _FoodListViewState extends State<FoodListView> {
                       // padding: const EdgeInsets.all(8),
                       itemCount: foodItems.length,
                       itemBuilder: (BuildContext context, int index) {
+                        foodItems.sort(((a, b) {
+                          switch (sortOptionChoice) {
+                            case 0:
+                              {
+                                FoodItem? foodItemA =
+                                    FoodItemViewModel.getFoodItem(a.foodId);
+                                FoodItem? foodItemB =
+                                    FoodItemViewModel.getFoodItem(b.foodId);
+                                Duration timePassedA =
+                                    DateTime.now().difference(a.dateAdded);
+                                Duration timePassedB =
+                                    DateTime.now().difference(b.dateAdded);
+                                int aDifference = foodItemA!.daysToExpire -
+                                    timePassedA.inDays;
+                                int bDifference = foodItemB!.daysToExpire -
+                                    timePassedB.inDays;
+                                return aDifference.compareTo(bDifference);
+                              }
+                            case 1:
+                              {
+                                FoodItem? foodItemA =
+                                    FoodItemViewModel.getFoodItem(a.foodId);
+                                FoodItem? foodItemB =
+                                    FoodItemViewModel.getFoodItem(b.foodId);
+                                return foodItemA!.name
+                                    .compareTo(foodItemB!.name);
+                              }
+                            case 2:
+                              {
+                                Duration timePassedA =
+                                    DateTime.now().difference(a.dateAdded);
+                                Duration timePassedB =
+                                    DateTime.now().difference(b.dateAdded);
+                                return timePassedA.compareTo(timePassedB);
+                              }
+                            default:
+                              {
+                                return 0;
+                              }
+                          }
+                        }));
+
                         return FoodItemRow(foodItems: foodItems, index: index);
                       })),
               Container(
