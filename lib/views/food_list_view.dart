@@ -22,16 +22,10 @@ class _FoodListViewState extends State<FoodListView> {
     // Sorting and Filtering
     int sortOptionChoice =
         context.watch<FoodListEntryViewModel>().sortOptionChoice;
-    final List<String> sortOptionsList =
-        context.watch<FoodListEntryViewModel>().sortOptionsList;
     final List<String> categoryFilters =
         context.watch<FoodListEntryViewModel>().categoryFilters;
     final List<String> userFilters =
         context.watch<FoodListEntryViewModel>().userFilters;
-    final List<String> categoryOptions =
-        context.watch<FoodListEntryViewModel>().categoryOptions;
-    final List<String> userOptions =
-        context.watch<FoodListEntryViewModel>().userOptions;
 
     // Food Categories
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
