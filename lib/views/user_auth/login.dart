@@ -1,46 +1,54 @@
 import "package:flutter/material.dart";
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
-
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _isHidden = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         body: SafeArea(
             child: Center(
-                child: Column(
+              child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.shopping_cart,
-              size: 100,
-            ),
-            const SizedBox(height: 75),
-            // Hello again
-            Text(
-              "Hello Again!",
-              style: GoogleFonts.bebasNeue(
-                fontWeight: FontWeight.bold,
-                fontSize: 52,
+              //app logo
+              Image.asset(
+                  'assets/groceries_icon.png', 
+                  height: 150,
+                  width: 150,
+                  ),
+              // const SizedBox(height: 20),
+
+              //app name 
+              Text(
+                "Grosseries",
+                style: GoogleFonts.bebasNeue(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 52,
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "Welcome back you've been missed",
-              style: TextStyle(
-                fontSize: 16,
+
+              //tagline
+              const SizedBox(height: 10),
+              const Text(
+                "Eat your groceries before they become gross-eries ;)",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
               ),
-            ),
-            const SizedBox(height: 50),
+              const SizedBox(height: 50),
+              
+
+
             // username textfield
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -56,6 +64,10 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Email",
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: Color.fromARGB(255, 18, 156, 57),
+                      ),
                     ),
                   ),
                 ),
@@ -72,62 +84,91 @@ class _LoginPageState extends State<LoginPage> {
                   border: Border.all(color: Colors.white),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: TextField(
-                    obscureText: true,
+                    obscureText: _isHidden,
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: "Password",
+                      prefixIcon: 
+                        Icon(
+                          Icons.lock, 
+                          color: Color.fromARGB(255, 18, 156, 57),
+                        ),
+                      suffixIcon: InkWell(
+                        onTap: _togglePasswordView,
+                        child: Icon( 
+                          _isHidden
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                          color: Colors.grey,
+                        ), 
+                      )
                     ),
                   ),
                 ),
               ),
             ),
             const SizedBox(height: 10),
+            
 
-            // sign in button
-            InkWell(
-              onTap: () => GoRouter.of(context).go("/"),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Container(
-                  padding: const EdgeInsets.all(20),
+            //new sign in button 
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: GestureDetector(
+                  onTap: () => GoRouter.of(context).go("/profile"),
+                  child: Container(
+                    padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                      color: Colors.deepPurple,
+                      color: Color.fromARGB(255, 18, 156, 57),
                       borderRadius: BorderRadius.circular(12)),
                   child: const Center(
                     child: Text(
-                      "Sign In",
+                      "Log In",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 18),
-                    ),
-                  ),
-                ),
-              ),
+                      )
+                    )
+                )
+              )
             ),
             const SizedBox(height: 25),
 
             // not a member? register now
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text("Not a member? ",
+              children: [
+                const Text("Don't have an Account? ",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                    )),
-                Text(
-                  "Register Now",
-                  style: TextStyle(
-                    color: Colors.blue,
+                    ),
+                ),
+                
+                GestureDetector(
+                  // onTap: widget.showRegisterpage,
+                  onTap: () => GoRouter.of(context).go("/create_account"),
+                  child: const Text(
+                    "Register Now",
+                     style: TextStyle(
+                    color: Color.fromARGB(255, 137, 194, 153),
                     fontWeight: FontWeight.bold,
                   ),
+                 ),
                 )
               ],
             ),
           ],
-        ))));
+         )
+        )
+      )
+    );
+  }
+  void _togglePasswordView(){
+  setState(() {
+    _isHidden = !_isHidden;
+  });
   }
 }
