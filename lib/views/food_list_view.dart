@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/filter_form.dart';
+import 'package:flutter_application_1/models/list_food_entry.dart';
 import 'package:flutter_application_1/view_models/food_category_view_model.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 import 'package:flutter_application_1/components/food_item_row.dart';
@@ -17,6 +18,9 @@ class FoodListView extends StatefulWidget {
 }
 
 class _FoodListViewState extends State<FoodListView> {
+  String query = "";
+  final textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     // Sorting and Filtering
@@ -26,6 +30,7 @@ class _FoodListViewState extends State<FoodListView> {
         context.watch<FoodListEntryViewModel>().categoryFilters;
     final List<String> userFilters =
         context.watch<FoodListEntryViewModel>().userFilters;
+    // String query = context.watch<FoodListEntryViewModel>().query;
 
     // Food Categories
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
@@ -102,42 +107,45 @@ class _FoodListViewState extends State<FoodListView> {
           child: Column(
             children: [
               Container(
-                // margin: const EdgeInsets.only(top: 24, left: 24),
-                padding: const EdgeInsets.only(top: 20),
-                child: Row(children: [
-                  Expanded(
-                      flex: 2,
-                      child: TextButton(
-                          onPressed: () {},
-                          child: Row(
-                            children: const [
-                              Text(
-                                "All Food Items",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 28,
-                                    color: Colors.black),
-                              ),
-                              Icon(
-                                Icons.arrow_drop_down_rounded,
-                                color: Colors.black,
-                                size: 56,
-                              )
-                            ],
-                          ))),
-                  Ink(
-                      decoration: const ShapeDecoration(
-                        color: Color(0xD6D6D6D6),
-                        shape: CircleBorder(),
-                      ),
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.search),
-                        color: Colors.black,
-                        iconSize: 28,
-                      ))
-                ]),
-              ),
+                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                  child: TextFormField(
+                    controller: textEditingController,
+                    onChanged: (value) {
+                      setState(() {
+                        query = value.toLowerCase();
+                      });
+                    },
+                    cursorColor: Colors.grey,
+                    decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24),
+                          borderSide: BorderSide.none,
+                        ),
+                        hintText: "Search",
+                        hintStyle: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18,
+                        ),
+                        prefixIcon: Container(
+                          padding: const EdgeInsets.all(16),
+                          width: 16,
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.yellow[800],
+                          ),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () => {
+                            textEditingController.clear(),
+                            setState(() {
+                              query = "";
+                            })
+                          },
+                        )),
+                  )),
               Expanded(
                   child: ListView.builder(
                       // padding: const EdgeInsets.all(8),
@@ -185,6 +193,15 @@ class _FoodListViewState extends State<FoodListView> {
                               }
                           }
                         }));
+
+                        // filter by search input
+                        if (query.isNotEmpty) {
+                          FoodItem? foodItem = FoodItemViewModel.getFoodItem(
+                              foodItems[index].foodId);
+                          return foodItem!.name.toLowerCase().contains(query)
+                              ? FoodItemRow(foodItems: foodItems, index: index)
+                              : Container();
+                        }
 
                         return FoodItemRow(foodItems: foodItems, index: index);
                       })),
