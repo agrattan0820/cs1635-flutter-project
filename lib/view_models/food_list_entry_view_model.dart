@@ -85,16 +85,6 @@ class FoodListEntryViewModel with ChangeNotifier {
     }
   }
 
-  static String getInitials(ListFoodEntry listFoodEntry) {
-    var buffer = StringBuffer();
-    var split = listFoodEntry.owner.split(' ');
-    for (var i = 0; i < split.length; i++) {
-      buffer.write(split[i][0].toUpperCase());
-    }
-
-    return buffer.toString();
-  }
-
   String expirationString(int entryId) {
     ListFoodEntry? listFoodEntry = getListFoodEntry(entryId);
     FoodItem? foodItem = FoodItemViewModel.getFoodItem(listFoodEntry!.foodId);
