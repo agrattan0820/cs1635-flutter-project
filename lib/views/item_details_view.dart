@@ -85,6 +85,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                   InputQty(
                       initVal: listFoodEntry.quantity,
                       minVal: 1,
+                      maxVal: 100,
                       onQtyChanged: (val) {
                         listFoodEntry.quantity = val!.toInt();
                       },
