@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/filter_form.dart';
-import 'package:flutter_application_1/models/list_food_entry.dart';
 import 'package:flutter_application_1/view_models/food_category_view_model.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 import 'package:flutter_application_1/components/food_item_row.dart';
@@ -99,6 +98,8 @@ class _FoodListViewState extends State<FoodListView> {
           });
     }
 
+    final GlobalKey<AnimatedListState> key = GlobalKey();
+
     return SafeArea(child:
         Consumer<FoodListEntryViewModel>(builder: (context, viewModel, child) {
       return Container(
@@ -147,10 +148,10 @@ class _FoodListViewState extends State<FoodListView> {
                         )),
                   )),
               Expanded(
-                  child: ListView.builder(
+                  child: AnimatedList(
                       // padding: const EdgeInsets.all(8),
-                      itemCount: foodItems.length,
-                      itemBuilder: (BuildContext context, int index) {
+                      initialItemCount: foodItems.length,
+                      itemBuilder: (context, index, animation) {
                         foodItems.sort(((a, b) {
                           debugPrint("$sortOptionChoice");
                           switch (sortOptionChoice) {
