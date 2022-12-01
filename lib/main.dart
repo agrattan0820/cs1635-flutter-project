@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/view_models/food_category_view_model.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
@@ -19,6 +20,25 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  AwesomeNotifications().initialize(
+    "resource://drawable/res_app_icon",
+    [
+      NotificationChannel(
+          channelGroupKey: 'basic_channel_group',
+          channelKey: 'basic_channel',
+          channelName: 'Basic notifications',
+          channelDescription: 'Notification channel for basic tests',
+          defaultColor: const Color(0xFF9D50DD),
+          ledColor: Colors.white)
+    ],
+    // Channel groups are only visual and are not required
+    channelGroups: [
+      NotificationChannelGroup(
+          channelGroupKey: 'basic_channel_group',
+          channelGroupName: 'Basic group')
+    ],
+    debug: true,
+  );
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<FoodListEntryViewModel>(
@@ -86,33 +106,29 @@ class MyApp extends StatelessWidget {
                 return const EditProfile();
               },
             ),
-            
             GoRoute(
               path: '/household_send_invite',
               builder: (BuildContext context, GoRouterState state) {
                 return const HouseholdSendInvite();
               },
             ),
-
             GoRoute(
               path: '/manage_reminders',
               builder: (BuildContext context, GoRouterState state) {
                 return const ManageReminders();
               },
             ),
-
             GoRoute(
                 path: '/item_details/:id',
                 builder: (BuildContext context, GoRouterState state) {
                   return ItemDetailsView(id: state.params['id']);
                 }),
-            
             GoRoute(
-                path: '/profile',
-                builder: (BuildContext context, GoRouterState state) {
-                  return const ProfilePage();
-                },
-              ),
+              path: '/profile',
+              builder: (BuildContext context, GoRouterState state) {
+                return const ProfilePage();
+              },
+            ),
           ]),
       GoRoute(
         path: '/welcome',
@@ -132,7 +148,6 @@ class MyApp extends StatelessWidget {
           return const CreateAccountPage();
         },
       ),
-
     ],
   );
 }
