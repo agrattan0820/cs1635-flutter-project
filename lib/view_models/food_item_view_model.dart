@@ -8,16 +8,6 @@ final _random = Random();
 /// from [min], inclusive, to [max], exclusive.
 int next(int min, int max) => min + _random.nextInt(max - min);
 
-// final List<FoodItem> initialData = List.generate(
-//   10,
-//   (index) => FoodItem(
-//     id: index,
-//     name: "Food Item $index",
-//     category: next(0, 5),
-//     image: "assets/food-items/apple.jpeg",
-//   ),
-// );
-
 final List<FoodItem> initialData = [
   FoodItem(
     id: 0,
