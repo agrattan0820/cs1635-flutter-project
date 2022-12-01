@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/components/filter_form.dart';
-import 'package:flutter_application_1/models/list_food_entry.dart';
 import 'package:flutter_application_1/view_models/food_category_view_model.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
 import 'package:flutter_application_1/components/food_item_row.dart';
@@ -99,6 +98,8 @@ class _FoodListViewState extends State<FoodListView> {
           });
     }
 
+    final GlobalKey<AnimatedListState> key = GlobalKey();
+
     return SafeArea(child:
         Consumer<FoodListEntryViewModel>(builder: (context, viewModel, child) {
       return Container(
@@ -147,10 +148,10 @@ class _FoodListViewState extends State<FoodListView> {
                         )),
                   )),
               Expanded(
-                  child: ListView.builder(
+                  child: AnimatedList(
                       // padding: const EdgeInsets.all(8),
-                      itemCount: foodItems.length,
-                      itemBuilder: (BuildContext context, int index) {
+                      initialItemCount: foodItems.length,
+                      itemBuilder: (context, index, animation) {
                         foodItems.sort(((a, b) {
                           debugPrint("$sortOptionChoice");
                           switch (sortOptionChoice) {
@@ -158,6 +159,7 @@ class _FoodListViewState extends State<FoodListView> {
                               {
                                 FoodItem? foodItemA =
                                     FoodItemViewModel.getFoodItem(a.foodId);
+
                                 FoodItem? foodItemB =
                                     FoodItemViewModel.getFoodItem(b.foodId);
                                 Duration timePassedA =
@@ -209,10 +211,9 @@ class _FoodListViewState extends State<FoodListView> {
                   margin: const EdgeInsets.only(
                       top: 10, bottom: 10, left: 20, right: 20),
                   padding: const EdgeInsets.only(left: 10, right: 10),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20))),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: IntrinsicHeight(
                       child: IntrinsicWidth(
                     child: Row(children: <Widget>[
@@ -238,7 +239,7 @@ class _FoodListViewState extends State<FoodListView> {
                         thickness: 1,
                         indent: 5,
                         endIndent: 5,
-                        color: Colors.black,
+                        color: Colors.grey,
                       ),
                       TextButton(
                           onPressed: onFilterPress,
@@ -257,7 +258,7 @@ class _FoodListViewState extends State<FoodListView> {
                         thickness: 1,
                         indent: 5,
                         endIndent: 5,
-                        color: Colors.black,
+                        color: Colors.grey,
                       ),
                       TextButton(
                           onPressed: onSharePress,
