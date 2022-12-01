@@ -148,10 +148,10 @@ class _FoodListViewState extends State<FoodListView> {
                         )),
                   )),
               Expanded(
-                  child: AnimatedList(
+                  child: ListView.builder(
                       // padding: const EdgeInsets.all(8),
-                      initialItemCount: foodItems.length,
-                      itemBuilder: (context, index, animation) {
+                      itemCount: foodItems.length,
+                      itemBuilder: (context, index) {
                         foodItems.sort(((a, b) {
                           debugPrint("$sortOptionChoice");
                           switch (sortOptionChoice) {

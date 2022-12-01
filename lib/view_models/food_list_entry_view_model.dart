@@ -10,12 +10,13 @@ const int max = 1000000000;
 final List<ListFoodEntry> initialData = List.generate(
   10,
   (index) => ListFoodEntry(
-      entryId: _random.nextInt(max),
-      foodId: index,
-      storage: "Fridge",
-      quantity: 3,
-      owner: "Jennifer Zheng",
-      dateAdded: DateTime.now()),
+    entryId: _random.nextInt(max),
+    foodId: index,
+    storage: "Fridge",
+    quantity: 3,
+    owner: "Jennifer Zheng",
+    dateAdded: DateTime.now(),
+  ),
 );
 
 class FoodListEntryViewModel with ChangeNotifier {
