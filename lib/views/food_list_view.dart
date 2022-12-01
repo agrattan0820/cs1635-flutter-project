@@ -159,6 +159,7 @@ class _FoodListViewState extends State<FoodListView> {
                               {
                                 FoodItem? foodItemA =
                                     FoodItemViewModel.getFoodItem(a.foodId);
+
                                 FoodItem? foodItemB =
                                     FoodItemViewModel.getFoodItem(b.foodId);
                                 Duration timePassedA =

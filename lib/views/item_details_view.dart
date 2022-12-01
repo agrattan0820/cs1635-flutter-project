@@ -5,6 +5,8 @@ import 'package:flutter_application_1/components/user_bubble.dart';
 import 'package:flutter_application_1/models/list_food_entry.dart';
 import 'package:flutter_application_1/models/food_item.dart';
 import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../view_models/food_category_view_model.dart';
@@ -40,35 +42,53 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
             Container(
                 padding: const EdgeInsets.only(top: 20, left: 8),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
-                        flex: 2,
-                        child: Text(
-                          foodItem!.name,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 28,
-                            color: Colors.black,
-                          ),
-                        )),
                     IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.ios_share,
-                          color: Colors.black,
-                          size: 28,
-                        ))
+                      onPressed: () => GoRouter.of(context).go('/'),
+                      icon: const FaIcon(
+                        FontAwesomeIcons.chevronLeft,
+                        size: 24,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Container(
+                      transform: Matrix4.translationValues(-2.0, 0.0, 0.0),
+                      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                      decoration: BoxDecoration(
+                          color: foodCategories[foodItem!.category].color[100],
+                          borderRadius: BorderRadius.circular(32)),
+                      child: Text(
+                        foodItem.name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.ios_share,
+                        color: Colors.black,
+                        size: 28,
+                      ),
+                    )
                   ],
                 )),
             Container(
-                height: 200,
-                width: 200,
-                margin: const EdgeInsets.only(top: 56, bottom: 8),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Image(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(foodItem.image)))),
+              height: 200,
+              width: 200,
+              margin: const EdgeInsets.only(top: 56, bottom: 8),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image(
+                  fit: BoxFit.cover,
+                  image: AssetImage(foodItem.image),
+                ),
+              ),
+            ),
             InkWell(
                 onTap: () {},
                 child: Container(

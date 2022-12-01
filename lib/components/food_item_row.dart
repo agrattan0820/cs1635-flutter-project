@@ -7,6 +7,10 @@ import 'package:flutter_application_1/view_models/food_list_entry_view_model.dar
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../models/food_item.dart';
+import '../view_models/food_category_view_model.dart';
+import '../view_models/food_item_view_model.dart';
+
 class FoodItemRow extends StatelessWidget {
   final List<ListFoodEntry> foodItems;
   final int index;
@@ -15,6 +19,10 @@ class FoodItemRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FoodItem? foodItem = FoodItemViewModel.getFoodItem(foodItems[index].foodId);
+
+    var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
+
     return Container(
         padding: const EdgeInsets.only(top: 8, bottom: 28, left: 8, right: 8),
         child: Slidable(
@@ -43,7 +51,7 @@ class FoodItemRow extends StatelessWidget {
                     // margin: const EdgeInsets.only(top: 8, bottom: 8),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: foodCategories[foodItem!.category].color[100],
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.25),
@@ -63,7 +71,7 @@ class FoodItemRow extends StatelessWidget {
                         Expanded(
                           flex: 2,
                           child: Text(
-                            "${foodItems[index].quantity.toString()}x ${context.read<FoodListEntryViewModel>().getFoodItem(foodItems[index].foodId)!.name}",
+                            "${foodItems[index].quantity.toString()}x ${foodItem.name}",
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20,
