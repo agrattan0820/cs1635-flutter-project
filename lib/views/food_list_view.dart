@@ -211,10 +211,9 @@ class _FoodListViewState extends State<FoodListView> {
                   margin: const EdgeInsets.only(
                       top: 10, bottom: 10, left: 20, right: 20),
                   padding: const EdgeInsets.only(left: 10, right: 10),
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20))),
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: IntrinsicHeight(
                       child: IntrinsicWidth(
                     child: Row(children: <Widget>[
@@ -240,7 +239,7 @@ class _FoodListViewState extends State<FoodListView> {
                         thickness: 1,
                         indent: 5,
                         endIndent: 5,
-                        color: Colors.black,
+                        color: Colors.grey,
                       ),
                       TextButton(
                           onPressed: onFilterPress,
@@ -259,7 +258,7 @@ class _FoodListViewState extends State<FoodListView> {
                         thickness: 1,
                         indent: 5,
                         endIndent: 5,
-                        color: Colors.black,
+                        color: Colors.grey,
                       ),
                       TextButton(
                           onPressed: onSharePress,
