@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class Tag extends StatelessWidget {
   final String text;
+  Color color;
 
-  const Tag({super.key, required this.text});
+  Tag({super.key, required this.text, this.color = Colors.transparent});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,8 @@ class Tag extends StatelessWidget {
       padding: const EdgeInsets.only(top: 4, bottom: 4, left: 4, right: 4),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
-          borderRadius: const BorderRadius.all(Radius.circular(20))),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
+          color: color),
       child: Center(
           child: Text(text, style: const TextStyle(color: Colors.black))),
     );

@@ -70,7 +70,7 @@ final List<FoodItem> initialData = [
     name: "Ground Beef",
     category: 2,
     image: "assets/food-items/ground_beef.jpeg",
-    daysToExpire: 4,
+    daysToExpire: 3,
   ),
   FoodItem(
     id: 9,

@@ -82,9 +82,13 @@ class FoodItemRow extends StatelessWidget {
                         ),
                         UserBubble(user: foodItems[index].owner),
                         Tag(
-                            text: context
-                                .read<FoodListEntryViewModel>()
-                                .expirationString(foodItems[index].entryId))
+                          text: context
+                              .read<FoodListEntryViewModel>()
+                              .expiration(foodItems[index].entryId)["text"],
+                          color: context
+                              .read<FoodListEntryViewModel>()
+                              .expiration(foodItems[index].entryId)["color"],
+                        )
                       ],
                     )))));
   }

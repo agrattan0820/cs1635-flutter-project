@@ -112,24 +112,29 @@ class FoodListEntryViewModel with ChangeNotifier {
     }
   }
 
-  String expirationString(int entryId) {
+  Map expiration(int entryId) {
     ListFoodEntry? listFoodEntry = getListFoodEntry(entryId);
     FoodItem? foodItem = FoodItemViewModel.getFoodItem(listFoodEntry!.foodId);
     Duration timePassed = DateTime.now().difference(listFoodEntry.dateAdded);
+    Map expirationInfo = {"text": "", "color": Colors.lightGreen};
 
     if (timePassed.inDays == foodItem!.daysToExpire) {
-      return "Expires Today";
-    }
-
-    if (timePassed.inDays > foodItem.daysToExpire) {
-      return "Expired by ${timePassed.inDays - foodItem.daysToExpire} Day";
-    }
-
-    if (foodItem.daysToExpire - timePassed.inDays > 1) {
-      return "${foodItem.daysToExpire - timePassed.inDays} days left";
+      expirationInfo["text"] = "Expires Today";
+      expirationInfo["color"] = Colors.red[300];
+    } else if (timePassed.inDays > foodItem.daysToExpire) {
+      expirationInfo["text"] =
+          "Expired by ${timePassed.inDays - foodItem.daysToExpire} ${(timePassed.inDays - foodItem.daysToExpire > 1) ? "days" : "day"}";
+      expirationInfo["color"] = Colors.red[300];
     } else {
-      return "${foodItem.daysToExpire - timePassed.inDays} day left";
+      expirationInfo["text"] =
+          "${foodItem.daysToExpire - timePassed.inDays} ${(foodItem.daysToExpire - timePassed.inDays > 1) ? "days" : "day"} left";
+
+      if (foodItem.daysToExpire - timePassed.inDays <= 3) {
+        expirationInfo["color"] = Colors.amber;
+      }
     }
+
+    return expirationInfo;
   }
 
   void onOptionSelect(bool value, int index) {
