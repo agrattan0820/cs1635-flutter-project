@@ -99,7 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                             _isHidden ? Icons.visibility : Icons.visibility_off,
                             color: Colors.grey,
                           ),
-                        )),
+                        )
+                      ),
                   ),
                 ),
               ),

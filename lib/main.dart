@@ -7,14 +7,15 @@ import 'package:flutter_application_1/views/add_food_category.dart';
 import 'package:flutter_application_1/views/add_food_item_detail.dart';
 import 'package:flutter_application_1/views/app_scaffold.dart';
 import 'package:flutter_application_1/views/food_list_view.dart';
-import 'package:flutter_application_1/views/settings/household/household_send_invite.dart';
 import 'package:flutter_application_1/views/settings/edit_profile.dart';
+import 'package:flutter_application_1/views/settings/edit_profile_more.dart';
 import 'package:flutter_application_1/views/settings/manage_reminders.dart';
 import 'package:flutter_application_1/views/user_auth/login.dart';
 import 'package:flutter_application_1/views/item_details_view.dart';
 import 'package:flutter_application_1/views/user_auth/create_account.dart';
 import 'package:flutter_application_1/views/settings/profile.dart';
 import 'package:flutter_application_1/views/user_auth/welcome.dart';
+// import 'package:flutter_application_1/views/settings/household/household_send_invite.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false, //remove DEBUG banner
       title: 'Grosseries',
       theme: ThemeData(
         primarySwatch: Colors.orange,
@@ -87,10 +89,17 @@ class MyApp extends StatelessWidget {
               },
             ),
             
+            // GoRoute(
+            //   path: '/household_send_invite',
+            //   builder: (BuildContext context, GoRouterState state) {
+            //     return const HouseholdSendInvite();
+            //   },
+            // ),
+
             GoRoute(
-              path: '/household_send_invite',
+              path: '/edit_profile_more',
               builder: (BuildContext context, GoRouterState state) {
-                return const HouseholdSendInvite();
+                return const EditProfileMore();
               },
             ),
 

@@ -78,7 +78,7 @@ class FoodItemRow extends StatelessWidget {
                                 color: Colors.black),
                           ),
                         ),
-                        UserBubble(user: foodItems[index].owner),
+                        UserBubble(user: foodItems[index].owner, borderSize: 4, textSize: 15),
                         Tag(
                             text: context
                                 .read<FoodListEntryViewModel>()
