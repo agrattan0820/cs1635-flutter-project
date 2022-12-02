@@ -10,6 +10,7 @@ import 'package:grosseries/views/add_food_item_detail.dart';
 import 'package:grosseries/views/app_scaffold.dart';
 import 'package:grosseries/views/food_list_view.dart';
 import 'package:grosseries/views/settings/edit_profile.dart';
+import 'package:grosseries/views/settings/edit_profile_more.dart';
 import 'package:grosseries/views/settings/manage_reminders.dart';
 import 'package:grosseries/views/user_auth/login.dart';
 import 'package:grosseries/views/item_details_view.dart';
