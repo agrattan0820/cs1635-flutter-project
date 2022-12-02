@@ -1,4 +1,3 @@
-
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:grosseries/view_models/food_category_view_model.dart';
@@ -110,7 +109,6 @@ class MyApp extends StatelessWidget {
                 return const EditProfile();
               },
             ),
-            
             GoRoute(
               path: '/edit_profile_more',
               builder: (BuildContext context, GoRouterState state) {
