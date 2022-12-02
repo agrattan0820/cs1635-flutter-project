@@ -53,7 +53,8 @@ class FoodItemRow extends StatelessWidget {
                     // margin: const EdgeInsets.only(top: 8, bottom: 8),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: foodCategories[foodItem.category].color[100],
+                      // color: foodCategories[foodItem.category].color[100],
+                      color: Colors.lightBlue.shade100,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.25),
