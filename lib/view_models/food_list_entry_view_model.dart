@@ -67,17 +67,17 @@ class FoodListEntryViewModel with ChangeNotifier {
 
   Future<void> addFoodItemEntry(int id, String storage, int quantity,
       String owner, DateTime dateAdded) async {
-    // Add entry to overall list
-    _foodItems.add(
-      ListFoodEntry(
-        entryId: _random.nextInt(max),
-        foodId: id,
-        storage: storage,
-        quantity: quantity,
-        owner: owner,
-        dateAdded: dateAdded,
-      ),
+    ListFoodEntry entry = ListFoodEntry(
+      entryId: _random.nextInt(max),
+      foodId: id,
+      storage: storage,
+      quantity: quantity,
+      owner: owner,
+      dateAdded: dateAdded,
     );
+
+    // Add entry to overall list
+    _foodItems.add(entry);
 
     // Get relevant food item
     FoodItem? foodItem = getFoodItem(id);
@@ -96,7 +96,8 @@ class FoodListEntryViewModel with ChangeNotifier {
     );
 
     // Schedule notification
-    await createFoodExpireReminderNotification(notificationSchedule);
+    await createFoodExpireReminderNotification(
+        entry, foodItem, notificationSchedule);
     notifyListeners();
   }
 
