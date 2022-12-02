@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_application_1/view_models/food_item_view_model.dart';
+import 'package:grosseries/view_models/food_item_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,7 +18,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
         backgroundColor: Colors.yellow[200],
         body: SafeArea(
             child: Center(
@@ -146,9 +146,6 @@ class _ProfilePageState extends State<ProfilePage> {
             color: Colors.black,
           ),
           ],
-         )
-        )
-      )
-   );
+        ))));
   }
 }

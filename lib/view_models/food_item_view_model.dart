@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_application_1/models/food_item.dart';
+import 'package:grosseries/models/food_item.dart';
 
 final _random = Random();
 

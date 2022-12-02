@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_application_1/components/tag.dart';
-import 'package:flutter_application_1/components/user_bubble.dart';
-import 'package:flutter_application_1/models/list_food_entry.dart';
-import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
+import 'package:grosseries/components/tag.dart';
+import 'package:grosseries/components/user_bubble.dart';
+import 'package:grosseries/models/list_food_entry.dart';
+import 'package:grosseries/view_models/food_list_entry_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +22,8 @@ class FoodItemRow extends StatelessWidget {
     FoodItem? foodItem = FoodItemViewModel.getFoodItem(foodItems[index].foodId);
 
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
+
+    debugPrint("${foodItem!.name}${foodItem.daysToExpire}");
 
     return Container(
         padding: const EdgeInsets.only(top: 8, bottom: 28, left: 8, right: 8),
@@ -51,7 +53,7 @@ class FoodItemRow extends StatelessWidget {
                     // margin: const EdgeInsets.only(top: 8, bottom: 8),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: foodCategories[foodItem!.category].color[100],
+                      color: foodCategories[foodItem.category].color[100],
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.25),
