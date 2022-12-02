@@ -173,12 +173,12 @@ class _FoodAddFormState extends State<FoodAddForm> {
                       debugPrint(_formKey.currentState.toString());
 
                       context.read<FoodListEntryViewModel>().addFoodItemEntry(
-                          widget.foodItem.id,
-                          storage,
-                          quantity,
-                          owner,
-                          datePurchased.add(
-                              Duration(days: widget.foodItem.daysToExpire)));
+                            widget.foodItem.id,
+                            storage,
+                            quantity,
+                            owner,
+                            datePurchased,
+                          );
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
