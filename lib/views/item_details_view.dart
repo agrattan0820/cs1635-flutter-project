@@ -152,7 +152,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                       )),
                   InkWell(
                       onTap: () {},
-                      child: UserBubble(user: listFoodEntry.owner))
+                      child: UserBubble(user: listFoodEntry.owner, borderSize: 4, textSize: 15))
                 ])),
           ])),
     );

@@ -22,114 +22,129 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.yellow[200],
         body: SafeArea(
             child: Center(
-                child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //get user bubble + name? how do i do that?
-            // UserBubble(user: user),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+              
+          //get user bubble initials 
+          const UserBubble(user: "Jennifer Zheng", borderSize: 20, textSize: 25),
 
-            //Account - Edit Profile
-            const Divider(
-              height: 20,
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-              color: Colors.black,
+          //display name of user: 
+            Text(
+              "Jennifer Zheng",
+              style: GoogleFonts.bebasNeue(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text(
-                  "Account ",
+          const SizedBox(height: 30),
+
+          //Account - Edit Profile
+          const Divider(
+            height: 20,
+            thickness: 1,
+            indent: 20,
+            endIndent: 20,
+            color: Colors.black,
+          ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const Text("Account ",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontSize: 15,
                   ),
-                ),
-                GestureDetector(
-                  onTap: () => GoRouter.of(context).go("/edit_profile"),
-                  child: const Text(
-                    "Edit Profile",
+              ),
+              GestureDetector(
+                onTap: () => GoRouter.of(context).go("/edit_profile"),
+                child: const Text(
+                  "Edit Profile",
                     style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
-            ),
-
-            //Household - Send Invite
-            const Divider(
-              height: 20,
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-              color: Colors.black,
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text(
-                  "Household ",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
                 ),
-                GestureDetector(
-                  onTap: () =>
-                      GoRouter.of(context).go("/household_send_invite"),
-                  child: const Text(
-                    "Send Invite",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
+          ),
 
-            //Expiration Date - Manage Reminders
-            const Divider(
-              height: 20,
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-              color: Colors.black,
-            ),
+          // //Household - Send Invite 
+            //NOTE: will not be included in the final deliverable as we chose to not move forward with implementing household-related tasks due to time constraints (explained in deliverable 3 demo)
+          // const Divider(
+          //   height: 20,
+          //   thickness: 1,
+          //   indent: 20,
+          //   endIndent: 20,
+          //   color: Colors.black,
+          // ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text(
-                  "Expiration Date ",
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //   children: [
+          //     const Text("Household ",
+          //         style: TextStyle(
+          //           fontWeight: FontWeight.bold,
+          //         ),
+          //     ),
+              
+          //     GestureDetector(
+          //       onTap: () => GoRouter.of(context).go("/household_send_invite"),
+          //       child: const Text(
+          //         "Send Invite",
+          //           style: TextStyle(
+          //         color: Colors.grey,
+          //         fontWeight: FontWeight.bold,
+          //       ),
+          //       ),
+          //     )
+          //   ],
+          // ),
+
+          //Expiration Date - Manage Reminders
+          const Divider(
+            height: 20,
+            thickness: 1,
+            indent: 20,
+            endIndent: 20,
+            color: Colors.black,
+          ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              const Text("Expiration Date ",
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontSize: 15,
                   ),
-                ),
-                GestureDetector(
-                  onTap: () => GoRouter.of(context).go("/manage_reminders"),
-                  child: const Text(
-                    "Manage Reminders",
+              ),
+              
+              GestureDetector(
+                onTap: () => GoRouter.of(context).go("/manage_reminders"),
+                child: const Text(
+                  "Manage Reminders",
                     style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
-              ],
-            ),
-
-            const Divider(
-              height: 20,
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-              color: Colors.black,
-            ),
+                  color: Colors.grey,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+                ),
+              )
+            ],
+          ),
+            
+          const Divider(
+            height: 20,
+            thickness: 1,
+            indent: 20,
+            endIndent: 20,
+            color: Colors.black,
+          ),
           ],
         ))));
   }
