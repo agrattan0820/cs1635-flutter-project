@@ -33,23 +33,20 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
   Widget build(BuildContext context) {
     var foodItems = context.watch<FoodItemViewModel>().foodItems;
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
-    var selectedFoodItem = context.watch<FoodItemViewModel>().selectedFoodItem;
 
     void onFoodSelection(FoodItem item) {
       debugPrint('You just selected ${_foodItemDisplay(item)}');
       context.read<FoodItemViewModel>().updateSelectedFoodItem(item);
-      if (selectedFoodItem != null) {
-        showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Container(
-                height: 500,
-                decoration: BoxDecoration(color: Colors.yellow[100]),
-                padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
-                child: FoodAddForm(foodItem: item),
-              );
-            });
-      }
+      showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              height: 500,
+              decoration: BoxDecoration(color: Colors.yellow[100]),
+              padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
+              child: FoodAddForm(foodItem: item),
+            );
+          });
     }
 
     void getFilteredList(List<FoodItem> inputlist) {
