@@ -96,7 +96,10 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     child: Tag(
                         text: context
                             .read<FoodListEntryViewModel>()
-                            .expirationString(id)))),
+                            .expiration(id)["text"],
+                        color: context
+                            .read<FoodListEntryViewModel>()
+                            .expiration(id)["color"]))),
             Container(
                 margin: const EdgeInsets.only(top: 24, bottom: 16),
                 padding: const EdgeInsets.only(left: 8),

@@ -53,7 +53,8 @@ class FoodItemRow extends StatelessWidget {
                     // margin: const EdgeInsets.only(top: 8, bottom: 8),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: foodCategories[foodItem.category].color[100],
+                      // color: foodCategories[foodItem.category].color[100],
+                      color: Colors.lightBlue.shade100,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.25),
@@ -82,9 +83,13 @@ class FoodItemRow extends StatelessWidget {
                         ),
                         UserBubble(user: foodItems[index].owner, borderSize: 4, textSize: 15),
                         Tag(
-                            text: context
-                                .read<FoodListEntryViewModel>()
-                                .expirationString(foodItems[index].entryId))
+                          text: context
+                              .read<FoodListEntryViewModel>()
+                              .expiration(foodItems[index].entryId)["text"],
+                          color: context
+                              .read<FoodListEntryViewModel>()
+                              .expiration(foodItems[index].entryId)["color"],
+                        )
                       ],
                     )))));
   }
