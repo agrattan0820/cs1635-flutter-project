@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:grosseries/components/notifications.dart';
+import 'package:grosseries/components/utilities.dart';
 import 'dart:math';
-import 'package:flutter_application_1/models/list_food_entry.dart';
-import 'package:flutter_application_1/models/food_item.dart';
-import 'package:flutter_application_1/view_models/food_item_view_model.dart';
+import 'package:grosseries/models/list_food_entry.dart';
+import 'package:grosseries/models/food_item.dart';
+import 'package:grosseries/view_models/food_item_view_model.dart';
 
 final Random _random = Random();
 const int max = 1000000000;
@@ -15,7 +17,9 @@ final List<ListFoodEntry> initialData = List.generate(
     storage: "Fridge",
     quantity: 3,
     owner: "Jennifer Zheng",
-    dateAdded: DateTime.now(),
+    dateAdded: index == 0
+        ? DateTime.now().subtract(const Duration(days: 12))
+        : DateTime.now(),
   ),
 );
 
@@ -61,8 +65,9 @@ class FoodListEntryViewModel with ChangeNotifier {
     return null;
   }
 
-  void addFoodItemEntry(
-      int id, String storage, int quantity, String owner, DateTime dateAdded) {
+  Future<void> addFoodItemEntry(int id, String storage, int quantity,
+      String owner, DateTime dateAdded) async {
+    // Add entry to overall list
     _foodItems.add(
       ListFoodEntry(
         entryId: _random.nextInt(max),
@@ -73,6 +78,26 @@ class FoodListEntryViewModel with ChangeNotifier {
         dateAdded: dateAdded,
       ),
     );
+
+    // Get relevant food item
+    FoodItem? foodItem = getFoodItem(id);
+
+    // Add days to expire to current day to get day of reminder
+    DateTime dayOfReminder =
+        dateAdded.add(Duration(days: foodItem!.daysToExpire));
+    debugPrint(dayOfReminder.toIso8601String());
+
+    // Determine particular day and time we want notification
+    NotificationDay notificationSchedule = NotificationDay(
+      day: dayOfReminder.day,
+      month: dayOfReminder.month,
+      year: dayOfReminder.year,
+      timeOfDay: const TimeOfDay(hour: 10, minute: 0),
+    );
+
+    // Schedule notification
+    await createFoodExpireReminderNotification(notificationSchedule);
+    notifyListeners();
   }
 
   void removeFoodItemEntry(int entryId) {

@@ -1,21 +1,21 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/view_models/food_category_view_model.dart';
-import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
-import 'package:flutter_application_1/view_models/food_item_view_model.dart';
-import 'package:flutter_application_1/view_models/user_view_model.dart';
-import 'package:flutter_application_1/views/add_food_category.dart';
-import 'package:flutter_application_1/views/add_food_item_detail.dart';
-import 'package:flutter_application_1/views/app_scaffold.dart';
-import 'package:flutter_application_1/views/food_list_view.dart';
-import 'package:flutter_application_1/views/settings/household/household_send_invite.dart';
-import 'package:flutter_application_1/views/settings/edit_profile.dart';
-import 'package:flutter_application_1/views/settings/manage_reminders.dart';
-import 'package:flutter_application_1/views/user_auth/login.dart';
-import 'package:flutter_application_1/views/item_details_view.dart';
-import 'package:flutter_application_1/views/user_auth/create_account.dart';
-import 'package:flutter_application_1/views/settings/profile.dart';
-import 'package:flutter_application_1/views/user_auth/welcome.dart';
+import 'package:grosseries/view_models/food_category_view_model.dart';
+import 'package:grosseries/view_models/food_list_entry_view_model.dart';
+import 'package:grosseries/view_models/food_item_view_model.dart';
+import 'package:grosseries/view_models/user_view_model.dart';
+import 'package:grosseries/views/add_food_category.dart';
+import 'package:grosseries/views/add_food_item_detail.dart';
+import 'package:grosseries/views/app_scaffold.dart';
+import 'package:grosseries/views/food_list_view.dart';
+import 'package:grosseries/views/settings/household/household_send_invite.dart';
+import 'package:grosseries/views/settings/edit_profile.dart';
+import 'package:grosseries/views/settings/manage_reminders.dart';
+import 'package:grosseries/views/user_auth/login.dart';
+import 'package:grosseries/views/item_details_view.dart';
+import 'package:grosseries/views/user_auth/create_account.dart';
+import 'package:grosseries/views/settings/profile.dart';
+import 'package:grosseries/views/user_auth/welcome.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -24,18 +24,20 @@ void main() {
     "resource://drawable/res_app_icon",
     [
       NotificationChannel(
-          channelGroupKey: 'basic_channel_group',
-          channelKey: 'basic_channel',
-          channelName: 'Basic notifications',
-          channelDescription: 'Notification channel for basic tests',
-          defaultColor: const Color(0xFF9D50DD),
-          ledColor: Colors.white)
-    ],
-    // Channel groups are only visual and are not required
-    channelGroups: [
-      NotificationChannelGroup(
-          channelGroupKey: 'basic_channel_group',
-          channelGroupName: 'Basic group')
+        channelKey: 'basic_channel',
+        channelName: 'Basic Notifications',
+        channelDescription: 'Notification channel for basic tests',
+        defaultColor: Colors.yellow[800],
+        importance: NotificationImportance.High,
+        channelShowBadge: true,
+      ),
+      NotificationChannel(
+        channelKey: 'scheduled_channel',
+        channelName: 'Scheduled Notifications',
+        channelDescription: 'Notification channel for basic tests',
+        defaultColor: Colors.yellow[800],
+        importance: NotificationImportance.High,
+      ),
     ],
     debug: true,
   );

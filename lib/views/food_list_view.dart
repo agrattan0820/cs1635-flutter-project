@@ -1,8 +1,10 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/filter_form.dart';
-import 'package:flutter_application_1/view_models/food_category_view_model.dart';
-import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
-import 'package:flutter_application_1/components/food_item_row.dart';
+import 'package:grosseries/components/filter_form.dart';
+import 'package:grosseries/components/notifications.dart';
+import 'package:grosseries/view_models/food_category_view_model.dart';
+import 'package:grosseries/view_models/food_list_entry_view_model.dart';
+import 'package:grosseries/components/food_item_row.dart';
 import 'package:provider/provider.dart';
 
 import '../components/sort_form.dart';
@@ -19,6 +21,73 @@ class FoodListView extends StatefulWidget {
 class _FoodListViewState extends State<FoodListView> {
   String query = "";
   final textEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      // If notifications are not allowed, show notification dialog
+      if (!isAllowed) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Allow Notifications"),
+            content: const Text(
+                "Grosseries would like to send notifications when your food is about to expire"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  // Remove alert dialog
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Don't Allow",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Request permissions from system
+                  AwesomeNotifications()
+                      .requestPermissionToSendNotifications()
+                      .then((_) => Navigator.pop(context));
+                },
+                child: Text(
+                  "Allow",
+                  style: TextStyle(
+                      color: Colors.yellow[800],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
+        );
+      }
+    });
+
+    // AwesomeNotifications().setListeners(
+    //   onActionReceivedMethod: (ReceivedAction receivedAction) {
+    //     NotificationController.onActionReceivedMethod(receivedAction);
+    //   },
+    //   onNotificationCreatedMethod: (ReceivedNotification receivedNotification) {
+    //     NotificationController.onNotificationCreatedMethod(
+    //         receivedNotification);
+    //   },
+    //   onNotificationDisplayedMethod:
+    //       (ReceivedNotification receivedNotification) {
+    //     NotificationController.onNotificationDisplayedMethod(
+    //         receivedNotification);
+    //   },
+    //   onDismissActionReceivedMethod: (ReceivedAction receivedAction) {
+    //     NotificationController.onDismissActionReceivedMethod(receivedAction);
+    //   },
+    // );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +155,7 @@ class _FoodListViewState extends State<FoodListView> {
 
     void onSharePress() {
       debugPrint('You just pressed the share button');
+      createFoodExpireNotification();
       showModalBottomSheet(
           context: context,
           builder: (context) {

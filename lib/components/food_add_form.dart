@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
+import 'package:grosseries/view_models/food_list_entry_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:form_validator/form_validator.dart';
 
