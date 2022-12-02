@@ -1,6 +1,8 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:grosseries/components/utilities.dart';
+import 'package:grosseries/models/food_item.dart';
+import 'package:grosseries/models/list_food_entry.dart';
 
 class NotificationController {
   /// Use this method to detect when a new notification or a schedule is created
@@ -32,7 +34,7 @@ class NotificationController {
   }
 }
 
-Future<void> createFoodExpireNotification() async {
+Future<void> createTestFoodExpireNotification() async {
   await AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: createUniqueId(),
@@ -43,17 +45,34 @@ Future<void> createFoodExpireNotification() async {
   );
 }
 
-Future<void> createFoodExpireReminderNotification(
-    NotificationDay notificationSchedule) async {
+Future<void> createFoodExpireReminderNotification(ListFoodEntry listFoodEntry,
+    FoodItem foodItem, NotificationDay notificationSchedule) async {
   String localTimeZone =
       await AwesomeNotifications().getLocalTimeZoneIdentifier();
   debugPrint(localTimeZone);
+
+  String emoji = foodItem.category == 0
+      ? Emojis.food_red_apple
+      : foodItem.category == 1
+          ? Emojis.food_glass_of_milk
+          : foodItem.category == 2
+              ? Emojis.food_meat_on_bone
+              : foodItem.category == 3
+                  ? Emojis.food_bread
+                  : foodItem.category == 4
+                      ? Emojis.animals_fish
+                      : foodItem.category == 5
+                          ? Emojis.food_candy
+                          : Emojis.household_shopping_cart;
+
   var notification = await AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: createUniqueId(),
       channelKey: 'scheduled_channel',
-      title: "Hello",
-      body: 'Water your plant regularly to keep it healthy.',
+      title:
+          "$emoji Your ${foodItem.name}${listFoodEntry.quantity > 1 ? 's' : ''} are about to go bad!",
+      body:
+          "Double check the quality of your ${foodItem.name}${listFoodEntry.quantity > 1 ? 's' : ''}",
       notificationLayout: NotificationLayout.Default,
     ),
     schedule: NotificationCalendar(

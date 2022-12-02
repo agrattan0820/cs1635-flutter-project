@@ -1,12 +1,12 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:grosseries/components/filter_form.dart';
-import 'package:grosseries/components/notifications.dart';
 import 'package:grosseries/view_models/food_category_view_model.dart';
 import 'package:grosseries/view_models/food_list_entry_view_model.dart';
 import 'package:grosseries/components/food_item_row.dart';
 import 'package:provider/provider.dart';
 
+import '../components/notifications.dart';
 import '../components/sort_form.dart';
 import '../models/food_item.dart';
 import '../view_models/food_item_view_model.dart';
@@ -70,23 +70,24 @@ class _FoodListViewState extends State<FoodListView> {
       }
     });
 
-    // AwesomeNotifications().setListeners(
-    //   onActionReceivedMethod: (ReceivedAction receivedAction) {
-    //     NotificationController.onActionReceivedMethod(receivedAction);
-    //   },
-    //   onNotificationCreatedMethod: (ReceivedNotification receivedNotification) {
-    //     NotificationController.onNotificationCreatedMethod(
-    //         receivedNotification);
-    //   },
-    //   onNotificationDisplayedMethod:
-    //       (ReceivedNotification receivedNotification) {
-    //     NotificationController.onNotificationDisplayedMethod(
-    //         receivedNotification);
-    //   },
-    //   onDismissActionReceivedMethod: (ReceivedAction receivedAction) {
-    //     NotificationController.onDismissActionReceivedMethod(receivedAction);
-    //   },
-    // );
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: (ReceivedAction receivedAction) {
+        return NotificationController.onActionReceivedMethod(receivedAction);
+      },
+      onNotificationCreatedMethod: (ReceivedNotification receivedNotification) {
+        return NotificationController.onNotificationCreatedMethod(
+            receivedNotification);
+      },
+      onNotificationDisplayedMethod:
+          (ReceivedNotification receivedNotification) {
+        return NotificationController.onNotificationDisplayedMethod(
+            receivedNotification);
+      },
+      onDismissActionReceivedMethod: (ReceivedAction receivedAction) {
+        return NotificationController.onDismissActionReceivedMethod(
+            receivedAction);
+      },
+    );
   }
 
   @override
@@ -155,7 +156,6 @@ class _FoodListViewState extends State<FoodListView> {
 
     void onSharePress() {
       debugPrint('You just pressed the share button');
-      createFoodExpireNotification();
       showModalBottomSheet(
           context: context,
           builder: (context) {
