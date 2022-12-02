@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
+import 'package:grosseries/view_models/food_list_entry_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:form_validator/form_validator.dart';
 
@@ -173,12 +173,12 @@ class _FoodAddFormState extends State<FoodAddForm> {
                       debugPrint(_formKey.currentState.toString());
 
                       context.read<FoodListEntryViewModel>().addFoodItemEntry(
-                          widget.foodItem.id,
-                          storage,
-                          quantity,
-                          owner,
-                          datePurchased.add(
-                              Duration(days: widget.foodItem.daysToExpire)));
+                            widget.foodItem.id,
+                            storage,
+                            quantity,
+                            owner,
+                            datePurchased,
+                          );
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

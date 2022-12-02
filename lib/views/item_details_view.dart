@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/tag.dart';
-import 'package:flutter_application_1/components/input_qty.dart';
-import 'package:flutter_application_1/components/user_bubble.dart';
-import 'package:flutter_application_1/models/list_food_entry.dart';
-import 'package:flutter_application_1/models/food_item.dart';
-import 'package:flutter_application_1/view_models/food_list_entry_view_model.dart';
+import 'package:grosseries/components/tag.dart';
+import 'package:grosseries/components/input_qty.dart';
+import 'package:grosseries/components/user_bubble.dart';
+import 'package:grosseries/models/list_food_entry.dart';
+import 'package:grosseries/models/food_item.dart';
+import 'package:grosseries/view_models/food_list_entry_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';

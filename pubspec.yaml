@@ -1,5 +1,5 @@
-name: flutter_application_1
-description: A new Flutter project.
+name: grosseries
+description: An app to help track your food and their expiration dates
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -41,6 +41,7 @@ dependencies:
   go_router: ^5.1.5
   form_validator: ^1.0.3
   flutter_slidable: ^2.0.0
+  awesome_notifications: any
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +53,26 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+
+  flutter_launcher_icons: "^0.11.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/groceries_icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21, max:256, default: 48
+  web:
+    generate: true
+    image_path: "assets/icons/groceries_icon.png"
+    background_color: "#FFFFFF"
+    theme_color: "#FFFFFF"
+  windows:
+    generate: true
+    image_path: "assets/icons/groceries_icon.png"
+    icon_size: 48 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/icons/groceries_icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
