@@ -31,8 +31,7 @@ class ListFoodEntry {
     );
   }
 
-  @override
-  String toString() {
+  Map expiration() {
     FoodItem? foodItem = FoodItemViewModel.getFoodItem(foodId);
     Duration timePassed = DateTime.now().difference(dateAdded);
     Map expirationInfo = {"text": "", "color": Colors.lightGreen};
@@ -52,6 +51,14 @@ class ListFoodEntry {
         expirationInfo["color"] = Colors.amber;
       }
     }
-    return "${foodItem.name} - ${expirationInfo['text']}\n$storage - #$quantity - $owner";
+
+    return expirationInfo;
+  }
+
+  @override
+  String toString() {
+    FoodItem? foodItem = FoodItemViewModel.getFoodItem(foodId);
+    Map expirationInfo = expiration();
+    return "${foodItem!.name} - ${expirationInfo['text']}\n$storage - #$quantity - $owner";
   }
 }
