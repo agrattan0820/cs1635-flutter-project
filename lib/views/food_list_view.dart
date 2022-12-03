@@ -5,6 +5,7 @@ import 'package:grosseries/view_models/food_category_view_model.dart';
 import 'package:grosseries/view_models/food_list_entry_view_model.dart';
 import 'package:grosseries/components/food_item_row.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../components/notifications.dart';
 import '../components/sort_form.dart';
@@ -156,16 +157,7 @@ class _FoodListViewState extends State<FoodListView> {
 
     void onSharePress() {
       debugPrint('You just pressed the share button');
-      showModalBottomSheet(
-          context: context,
-          builder: (context) {
-            return Container(
-              height: 500,
-              decoration: BoxDecoration(color: Colors.yellow[100]),
-              padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
-              child: const Text("Share Container"),
-            );
-          });
+      Share.share("My Grosseries Item List\n\n${foodItems.join("\n\n")}");
     }
 
     final GlobalKey<AnimatedListState> key = GlobalKey();

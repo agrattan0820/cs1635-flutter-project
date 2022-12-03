@@ -20,6 +20,7 @@ class FoodItemRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FoodItem? foodItem = FoodItemViewModel.getFoodItem(foodItems[index].foodId);
+    ListFoodEntry? listFoodEntry = foodItems[index];
 
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
 
@@ -53,7 +54,8 @@ class FoodItemRow extends StatelessWidget {
                     // margin: const EdgeInsets.only(top: 8, bottom: 8),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: foodCategories[foodItem.category].color[100],
+                      // color: foodCategories[foodItem.category].color[100],
+                      color: Colors.lightBlue.shade100,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.25),
@@ -80,11 +82,14 @@ class FoodItemRow extends StatelessWidget {
                                 color: Colors.black),
                           ),
                         ),
-                        UserBubble(user: foodItems[index].owner, borderSize: 4, textSize: 15),
+                        UserBubble(
+                            user: foodItems[index].owner,
+                            borderSize: 4,
+                            textSize: 15),
                         Tag(
-                            text: context
-                                .read<FoodListEntryViewModel>()
-                                .expirationString(foodItems[index].entryId))
+                          text: listFoodEntry.expiration()["text"],
+                          color: listFoodEntry.expiration()["color"],
+                        )
                       ],
                     )))));
   }

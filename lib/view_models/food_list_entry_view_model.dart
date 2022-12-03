@@ -112,26 +112,6 @@ class FoodListEntryViewModel with ChangeNotifier {
     }
   }
 
-  String expirationString(int entryId) {
-    ListFoodEntry? listFoodEntry = getListFoodEntry(entryId);
-    FoodItem? foodItem = FoodItemViewModel.getFoodItem(listFoodEntry!.foodId);
-    Duration timePassed = DateTime.now().difference(listFoodEntry.dateAdded);
-
-    if (timePassed.inDays == foodItem!.daysToExpire) {
-      return "Expires Today";
-    }
-
-    if (timePassed.inDays > foodItem.daysToExpire) {
-      return "Expired by ${timePassed.inDays - foodItem.daysToExpire} Day";
-    }
-
-    if (foodItem.daysToExpire - timePassed.inDays > 1) {
-      return "${foodItem.daysToExpire - timePassed.inDays} days left";
-    } else {
-      return "${foodItem.daysToExpire - timePassed.inDays} day left";
-    }
-  }
-
   void onOptionSelect(bool value, int index) {
     _sortOptionChoice = value ? index : sortOptionChoice;
     debugPrint("sortOptionChoice $sortOptionChoice");
