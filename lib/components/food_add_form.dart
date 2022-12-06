@@ -30,10 +30,12 @@ class _FoodAddFormState extends State<FoodAddForm> {
   String owner = "";
   DateTime datePurchased = DateTime.now();
 
-  final quanitityValidator = ValidationBuilder()
-      .regExp(RegExp(r'(\d)'), "Quantity must be a number")
-      .build();
-  final storageValidator = ValidationBuilder().build();
+  final quanitityValidator =
+      ValidationBuilder(requiredMessage: "Quantity is required")
+          .regExp(RegExp(r'(\d)'), "Quantity must be a number")
+          .build();
+  final storageValidator =
+      ValidationBuilder(requiredMessage: "Storage is required").build();
 
   void _showDatePicker() {
     showDatePicker(
