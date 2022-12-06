@@ -9,7 +9,7 @@ class ListFoodEntry {
   String storage;
   int quantity;
   String owner;
-  final DateTime dateAdded;
+  DateTime dateAdded;
 
   ListFoodEntry({
     required this.entryId,
