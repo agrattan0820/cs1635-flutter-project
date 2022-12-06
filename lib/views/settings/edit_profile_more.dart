@@ -45,13 +45,12 @@ class LogoutDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      child: const Text(
-        'Log out',
-        style: TextStyle(
-          fontSize: 20,
-          color: Colors.black,
-        ),
-      ),
+      child: const Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Log Out',
+            style: TextStyle(fontSize: 20, color: Colors.black),
+          )),
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(
@@ -83,10 +82,12 @@ class DeleteAccountDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      child: const Text(
-        'Delete Account',
-        style: TextStyle(fontSize: 20, color: Colors.black),
-      ),
+      child: const Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Delete Account',
+            style: TextStyle(fontSize: 20, color: Colors.black),
+          )),
       onPressed: () => showDialog<String>(
         context: context,
         builder: (BuildContext context) => AlertDialog(

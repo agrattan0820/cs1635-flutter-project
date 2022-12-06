@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:grosseries/components/tag.dart';
+import 'package:grosseries/components/dropdown_tag.dart';
 import 'package:grosseries/components/input_qty.dart';
 import 'package:grosseries/components/user_bubble.dart';
 import 'package:grosseries/models/list_food_entry.dart';
@@ -22,6 +23,13 @@ class ItemDetailsView extends StatefulWidget {
 }
 
 class _ItemDetailsViewState extends State<ItemDetailsView> {
+  List<String> storageList = ["Fridge", "Pantry", "Freezer"];
+  List<String> peopleList = [
+    "Alexander Grattan",
+    "Jennifer Zheng",
+    "Crystal Li"
+  ];
+
   @override
   Widget build(BuildContext context) {
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
@@ -34,6 +42,19 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
         .getFoodItem(listFoodEntry!.foodId);
     TextStyle style =
         const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
+
+    void _showDatePicker() {
+      showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2000),
+        lastDate: DateTime.now(),
+      ).then((value) => setState(() {
+            if (value != null) {
+              listFoodEntry.dateAdded = value;
+            }
+          }));
+    }
 
     return SafeArea(
       child: Container(
@@ -94,7 +115,7 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
               ),
             ),
             InkWell(
-                onTap: () {},
+                onTap: _showDatePicker,
                 child: Container(
                     constraints: const BoxConstraints(maxWidth: 150),
                     child: Tag(
@@ -119,12 +140,25 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                 padding: const EdgeInsets.only(left: 8),
                 child: Row(children: [
                   Expanded(flex: 2, child: Text("Storage", style: style)),
-                  InkWell(
-                      onTap: () {},
-                      child: Tag(
-                        text: listFoodEntry.storage,
-                        // padding: 12,
-                      ))
+                  // InkWell(
+                  //     onTap: () {},
+                  //     child: Tag(
+                  //       text: listFoodEntry.storage,
+                  //       // padding: 12,
+                  //     )),
+                  DropdownTag(
+                      dropdown: DropdownButton(
+                    value: listFoodEntry.storage,
+                    items: storageList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: ((value) =>
+                        setState(() => listFoodEntry.storage = value!)),
+                  ))
                 ])),
             Container(
                 margin: const EdgeInsets.only(top: 16, bottom: 16),
@@ -153,12 +187,25 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                         "Belongs To",
                         style: style,
                       )),
-                  InkWell(
-                      onTap: () {},
-                      child: UserBubble(
-                          user: listFoodEntry.owner,
-                          borderSize: 4,
-                          textSize: 15))
+                  // InkWell(
+                  //     onTap: () {},
+                  //     child: UserBubble(
+                  //         user: listFoodEntry.owner,
+                  //         borderSize: 4,
+                  //         textSize: 15)),
+                  DropdownTag(
+                      dropdown: DropdownButton(
+                    value: listFoodEntry.owner,
+                    items: peopleList
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: ((value) =>
+                        setState(() => listFoodEntry.owner = value!)),
+                  ))
                 ])),
           ])),
     );
