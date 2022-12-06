@@ -61,6 +61,10 @@ class UserViewModel with ChangeNotifier {
     return [true];
   }
 
+  void logout() {
+    _currentUser = null;
+  }
+
   void deleteAccount() {
     _userDatabase.remove(_currentUser!.email);
     _currentUser = null;
