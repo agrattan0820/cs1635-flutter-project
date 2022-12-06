@@ -39,7 +39,7 @@ class UserViewModel with ChangeNotifier {
     return false;
   }
 
-  Object createAccount(String firstName, String lastName, String email,
+  List createAccount(String firstName, String lastName, String email,
       String password, String confirmPassword) {
     if (_userDatabase.containsKey(email)) {
       return [false, "Account with email already exists"];
