@@ -15,7 +15,7 @@ class DropdownTag extends StatelessWidget {
         border: Border.all(color: Colors.black),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
-      child: Center(child: dropdown),
+      child: Center(child: DropdownButtonHideUnderline(child: dropdown)),
     );
   }
 }
