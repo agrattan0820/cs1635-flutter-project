@@ -4,7 +4,6 @@ class User {
   final String lastName;
   final String email;
   final String password;
-  final String image;
   final bool notificationsEnabled;
   final int notificationDayAmount;
 
@@ -14,7 +13,6 @@ class User {
     required this.lastName,
     required this.email,
     required this.password,
-    required this.image,
     this.notificationsEnabled = true,
     this.notificationDayAmount = 3,
   });
@@ -26,7 +24,6 @@ class User {
       lastName: json["lastName"],
       email: json["email"],
       password: json["password"],
-      image: json["image"],
       notificationsEnabled: json["notificationsEnabled"],
       notificationDayAmount: json["notificationDayAmount"],
     );
