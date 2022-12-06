@@ -68,7 +68,7 @@ class LogoutDialog extends StatelessWidget {
                 context.read<UserViewModel>().logout();
                 GoRouter.of(context).go("/welcome");
               },
-              child: const Text('Log out'),
+              child: const Text('Log Out'),
             ),
           ],
         ),
@@ -99,7 +99,10 @@ class DeleteAccountDialog extends StatelessWidget {
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
+              onPressed: () {
+                context.read<UserViewModel>().deleteAccount();
+                GoRouter.of(context).go("/welcome");
+              },
               child: const Text('Delete Account'),
             ),
           ],
