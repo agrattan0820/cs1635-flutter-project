@@ -61,6 +61,11 @@ class UserViewModel with ChangeNotifier {
     return [true];
   }
 
+  void deleteAccount() {
+    _userDatabase.remove(_currentUser!.email);
+    _currentUser = null;
+  }
+
   User? get currentUser => _currentUser;
 
   String? get firstName {
