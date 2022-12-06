@@ -8,6 +8,7 @@ import 'package:grosseries/view_models/food_list_entry_view_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../view_models/food_category_view_model.dart';
 
@@ -68,7 +69,10 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                       ),
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Share.share(
+                            "My Grosseries Food Item\n\n$listFoodEntry");
+                      },
                       icon: const Icon(
                         Icons.ios_share,
                         color: Colors.black,
@@ -94,12 +98,8 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                 child: Container(
                     constraints: const BoxConstraints(maxWidth: 150),
                     child: Tag(
-                        text: context
-                            .read<FoodListEntryViewModel>()
-                            .expiration(id)["text"],
-                        color: context
-                            .read<FoodListEntryViewModel>()
-                            .expiration(id)["color"]))),
+                        text: listFoodEntry.expiration()["text"],
+                        color: listFoodEntry.expiration()["color"]))),
             Container(
                 margin: const EdgeInsets.only(top: 24, bottom: 16),
                 padding: const EdgeInsets.only(left: 8),
@@ -155,7 +155,10 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                       )),
                   InkWell(
                       onTap: () {},
-                      child: UserBubble(user: listFoodEntry.owner, borderSize: 4, textSize: 15))
+                      child: UserBubble(
+                          user: listFoodEntry.owner,
+                          borderSize: 4,
+                          textSize: 15))
                 ])),
           ])),
     );
