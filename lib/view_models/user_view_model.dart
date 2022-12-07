@@ -98,6 +98,10 @@ class UserViewModel with ChangeNotifier {
     return _currentUser?.notificationsEnabled;
   }
 
+  set notificationsEnabled(bool? value) {
+    notificationsEnabled = value;
+  }
+
   int? get notificationDayAmount {
     return _currentUser?.notificationDayAmount;
   }
