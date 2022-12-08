@@ -61,6 +61,35 @@ class UserViewModel with ChangeNotifier {
     return [true];
   }
 
+  bool editProfile(
+    String firstName,
+    String lastName,
+    String email,
+    String password,
+  ) {
+    String previousEmail = currentUser!.email;
+
+    User loggedInUser = _userDatabase[previousEmail]!;
+
+    loggedInUser.firstName = firstName;
+    loggedInUser.lastName = lastName;
+    loggedInUser.email = email;
+    loggedInUser.password = password;
+
+    _userDatabase[email] = loggedInUser;
+
+    if (email != previousEmail) {
+      _userDatabase.remove(previousEmail);
+    }
+
+    currentUser!.firstName = firstName;
+    currentUser!.lastName = lastName;
+    currentUser!.email = email;
+    currentUser!.password = password;
+
+    return true;
+  }
+
   void logout() {
     _currentUser = null;
     notifyListeners();
@@ -73,29 +102,8 @@ class UserViewModel with ChangeNotifier {
   }
 
   User? get currentUser => _currentUser;
-
-  String? get firstName {
-    return _currentUser?.firstName;
-  }
-
-  String? get lastName {
-    return _currentUser?.lastName;
-  }
-
-  String? get fullName {
-    return "${_currentUser?.firstName} ${_currentUser?.lastName}";
-  }
-
-  String? get email {
-    return _currentUser?.email;
-  }
-
-  String? get password {
-    return _currentUser?.password;
-  }
-
-  bool? get notificationsEnabled {
-    return _currentUser?.notificationsEnabled;
+  set currentUser(User? newUser) {
+    currentUser = newUser;
   }
 
   set notificationsEnabled(bool? value) {

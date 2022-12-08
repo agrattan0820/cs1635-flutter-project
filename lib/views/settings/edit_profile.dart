@@ -18,6 +18,12 @@ class _EditProfileState extends State<EditProfile> {
 
   final _formKey = GlobalKey<FormState>();
 
+  String firstNameInput = "";
+  String lastNameInput = "";
+  String emailInput = "";
+  String passwordInput = "";
+  String confirmPasswordInput = "";
+
   var firstNameValidator =
       ValidationBuilder(requiredMessage: "First Name is required").build();
   var lastNameValidator =
@@ -65,37 +71,154 @@ class _EditProfileState extends State<EditProfile> {
             child: ListView(
               children: [
                 Center(
-                    child:
-                        //get user bubble initials
-                        UserBubble(
-                  user: "${currentUser!.firstName} ${currentUser.lastName}",
-                  borderSize: 20,
-                  textSize: 25,
-                )),
+                  child:
+                      //get user bubble initials
+                      UserBubble(
+                    user: "${currentUser!.firstName} ${currentUser.lastName}",
+                    borderSize: 20,
+                    textSize: 25,
+                  ),
+                ),
                 const SizedBox(height: 30),
-                buildTextField("First Name", "Jennifer", false),
-                buildTextField("Last Name", "Zheng", false),
-                buildTextField("Email", "jennifer.zheng@pitt.edu", false),
-                buildTextField("Password", "************", true),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: TextFormField(
+                    obscureText: false,
+                    onSaved: ((value) =>
+                        setState(() => firstNameInput = value!)),
+                    validator: firstNameValidator,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(bottom: 5),
+                      labelText: "First Name",
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      hintText: currentUser.firstName,
+                      hintStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: TextFormField(
+                    obscureText: false,
+                    onSaved: ((value) =>
+                        setState(() => lastNameInput = value!)),
+                    validator: lastNameValidator,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(bottom: 5),
+                      labelText: "Last Name",
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      hintText: currentUser.lastName,
+                      hintStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: TextFormField(
+                    obscureText: false,
+                    onSaved: ((value) => setState(() => emailInput = value!)),
+                    validator: emailValidator,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(bottom: 5),
+                      labelText: "Email",
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      hintText: currentUser.email,
+                      hintStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: TextFormField(
+                    obscureText: _isHidden,
+                    onSaved: ((value) =>
+                        setState(() => passwordInput = value!)),
+                    validator: passwordValidator,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(bottom: 5),
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.remove_red_eye,
+                            color: Colors.grey),
+                        onPressed: () {
+                          setState(() {
+                            _isHidden = !_isHidden;
+                          });
+                        },
+                      ),
+                      labelText: "Password",
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      hintText: "**********",
+                      hintStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     OutlinedButton(
-                      onPressed: () {},
+                      onPressed: (() => GoRouter.of(context).pop()),
                       // ignore: sort_child_properties_last
-                      child: const Text("Cancel",
-                          style: TextStyle(
-                              fontSize: 15,
-                              letterSpacing: 2,
-                              color: Colors.black)),
+                      child: const Text(
+                        "Cancel",
+                        style: TextStyle(
+                          fontSize: 15,
+                          letterSpacing: 2,
+                          color: Colors.black,
+                        ),
+                      ),
                       style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 50),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20))),
+                        padding: const EdgeInsets.symmetric(horizontal: 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState?.save();
+
+                          debugPrint(_formKey.currentState.toString());
+                          debugPrint(firstNameInput);
+                          debugPrint(lastNameInput);
+                          debugPrint(emailInput);
+                          debugPrint(passwordInput);
+
+                          var editProfileResult =
+                              context.read<UserViewModel>().editProfile(
+                                    firstNameInput,
+                                    lastNameInput,
+                                    emailInput,
+                                    passwordInput,
+                                  );
+
+                          _formKey.currentState?.reset();
+
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content: Text("Profile successfully edited"),
+                          ));
+
+                          debugPrint(editProfileResult.toString());
+                        }
+                      },
                       // ignore: sort_child_properties_last
                       child: const Text("Save",
                           style: TextStyle(
@@ -117,35 +240,5 @@ class _EditProfileState extends State<EditProfile> {
         ),
       ),
     );
-  }
-
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
-    return Padding(
-        padding: const EdgeInsets.only(bottom: 30),
-        child: TextField(
-          obscureText: isPasswordTextField ? _isHidden : false,
-          decoration: InputDecoration(
-              suffixIcon: isPasswordTextField
-                  ? IconButton(
-                      icon:
-                          const Icon(Icons.remove_red_eye, color: Colors.grey),
-                      onPressed: () {
-                        setState(() {
-                          _isHidden = !_isHidden;
-                        });
-                      },
-                    )
-                  : null,
-              contentPadding: const EdgeInsets.only(bottom: 5),
-              labelText: labelText,
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              hintText: placeholder,
-              hintStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              )),
-        ));
   }
 }
