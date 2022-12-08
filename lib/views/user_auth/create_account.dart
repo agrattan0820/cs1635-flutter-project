@@ -32,8 +32,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   var passwordValidator =
       ValidationBuilder(requiredMessage: "Password is required").build();
   var confirmPasswordValidator =
-      ValidationBuilder(requiredMessage: "Confirm Password is required")
-          .build();
+      ValidationBuilder(requiredMessage: "Confirm Password is required").build();
 
   List? isError;
 
