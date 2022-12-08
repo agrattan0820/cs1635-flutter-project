@@ -4,12 +4,14 @@ import 'package:grosseries/components/filter_form.dart';
 import 'package:grosseries/view_models/food_category_view_model.dart';
 import 'package:grosseries/view_models/food_list_entry_view_model.dart';
 import 'package:grosseries/components/food_item_row.dart';
+import 'package:grosseries/view_models/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../components/notifications.dart';
 import '../components/sort_form.dart';
 import '../models/food_item.dart';
+import '../models/user.dart';
 import '../view_models/food_item_view_model.dart';
 
 class FoodListView extends StatefulWidget {
@@ -26,50 +28,6 @@ class _FoodListViewState extends State<FoodListView> {
   @override
   void initState() {
     super.initState();
-
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      // If notifications are not allowed, show notification dialog
-      if (!isAllowed) {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text("Allow Notifications"),
-            content: const Text(
-                "Grosseries would like to send notifications when your food is about to expire"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  // Remove alert dialog
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  "Don't Allow",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  // Request permissions from system
-                  AwesomeNotifications()
-                      .requestPermissionToSendNotifications()
-                      .then((_) => Navigator.pop(context));
-                },
-                child: Text(
-                  "Allow",
-                  style: TextStyle(
-                      color: Colors.yellow[800],
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
-          ),
-        );
-      }
-    });
 
     AwesomeNotifications().setListeners(
       onActionReceivedMethod: (ReceivedAction receivedAction) {
@@ -93,6 +51,8 @@ class _FoodListViewState extends State<FoodListView> {
 
   @override
   Widget build(BuildContext context) {
+    User? currentUser = context.watch<UserViewModel>().currentUser;
+
     // Sorting and Filtering
     int sortOptionChoice =
         context.watch<FoodListEntryViewModel>().sortOptionChoice;
@@ -126,6 +86,51 @@ class _FoodListViewState extends State<FoodListView> {
         return true;
       },
     ).toList();
+
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      // If notifications are not allowed, show notification dialog
+      if (!isAllowed && currentUser!.notificationsEnabled) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Allow Notifications"),
+            content: const Text(
+                "Grosseries would like to send notifications when your food is about to expire"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  // Remove alert dialog
+                  currentUser.notificationsEnabled = false;
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Don't Allow",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  // Request permissions from system
+                  AwesomeNotifications()
+                      .requestPermissionToSendNotifications()
+                      .then((_) => Navigator.pop(context));
+                },
+                child: Text(
+                  "Allow",
+                  style: TextStyle(
+                      color: Colors.yellow[800],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
+        );
+      }
+    });
 
     void onSortPress() {
       debugPrint('You just pressed the sort button');

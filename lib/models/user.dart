@@ -4,8 +4,8 @@ class User {
   final String lastName;
   final String email;
   final String password;
-  final bool notificationsEnabled;
-  final int notificationDayAmount;
+  bool notificationsEnabled;
+  int notificationDayAmount;
 
   User({
     required this.id,
