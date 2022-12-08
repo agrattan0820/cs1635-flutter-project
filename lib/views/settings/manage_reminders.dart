@@ -26,7 +26,7 @@ class _ManageRemindersState extends State<ManageReminders> {
           centerTitle: false,
           leading: IconButton(
             icon: const Icon(Icons.chevron_left, color: Colors.black),
-            onPressed: (() => GoRouter.of(context).pop()),
+            onPressed: (() => GoRouter.of(context).go("/profile")),
           ),
           title: const Text('Manage Reminders'),
         ),
