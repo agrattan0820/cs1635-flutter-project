@@ -41,7 +41,7 @@ class _AddFoodCategoryViewState extends State<AddFoodCategoryView> {
           context: context,
           builder: (context) {
             return Container(
-              height: 500,
+              height: 600,
               decoration: BoxDecoration(color: Colors.yellow[100]),
               padding: const EdgeInsets.only(top: 16, left: 32, right: 32),
               child: FoodAddForm(foodItem: item),

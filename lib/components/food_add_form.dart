@@ -4,7 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:form_validator/form_validator.dart';
 
 import '../models/food_item.dart';
+import '../models/user.dart';
 import '../view_models/food_category_view_model.dart';
+import '../view_models/user_view_model.dart';
 
 class FoodAddForm extends StatefulWidget {
   final FoodItem foodItem;
@@ -19,11 +21,6 @@ class _FoodAddFormState extends State<FoodAddForm> {
   final _formKey = GlobalKey<FormState>();
 
   List<String> storageList = ["Fridge", "Pantry", "Freezer"];
-  List<String> peopleList = [
-    "Alexander Grattan",
-    "Jennifer Zheng",
-    "Crystal Li"
-  ];
 
   int quantity = 0;
   String storage = "";
@@ -36,6 +33,8 @@ class _FoodAddFormState extends State<FoodAddForm> {
           .build();
   final storageValidator =
       ValidationBuilder(requiredMessage: "Storage is required").build();
+  final peopleValidator =
+      ValidationBuilder(requiredMessage: "Owner is required").build();
 
   void _showDatePicker() {
     showDatePicker(
@@ -43,16 +42,25 @@ class _FoodAddFormState extends State<FoodAddForm> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime.now(),
-    ).then((value) => setState(() {
+    ).then(
+      (value) => setState(
+        () {
           if (value != null) {
             datePurchased = value;
           }
-        }));
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
+
+    List<User> peopleList =
+        context.watch<UserViewModel>().userDatabase.values.toList();
+
+    debugPrint(peopleList.toString());
 
     return Container(
       padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -127,12 +135,11 @@ class _FoodAddFormState extends State<FoodAddForm> {
                 DropdownButtonFormField(
                   decoration:
                       const InputDecoration(labelText: "Choose item owner"),
-                  validator: storageValidator,
-                  items:
-                      peopleList.map<DropdownMenuItem<String>>((String value) {
+                  validator: peopleValidator,
+                  items: peopleList.map<DropdownMenuItem<String>>((User value) {
                     return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
+                      value: value.email,
+                      child: Text("${value.firstName} ${value.lastName}"),
                     );
                   }).toList(),
                   onChanged: ((value) => setState(() => owner = value!)),
