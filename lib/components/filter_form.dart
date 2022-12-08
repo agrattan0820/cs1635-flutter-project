@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:grosseries/view_models/user_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../models/user.dart';
 import '../view_models/food_list_entry_view_model.dart';
 
 class FilterForm extends StatefulWidget {
@@ -21,8 +23,8 @@ class _FilterFormState extends State<FilterForm> {
         context.watch<FoodListEntryViewModel>().categoryOptions;
     List<String> userFilters =
         context.watch<FoodListEntryViewModel>().userFilters;
-    List<String> userOptions =
-        context.watch<FoodListEntryViewModel>().userOptions;
+    List<User> userOptions =
+        context.watch<UserViewModel>().userDatabase.values.toList();
 
     return Container(
       padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
@@ -92,7 +94,7 @@ class _FilterFormState extends State<FilterForm> {
             children: List.generate(userOptions.length, (index) {
               return FilterChip(
                 label: Text(
-                  userOptions[index],
+                  "${userOptions[index].firstName} ${userOptions[index].lastName}",
                 ),
                 labelStyle: const TextStyle(
                   color: Colors.black,
@@ -105,7 +107,7 @@ class _FilterFormState extends State<FilterForm> {
                 onSelected: (value) {
                   setState(() {
                     if (value) {
-                      userFilters.add(userOptions[index]);
+                      userFilters.add(userOptions[index].email);
                     } else {
                       userFilters.removeWhere((String filter) {
                         return filter == userOptions[index];

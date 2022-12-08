@@ -102,9 +102,7 @@ class UserViewModel with ChangeNotifier {
   }
 
   User? get currentUser => _currentUser;
-  set currentUser(User? newUser) {
-    currentUser = newUser;
-  }
+  Map<String, User> get userDatabase => _userDatabase;
 
   set notificationsEnabled(bool? value) {
     notificationsEnabled = value;

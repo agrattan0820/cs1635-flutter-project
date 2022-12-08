@@ -5,6 +5,7 @@ import 'package:grosseries/components/user_bubble.dart';
 import 'package:grosseries/models/list_food_entry.dart';
 import 'package:grosseries/view_models/food_list_entry_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:grosseries/view_models/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../models/food_item.dart';
@@ -26,6 +27,11 @@ class FoodItemRow extends StatelessWidget {
 
     debugPrint("${foodItem!.name}${foodItem.daysToExpire}");
 
+    debugPrint(context
+        .read<UserViewModel>()
+        .userDatabase[foodItems[index].owner]!
+        .firstName);
+
     return Container(
         padding: const EdgeInsets.only(top: 8, bottom: 28, left: 8, right: 8),
         child: Slidable(
@@ -39,8 +45,9 @@ class FoodItemRow extends StatelessWidget {
                 backgroundColor: Colors.red,
                 foregroundColor: Colors.white,
                 borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
+                  topRight: Radius.circular(10),
+                  bottomRight: Radius.circular(10),
+                ),
                 icon: Icons.delete,
                 label: 'Delete',
               ),
@@ -84,7 +91,8 @@ class FoodItemRow extends StatelessWidget {
                           ),
                         ),
                         UserBubble(
-                            user: foodItems[index].owner,
+                            user:
+                                "${context.read<UserViewModel>().userDatabase[foodItems[index].owner]!.firstName} ${context.read<UserViewModel>().userDatabase[foodItems[index].owner]!.lastName}",
                             borderSize: 4,
                             textSize: 15),
                         Tag(
