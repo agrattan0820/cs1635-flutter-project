@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => GoRouter.of(context).go("/edit_profile"),
+                  onTap: () => GoRouter.of(context).push("/edit_profile"),
                   child: const Text(
                     "Edit Profile",
                     style: TextStyle(

@@ -13,6 +13,8 @@ class CreateAccountPage extends StatefulWidget {
 }
 
 class _CreateAccountPageState extends State<CreateAccountPage> {
+  bool _isHidden = true;
+
   final _formKey = GlobalKey<FormState>();
 
   String firstNameInput = "";
@@ -30,8 +32,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   var passwordValidator =
       ValidationBuilder(requiredMessage: "Password is required").build();
   var confirmPasswordValidator =
-      ValidationBuilder(requiredMessage: "Confirm Password is required")
-          .build();
+      ValidationBuilder(requiredMessage: "Confirm Password is required").build();
 
   List? isError;
 
@@ -149,12 +150,21 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           padding: const EdgeInsets.only(
                               left: 8.0, top: 4.0, bottom: 4.0),
                           child: TextFormField(
-                            obscureText: true,
-                            decoration: const InputDecoration(
+                            obscureText: _isHidden,
+                            validator: passwordValidator,
+                            decoration: InputDecoration(
                               border: InputBorder.none,
                               hintText: "Password",
+                              suffixIcon: InkWell(
+                                onTap: _togglePasswordView,
+                                child: Icon(
+                                  _isHidden
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Colors.grey,
+                                ),
+                              )
                             ),
-                            validator: passwordValidator,
                             onSaved: ((value) =>
                                 setState(() => passwordInput = value!)),
                           ),
@@ -306,5 +316,10 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
             // ),
           ],
         ))));
+  }
+    void _togglePasswordView() {
+    setState(() {
+      _isHidden = !_isHidden;
+    });
   }
 }

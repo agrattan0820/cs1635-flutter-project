@@ -55,7 +55,7 @@ class FoodItemRow extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       // color: foodCategories[foodItem.category].color[100],
-                      color: Colors.lightBlue.shade100,
+                      color: Colors.white,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.25),
@@ -77,9 +77,10 @@ class FoodItemRow extends StatelessWidget {
                           child: Text(
                             "${foodItems[index].quantity.toString()}x ${foodItem.name}",
                             style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: Colors.black),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                         UserBubble(

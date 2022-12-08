@@ -1,9 +1,9 @@
 class User {
   final int id;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final String password;
+  String firstName;
+  String lastName;
+  String email;
+  String password;
   bool notificationsEnabled;
   int notificationDayAmount;
 
