@@ -30,6 +30,7 @@ class InputQty extends StatefulWidget {
   final num steps;
 
   final int id;
+  final String view;
 
   /// Function([num] value) [onChanged]
   /// update value every changes
@@ -66,6 +67,7 @@ class InputQty extends StatefulWidget {
     this.minVal = 0,
     this.steps = 1,
     required this.id,
+    required this.view,
   }) : super(key: key);
 
   @override
@@ -94,7 +96,7 @@ class _InputQtyState extends State<InputQty> {
     currentval = ValueNotifier(widget.initVal);
     _valCtrl = TextEditingController(text: "${widget.initVal}");
     widget.onQtyChanged(num.tryParse(_valCtrl.text));
-    if (widget.initVal <= widget.minVal) {
+    if (widget.view == 'item-details' && widget.initVal <= widget.minVal) {
       setState(() {
         _icon = Icons.delete_outline;
       });
@@ -146,11 +148,13 @@ class _InputQtyState extends State<InputQty> {
     } else {
       value = widget.minVal;
       currentval = ValueNotifier(value);
-      context.read<FoodListEntryViewModel>().removeFoodItemEntry(widget.id);
-      GoRouter.of(context).go("/");
+      if (widget.view == 'item-details') {
+        context.read<FoodListEntryViewModel>().removeFoodItemEntry(widget.id);
+        GoRouter.of(context).go("/");
+      }
     }
 
-    if (value <= widget.minVal) {
+    if (widget.view == 'item-details' && value <= widget.minVal) {
       setState(() {
         _icon = Icons.delete_outline;
       });
