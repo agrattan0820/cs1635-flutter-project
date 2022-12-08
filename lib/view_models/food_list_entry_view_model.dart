@@ -16,7 +16,7 @@ final List<ListFoodEntry> initialData = List.generate(
     foodId: index,
     storage: "Fridge",
     quantity: 3,
-    owner: "Jennifer Zheng",
+    owner: "alex@grattan.me",
     dateAdded: index == 0
         ? DateTime.now().subtract(const Duration(days: 12))
         : DateTime.now(),

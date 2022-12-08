@@ -16,7 +16,7 @@ class ListFoodEntry {
     required this.foodId,
     this.storage = "any",
     this.quantity = 1,
-    this.owner = "",
+    required this.owner,
     required this.dateAdded,
   });
 
