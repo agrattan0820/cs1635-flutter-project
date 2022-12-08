@@ -29,12 +29,6 @@ class _ManageRemindersState extends State<ManageReminders> {
             onPressed: (() => GoRouter.of(context).pop()),
           ),
           title: const Text('Manage Reminders'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.more_horiz, color: Colors.black),
-              onPressed: (() => GoRouter.of(context).go("/edit_profile_more")),
-            ),
-          ],
         ),
         body: Column(
           children: [
