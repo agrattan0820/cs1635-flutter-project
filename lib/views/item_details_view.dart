@@ -12,9 +12,7 @@ import 'package:share_plus/share_plus.dart';
 import '../models/user.dart';
 import '../view_models/user_view_model.dart';
 
-import '../models/user.dart';
 import '../view_models/food_category_view_model.dart';
-import '../view_models/user_view_model.dart';
 
 class ItemDetailsView extends StatefulWidget {
   final String? id;
@@ -40,8 +38,6 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
         .getFoodItem(listFoodEntry!.foodId);
     TextStyle style =
         const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
-    List<User> peopleList =
-        context.watch<UserViewModel>().userDatabase.values.toList();
 
     List<User> peopleList =
         context.watch<UserViewModel>().userDatabase.values.toList();
