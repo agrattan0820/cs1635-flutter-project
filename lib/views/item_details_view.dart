@@ -9,6 +9,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import '../models/user.dart';
+import '../view_models/user_view_model.dart';
 
 import '../models/user.dart';
 import '../view_models/food_category_view_model.dart';
@@ -38,6 +40,9 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
         .getFoodItem(listFoodEntry!.foodId);
     TextStyle style =
         const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
+    List<User> peopleList =
+        context.watch<UserViewModel>().userDatabase.values.toList();
+
     List<User> peopleList =
         context.watch<UserViewModel>().userDatabase.values.toList();
 
@@ -125,13 +130,15 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                 child: Row(children: [
                   Expanded(flex: 2, child: Text("Quantity", style: style)),
                   InputQty(
-                      initVal: listFoodEntry.quantity,
-                      minVal: 1,
-                      maxVal: 100,
-                      onQtyChanged: (val) {
-                        listFoodEntry.quantity = val!.toInt();
-                      },
-                      id: id),
+                    initVal: listFoodEntry.quantity,
+                    minVal: 1,
+                    maxVal: 100,
+                    onQtyChanged: (val) {
+                      listFoodEntry.quantity = val!.toInt();
+                    },
+                    id: id,
+                    view: 'item-details',
+                  ),
                 ])),
             Container(
                 margin: const EdgeInsets.only(top: 16, bottom: 16),
