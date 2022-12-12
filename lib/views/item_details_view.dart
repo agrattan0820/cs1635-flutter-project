@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:grosseries/components/tag.dart';
 import 'package:grosseries/components/dropdown_tag.dart';
 import 'package:grosseries/components/input_qty.dart';
-import 'package:grosseries/components/user_bubble.dart';
 import 'package:grosseries/models/list_food_entry.dart';
 import 'package:grosseries/models/food_item.dart';
 import 'package:grosseries/view_models/food_list_entry_view_model.dart';
@@ -10,6 +9,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import '../models/user.dart';
+import '../view_models/user_view_model.dart';
 
 import '../view_models/food_category_view_model.dart';
 
@@ -24,11 +25,6 @@ class ItemDetailsView extends StatefulWidget {
 
 class _ItemDetailsViewState extends State<ItemDetailsView> {
   List<String> storageList = ["Fridge", "Pantry", "Freezer"];
-  List<String> peopleList = [
-    "Alexander Grattan",
-    "Jennifer Zheng",
-    "Crystal Li"
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +38,9 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
         .getFoodItem(listFoodEntry!.foodId);
     TextStyle style =
         const TextStyle(fontWeight: FontWeight.bold, fontSize: 20);
+
+    List<User> peopleList =
+        context.watch<UserViewModel>().userDatabase.values.toList();
 
     void _showDatePicker() {
       showDatePicker(
@@ -127,13 +126,15 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                 child: Row(children: [
                   Expanded(flex: 2, child: Text("Quantity", style: style)),
                   InputQty(
-                      initVal: listFoodEntry.quantity,
-                      minVal: 1,
-                      maxVal: 100,
-                      onQtyChanged: (val) {
-                        listFoodEntry.quantity = val!.toInt();
-                      },
-                      id: id),
+                    initVal: listFoodEntry.quantity,
+                    minVal: 1,
+                    maxVal: 100,
+                    onQtyChanged: (val) {
+                      listFoodEntry.quantity = val!.toInt();
+                    },
+                    id: id,
+                    view: 'item-details',
+                  ),
                 ])),
             Container(
                 margin: const EdgeInsets.only(top: 16, bottom: 16),
@@ -196,11 +197,11 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                   DropdownTag(
                       dropdown: DropdownButton(
                     value: listFoodEntry.owner,
-                    items: peopleList
-                        .map<DropdownMenuItem<String>>((String value) {
+                    items:
+                        peopleList.map<DropdownMenuItem<String>>((User value) {
                       return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
+                        value: value.email,
+                        child: Text("${value.firstName} ${value.lastName}"),
                       );
                     }).toList(),
                     onChanged: ((value) =>
