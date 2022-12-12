@@ -42,6 +42,10 @@ class _ManageRemindersState extends State<ManageReminders> {
                     onChanged: (bool value) {
                       setState(() {
                         currentUser.notificationsEnabled = value;
+                        context
+                            .read<UserViewModel>()
+                            .userDatabase[currentUser.email]!
+                            .notificationsEnabled = value;
                       });
                     })),
             const Padding(
@@ -55,6 +59,10 @@ class _ManageRemindersState extends State<ManageReminders> {
               maxVal: 100,
               onQtyChanged: (val) {
                 currentUser.notificationDayAmount = val!.toInt();
+                context
+                    .read<UserViewModel>()
+                    .userDatabase[currentUser.email]!
+                    .notificationDayAmount = val.toInt();
               },
               id: currentUser.id,
               view: 'manage-reminders',
