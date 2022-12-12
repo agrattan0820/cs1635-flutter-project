@@ -15,8 +15,13 @@ import '../view_models/food_item_view_model.dart';
 class FoodItemRow extends StatelessWidget {
   final List<ListFoodEntry> foodItems;
   final int index;
+  final Animation<double> animation;
 
-  const FoodItemRow({super.key, required this.foodItems, required this.index});
+  const FoodItemRow(
+      {super.key,
+      required this.animation,
+      required this.foodItems,
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -33,73 +38,124 @@ class FoodItemRow extends StatelessWidget {
         .firstName);
 
     return Container(
-        padding: const EdgeInsets.only(top: 8, bottom: 28, left: 8, right: 8),
-        child: Slidable(
-            endActionPane: ActionPane(motion: const ScrollMotion(), children: [
-              SlidableAction(
-                onPressed: (context) => {
-                  context
-                      .read<FoodListEntryViewModel>()
-                      .removeFoodItemEntry(foodItems[index].entryId)
-                },
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                ),
-                icon: Icons.delete,
-                label: 'Delete',
-              ),
-            ]),
-            child: InkWell(
-                onTap: () {
-                  GoRouter.of(context)
-                      .go("/item_details/${foodItems[index].entryId}");
-                },
-                child: Container(
-                    // margin: const EdgeInsets.only(top: 8, bottom: 8),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      // color: foodCategories[foodItem.category].color[100],
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.25),
-                          spreadRadius: 2,
-                          blurRadius: 4,
-                          offset:
-                              const Offset(0, 2), // changes position of shadow
-                        ),
-                      ],
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
+      padding: const EdgeInsets.only(top: 8, bottom: 28, left: 8, right: 8),
+      child: Slidable(
+        endActionPane: ActionPane(motion: const ScrollMotion(), children: [
+          SlidableAction(
+            onPressed: (context) => {
+              AnimatedList.of(context).removeItem(
+                index,
+                (context, animation) => Container(
+                  // margin: const EdgeInsets.only(top: 8, bottom: 8),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    // color: foodCategories[foodItem.category].color[100],
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.25),
+                        spreadRadius: 2,
+                        blurRadius: 4,
+                        offset:
+                            const Offset(0, 2), // changes position of shadow
                       ),
+                    ],
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Text(
-                            "${foodItems[index].quantity.toString()}x ${foodItem.name}",
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          "${foodItems[index].quantity.toString()}x ${foodItem.name}",
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            color: Colors.black,
                           ),
                         ),
-                        UserBubble(
-                            user:
-                                "${context.read<UserViewModel>().userDatabase[foodItems[index].owner]!.firstName} ${context.read<UserViewModel>().userDatabase[foodItems[index].owner]!.lastName}",
-                            borderSize: 4,
-                            textSize: 15),
-                        Tag(
-                          text: listFoodEntry.expiration()["text"],
-                          color: listFoodEntry.expiration()["color"],
-                        )
-                      ],
-                    )))));
+                      ),
+                      UserBubble(
+                          user:
+                              "${context.read<UserViewModel>().userDatabase[foodItems[index].owner]!.firstName} ${context.read<UserViewModel>().userDatabase[foodItems[index].owner]!.lastName}",
+                          borderSize: 4,
+                          textSize: 15),
+                      Tag(
+                        text: listFoodEntry.expiration()["text"],
+                        color: listFoodEntry.expiration()["color"],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              context
+                  .read<FoodListEntryViewModel>()
+                  .removeFoodItemEntry(foodItems[index].entryId)
+            },
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
+            icon: Icons.delete,
+            label: 'Delete',
+          ),
+        ]),
+        child: InkWell(
+          onTap: () {
+            GoRouter.of(context)
+                .go("/item_details/${foodItems[index].entryId}");
+          },
+          child: Container(
+            // margin: const EdgeInsets.only(top: 8, bottom: 8),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              // color: foodCategories[foodItem.category].color[100],
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.25),
+                  spreadRadius: 2,
+                  blurRadius: 4,
+                  offset: const Offset(0, 2), // changes position of shadow
+                ),
+              ],
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Text(
+                    "${foodItems[index].quantity.toString()}x ${foodItem.name}",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                UserBubble(
+                    user:
+                        "${context.read<UserViewModel>().userDatabase[foodItems[index].owner]!.firstName} ${context.read<UserViewModel>().userDatabase[foodItems[index].owner]!.lastName}",
+                    borderSize: 4,
+                    textSize: 15),
+                Tag(
+                  text: listFoodEntry.expiration()["text"],
+                  color: listFoodEntry.expiration()["color"],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

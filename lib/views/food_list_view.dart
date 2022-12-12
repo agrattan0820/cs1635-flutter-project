@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:grosseries/components/filter_form.dart';
 import 'package:grosseries/view_models/food_category_view_model.dart';
 import 'package:grosseries/view_models/food_list_entry_view_model.dart';
-import 'package:grosseries/components/food_item_row.dart';
 import 'package:grosseries/view_models/user_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../components/food_item_row.dart';
 import '../components/notifications.dart';
 import '../components/sort_form.dart';
 import '../models/food_item.dart';
@@ -165,7 +165,9 @@ class _FoodListViewState extends State<FoodListView> {
       Share.share("My Grosseries Item List\n\n${foodItems.join("\n\n")}");
     }
 
-    final GlobalKey<AnimatedListState> key = GlobalKey();
+    final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
+
+    final items = [];
 
     return SafeArea(child:
         Consumer<FoodListEntryViewModel>(builder: (context, viewModel, child) {
@@ -210,70 +212,86 @@ class _FoodListViewState extends State<FoodListView> {
                             textEditingController.clear(),
                             setState(() {
                               query = "";
-                            })
+                            }),
                           },
                         )),
                   )),
               Expanded(
-                  child: ListView.builder(
-                      // padding: const EdgeInsets.all(8),
-                      itemCount: foodItems.length,
-                      itemBuilder: (context, index) {
-                        foodItems.sort(((a, b) {
-                          debugPrint("$sortOptionChoice");
-                          switch (sortOptionChoice) {
-                            case 0:
-                              {
-                                FoodItem? foodItemA =
-                                    FoodItemViewModel.getFoodItem(a.foodId);
+                child: AnimatedList(
+                  key: listKey,
+                  // padding: const EdgeInsets.all(8),
+                  initialItemCount: foodItems.length,
+                  itemBuilder: (context, index, animation) {
+                    foodItems.sort(((a, b) {
+                      debugPrint("$sortOptionChoice");
+                      switch (sortOptionChoice) {
+                        case 0:
+                          {
+                            FoodItem? foodItemA =
+                                FoodItemViewModel.getFoodItem(a.foodId);
 
-                                FoodItem? foodItemB =
-                                    FoodItemViewModel.getFoodItem(b.foodId);
-                                Duration timePassedA =
-                                    DateTime.now().difference(a.dateAdded);
-                                Duration timePassedB =
-                                    DateTime.now().difference(b.dateAdded);
-                                int aDifference = foodItemA!.daysToExpire -
-                                    timePassedA.inDays;
-                                int bDifference = foodItemB!.daysToExpire -
-                                    timePassedB.inDays;
-                                return aDifference.compareTo(bDifference);
-                              }
-                            case 1:
-                              {
-                                FoodItem? foodItemA =
-                                    FoodItemViewModel.getFoodItem(a.foodId);
-                                FoodItem? foodItemB =
-                                    FoodItemViewModel.getFoodItem(b.foodId);
-                                return foodItemA!.name
-                                    .compareTo(foodItemB!.name);
-                              }
-                            case 2:
-                              {
-                                Duration timePassedA =
-                                    DateTime.now().difference(a.dateAdded);
-                                Duration timePassedB =
-                                    DateTime.now().difference(b.dateAdded);
-                                return timePassedA.compareTo(timePassedB);
-                              }
-                            default:
-                              {
-                                return 0;
-                              }
+                            FoodItem? foodItemB =
+                                FoodItemViewModel.getFoodItem(b.foodId);
+                            Duration timePassedA =
+                                DateTime.now().difference(a.dateAdded);
+                            Duration timePassedB =
+                                DateTime.now().difference(b.dateAdded);
+                            int aDifference =
+                                foodItemA!.daysToExpire - timePassedA.inDays;
+                            int bDifference =
+                                foodItemB!.daysToExpire - timePassedB.inDays;
+                            return aDifference.compareTo(bDifference);
                           }
-                        }));
+                        case 1:
+                          {
+                            FoodItem? foodItemA =
+                                FoodItemViewModel.getFoodItem(a.foodId);
+                            FoodItem? foodItemB =
+                                FoodItemViewModel.getFoodItem(b.foodId);
+                            return foodItemA!.name.compareTo(foodItemB!.name);
+                          }
+                        case 2:
+                          {
+                            Duration timePassedA =
+                                DateTime.now().difference(a.dateAdded);
+                            Duration timePassedB =
+                                DateTime.now().difference(b.dateAdded);
+                            return timePassedA.compareTo(timePassedB);
+                          }
+                        default:
+                          {
+                            return 0;
+                          }
+                      }
+                    }));
 
-                        // filter by search input
-                        if (query.isNotEmpty) {
-                          FoodItem? foodItem = FoodItemViewModel.getFoodItem(
-                              foodItems[index].foodId);
-                          return foodItem!.name.toLowerCase().contains(query)
-                              ? FoodItemRow(foodItems: foodItems, index: index)
-                              : Container();
-                        }
+                    // filter by search input
+                    if (query.isNotEmpty) {
+                      FoodItem? foodItem = FoodItemViewModel.getFoodItem(
+                          foodItems[index].foodId);
+                      return foodItem!.name.toLowerCase().contains(query)
+                          ? SizeTransition(
+                              key: UniqueKey(),
+                              sizeFactor: animation,
+                              child: FoodItemRow(
+                                  foodItems: foodItems,
+                                  animation: animation,
+                                  index: index),
+                            )
+                          : Container();
+                    }
 
-                        return FoodItemRow(foodItems: foodItems, index: index);
-                      })),
+                    return SizeTransition(
+                      key: UniqueKey(),
+                      sizeFactor: animation,
+                      child: FoodItemRow(
+                          foodItems: foodItems,
+                          animation: animation,
+                          index: index),
+                    );
+                  },
+                ),
+              ),
               Container(
                   margin: const EdgeInsets.only(
                       top: 10, bottom: 10, left: 20, right: 20),
