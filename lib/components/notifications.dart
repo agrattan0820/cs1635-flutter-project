@@ -34,13 +34,31 @@ class NotificationController {
   }
 }
 
-Future<void> createTestFoodExpireNotification() async {
+Future<void> createTestFoodExpireNotification(
+    ListFoodEntry listFoodEntry, FoodItem foodItem) async {
+  String emoji = foodItem.category == 0
+      ? Emojis.food_red_apple
+      : foodItem.category == 1
+          ? Emojis.food_glass_of_milk
+          : foodItem.category == 2
+              ? Emojis.food_meat_on_bone
+              : foodItem.category == 3
+                  ? Emojis.food_bread
+                  : foodItem.category == 4
+                      ? Emojis.animals_fish
+                      : foodItem.category == 5
+                          ? Emojis.food_candy
+                          : Emojis.household_shopping_cart;
+
   await AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: createUniqueId(),
       channelKey: "basic_channel",
-      title: 'Your whole milk is about to go bad!',
-      body: 'Your whole milk has one day left until it goes bad',
+      title:
+          "$emoji Your ${foodItem.name}${listFoodEntry.quantity > 1 ? 's' : ''} are about to go bad!",
+      body:
+          "Double check the quality of your ${foodItem.name}${listFoodEntry.quantity > 1 ? 's' : ''}",
+      notificationLayout: NotificationLayout.Default,
     ),
   );
 }

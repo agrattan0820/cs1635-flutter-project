@@ -60,8 +60,6 @@ class _FoodAddFormState extends State<FoodAddForm> {
     List<User> peopleList =
         context.watch<UserViewModel>().userDatabase.values.toList();
 
-    debugPrint(peopleList.toString());
-
     return Container(
       padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
       child: Column(

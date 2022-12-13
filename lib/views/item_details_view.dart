@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+import '../components/notifications.dart';
 import '../models/user.dart';
 import '../view_models/user_view_model.dart';
 
@@ -48,11 +49,17 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
         initialDate: DateTime.now(),
         firstDate: DateTime(2000),
         lastDate: DateTime.now(),
-      ).then((value) => setState(() {
-            if (value != null) {
-              listFoodEntry.dateAdded = value;
-            }
-          }));
+      ).then((value) => setState(
+            () {
+              if (value != null) {
+                listFoodEntry.dateAdded = value;
+              }
+            },
+          ));
+    }
+
+    void createTestNotification() async {
+      await createTestFoodExpireNotification(listFoodEntry, foodItem!);
     }
 
     return SafeArea(
@@ -101,15 +108,18 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
                     )
                   ],
                 )),
-            Container(
-              height: 200,
-              width: 200,
-              margin: const EdgeInsets.only(top: 56, bottom: 8),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image(
-                  fit: BoxFit.cover,
-                  image: AssetImage(foodItem.image),
+            InkWell(
+              onTap: createTestNotification,
+              child: Container(
+                height: 200,
+                width: 200,
+                margin: const EdgeInsets.only(top: 56, bottom: 8),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image(
+                    fit: BoxFit.cover,
+                    image: AssetImage(foodItem.image),
+                  ),
                 ),
               ),
             ),
