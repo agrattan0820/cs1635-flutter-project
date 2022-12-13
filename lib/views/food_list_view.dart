@@ -263,32 +263,36 @@ class _FoodListViewState extends State<FoodListView> {
                       }
                     }));
 
-                    // filter by search input
-                    if (query.isNotEmpty) {
-                      FoodItem? foodItem = FoodItemViewModel.getFoodItem(
-                          foodItems[index].foodId);
-                      return foodItem!.name.toLowerCase().contains(query)
-                          ? SizeTransition(
-                              key: UniqueKey(),
-                              sizeFactor: animation,
-                              child: FoodItemRow(
-                                foodItems: foodItems,
-                                animation: animation,
-                                index: index,
-                              ),
-                            )
-                          : Container();
-                    }
+                    if (foodItems.length > index) {
+                      // filter by search input
+                      if (query.isNotEmpty) {
+                        FoodItem? foodItem = FoodItemViewModel.getFoodItem(
+                            foodItems[index].foodId);
+                        return foodItem!.name.toLowerCase().contains(query)
+                            ? SizeTransition(
+                                key: UniqueKey(),
+                                sizeFactor: animation,
+                                child: FoodItemRow(
+                                  foodItems: foodItems,
+                                  animation: animation,
+                                  index: index,
+                                ),
+                              )
+                            : Container();
+                      }
 
-                    return SlideTransition(
-                      key: UniqueKey(),
-                      position: animation.drive(offset),
-                      child: FoodItemRow(
-                        foodItems: foodItems,
-                        animation: animation,
-                        index: index,
-                      ),
-                    );
+                      return SlideTransition(
+                        key: UniqueKey(),
+                        position: animation.drive(offset),
+                        child: FoodItemRow(
+                          foodItems: foodItems,
+                          animation: animation,
+                          index: index,
+                        ),
+                      );
+                    } else {
+                      return Container();
+                    }
                   },
                 ),
               ),
