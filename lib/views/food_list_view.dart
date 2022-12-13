@@ -165,9 +165,8 @@ class _FoodListViewState extends State<FoodListView> {
       Share.share("My Grosseries Item List\n\n${foodItems.join("\n\n")}");
     }
 
-    final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
-
-    final items = [];
+    Tween<Offset> offset =
+        Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
 
     return SafeArea(child:
         Consumer<FoodListEntryViewModel>(builder: (context, viewModel, child) {
@@ -218,7 +217,6 @@ class _FoodListViewState extends State<FoodListView> {
                   )),
               Expanded(
                 child: AnimatedList(
-                  key: listKey,
                   // padding: const EdgeInsets.all(8),
                   initialItemCount: foodItems.length,
                   itemBuilder: (context, index, animation) {
@@ -274,20 +272,22 @@ class _FoodListViewState extends State<FoodListView> {
                               key: UniqueKey(),
                               sizeFactor: animation,
                               child: FoodItemRow(
-                                  foodItems: foodItems,
-                                  animation: animation,
-                                  index: index),
+                                foodItems: foodItems,
+                                animation: animation,
+                                index: index,
+                              ),
                             )
                           : Container();
                     }
 
-                    return SizeTransition(
+                    return SlideTransition(
                       key: UniqueKey(),
-                      sizeFactor: animation,
+                      position: animation.drive(offset),
                       child: FoodItemRow(
-                          foodItems: foodItems,
-                          animation: animation,
-                          index: index),
+                        foodItems: foodItems,
+                        animation: animation,
+                        index: index,
+                      ),
                     );
                   },
                 ),
