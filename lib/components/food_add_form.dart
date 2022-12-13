@@ -55,6 +55,7 @@ class _FoodAddFormState extends State<FoodAddForm> {
 
   @override
   Widget build(BuildContext context) {
+    User? currentUser = context.watch<UserViewModel>().currentUser;
     var foodCategories = context.watch<FoodCategoryViewModel>().foodCategories;
 
     List<User> peopleList =
@@ -185,6 +186,8 @@ class _FoodAddFormState extends State<FoodAddForm> {
                             quantity,
                             owner,
                             datePurchased,
+                            currentUser?.notificationsEnabled,
+                            currentUser?.notificationDayAmount,
                           );
 
                       ScaffoldMessenger.of(context).showSnackBar(

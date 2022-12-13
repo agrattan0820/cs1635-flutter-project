@@ -65,8 +65,15 @@ class FoodListEntryViewModel with ChangeNotifier {
     return null;
   }
 
-  Future<void> addFoodItemEntry(int id, String storage, int quantity,
-      String owner, DateTime dateAdded) async {
+  Future<void> addFoodItemEntry(
+    int id,
+    String storage,
+    int quantity,
+    String owner,
+    DateTime dateAdded,
+    bool? addNotification,
+    int? notificationDayAmount,
+  ) async {
     ListFoodEntry entry = ListFoodEntry(
       entryId: _random.nextInt(max),
       foodId: id,
@@ -79,25 +86,31 @@ class FoodListEntryViewModel with ChangeNotifier {
     // Add entry to overall list
     _foodItems.add(entry);
 
-    // Get relevant food item
-    FoodItem? foodItem = getFoodItem(id);
+    if (addNotification == true) {
+      // Get relevant food item
+      FoodItem? foodItem = getFoodItem(id);
 
-    // Add days to expire to current day to get day of reminder
-    DateTime dayOfReminder =
-        dateAdded.add(Duration(days: foodItem!.daysToExpire));
-    debugPrint(dayOfReminder.toIso8601String());
+      // Add days to expire to current day to get day of reminder
+      DateTime dayOfReminder = dateAdded
+          .add(Duration(days: foodItem!.daysToExpire + notificationDayAmount!));
+      debugPrint(dayOfReminder.toIso8601String());
 
-    // Determine particular day and time we want notification
-    NotificationDay notificationSchedule = NotificationDay(
-      day: dayOfReminder.day,
-      month: dayOfReminder.month,
-      year: dayOfReminder.year,
-      timeOfDay: const TimeOfDay(hour: 10, minute: 0),
-    );
+      // Determine particular day and time we want notification
+      NotificationDay notificationSchedule = NotificationDay(
+        day: dayOfReminder.day,
+        month: dayOfReminder.month,
+        year: dayOfReminder.year,
+        timeOfDay: const TimeOfDay(hour: 10, minute: 0),
+      );
 
-    // Schedule notification
-    await createFoodExpireReminderNotification(
-        entry, foodItem, notificationSchedule);
+      // Schedule notification
+      await createFoodExpireReminderNotification(
+        entry,
+        foodItem,
+        notificationSchedule,
+      );
+    }
+
     notifyListeners();
   }
 
